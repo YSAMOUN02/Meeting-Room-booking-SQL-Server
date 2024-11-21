@@ -1,0 +1,256 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+
+    background: url('https://img.freepik.com/free-vector/blue-curve-background_53876-113112.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+}
+.card_room {
+    position: relative;
+    height: auto !important;
+}
+.card_room .label{
+    clip-path: polygon(50% 0%, 100% 0, 100% 35%, 100% 70%, 50% 100%, 0 100%, 0% 70%, 0% 35%, 0 0);
+    width: 70%;
+    height: 70px;
+    background-color: red;
+    color: white;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.card_room img{
+    height: 50%;
+
+}
+.card_room  .p-5{
+    height: 50%;
+    display:  flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.card_room  .btn_book{
+    width: fit-content;
+}
+
+.input_book{
+    display: none;
+    width: 800px;
+    height: 500px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid rgb(0, 0, 0);
+    position: fixed;
+    border-radius: 20px ;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,50%);
+
+}
+.inner_book{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.inner_book button{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+.alert{
+    position: fixed;
+    top: 100px ;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 9999;
+}
+.alert_style{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+
+    z-index: 9999 !important;
+    padding: 5px 20px;
+    border-radius: 10px;
+
+    animation: fade 20s forwards;
+}
+.fail{
+    color: rgb(255, 74, 74);
+    border: 1px solid rgb(241, 62, 62);
+}
+.success{
+    color: rgb(0, 113, 11);
+
+}
+.alert_style i{
+    margin-right: 5px;
+}
+.drop_slow1{
+    animation: drop_slow 1s forwards;
+}
+.drop_slow2{
+    animation: drop_slow 2s forwards;
+}
+#main{
+    min-height: 100vh;
+
+    background: url('https://img.freepik.com/free-vector/blue-curve-background_53876-113112.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    position: relative;
+}
+#loading_style{
+    width: 200px;
+    height: 100px;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 99;
+    backdrop-filter: blur(10px);
+    background-color: black;
+    color: white;
+
+  }
+  #loading h1{
+    margin: 0 10px;
+  }
+
+  #btn_submit_booking{
+    background-color: red;
+  }
+  #toast {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto !important;
+    z-index: 9999;
+    display: none;
+
+}
+#toast p{
+    width: auto !important;
+    white-space: nowrap;
+    color: red;
+    font-weight: bold;
+}
+.fail_attemp{
+    border: 1px solid red !important;
+    color: red !important;
+}
+
+.selected{
+    background-color: rgb(219, 255, 219);
+}
+.table th{
+    white-space: nowrap;
+}
+.table td{
+    white-space: nowrap;
+}
+table{
+    position: relative;
+}
+.hover_td{
+    position: sticky;
+    right: 0;
+    background-color: rgb(255, 255, 255);
+}
+.day{
+    min-height: 80px;
+}
+.day:hover{
+    cursor: pointer;
+}
+.date_for_mobile{
+    display: none;
+}
+
+@keyframes fade {
+    0%{
+        display: block;
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        display: none;
+    }
+}
+
+@keyframes drop_slow {
+    0%{
+        transform: translateY(-10px);
+        opacity: 0;
+
+    }
+    100%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+@media  (max-width: 430px) {
+    .input_book{
+        width: 300px;
+        height: auto;
+    }
+    .inner_book button{
+        position: static;
+    }
+    #main{
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    #toast {
+
+        top: 20%;
+
+
+    }
+    #toast p{
+        font-size: 11px;
+        white-space: nowrap;
+        color: red;
+        font-weight: bold;
+    }
+    .calendar{
+        flex-direction: column;
+    }
+    .date_for_mobile{
+        display: block;
+    }
+    .date_for_pc{
+        display: none;
+    }
+    .day{
+        min-height: 30px;
+    }
+}
+@media  (min-width: 1280px  )  and (max-width: 1440px){
+ .laptop_respond{
+    margin: 0 20px !important;
+ }
+ .card_room h5{
+    font-size: 15px ;
+ }
+ .card_room .p-5{
+    padding: 10px !important;
+ }
+}
