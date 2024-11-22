@@ -272,34 +272,34 @@
         try {
             document.querySelector("#loading").style.display = 'block';
 
-        const response = await fetch('/api/check/name', {
-                method: 'POST',
-                headers: {
-            'Content-Type': 'application/json'
-        },
-            body: JSON.stringify({
-                name_email: document.getElementById('name_email').value,
-            }),
-        });
+            const response = await fetch('/api/check/name', {
+                    method: 'POST',
+                    headers: {
+                'Content-Type': 'application/json'
+            },
+                body: JSON.stringify({
+                    name_email: document.getElementById('name_email').value,
+                }),
+            });
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (response.ok) {
-                if(data){
-                    if(data.status == 'success'){
-                    alert(data.message);
-                    document.getElementById("code").style.display = 'block';
-                    document.getElementById("send").textContent = 'Send Again?'
-                    document.querySelector("#loading").style.display = 'none';
+                if (response.ok) {
+                    if(data){
+                        if(data.status == 'success'){
+                        alert(data.message);
+                        document.getElementById("code").style.display = 'block';
+                        document.getElementById("send").textContent = 'Send Again?'
+                        document.querySelector("#loading").style.display = 'none';
+                        }
+                    }else{
+                        document.querySelector("#loading").style.display = 'none';
+                        alert("Operation fail.");
                     }
-                }else{
-                    document.querySelector("#loading").style.display = 'none';
-                    alert("Operation fail.");
-                }
 
-            } else {
-                document.querySelector("#loading").style.display = 'none';
-                alert("Invalid Email or Name.");
+                } else {
+                    document.querySelector("#loading").style.display = 'none';
+                    alert("Invalid Email or Name.");
 
             }
             } catch (error) {
@@ -307,6 +307,7 @@
                 alert("Problem connection to database.");
 
         }
+        alert("Invalid Email or Name.");
         document.querySelector("#loading").style.display = 'none';
     }
 
