@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('seat')->nullable();
             $table->String('thumbnail')->nullable();
-            $table->string('created_by')->nullable();
+            $table->string('Created_by')->nullable();
             $table->timestamps();
         });
     }

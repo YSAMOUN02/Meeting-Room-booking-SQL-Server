@@ -231,6 +231,15 @@
 
     </div>
     <script>
+           const button = document.querySelector('#btn_login');
+
+        // id="search_button"
+        document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            button.click();
+        }
+        });
         async function submit_with_api() {
             try {
                 document.querySelector("#loading").style.display = 'block';

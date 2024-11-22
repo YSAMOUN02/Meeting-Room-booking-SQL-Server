@@ -276,6 +276,7 @@ function edit_room(index){
     let seat = document.querySelector('#seat');
     let description = document.querySelector("#description");
     let id = document.querySelector("#id");
+    let thumbnail = document.querySelector("#thumbnail");
     if(id){
         id.value = room[index].id;
     }
@@ -287,6 +288,11 @@ function edit_room(index){
     }
     if(description){
         description.value = room[index].description??'';
+    }
+    console.log(room[index].thumbnail);
+    if(thumbnail){
+        let image = '/Uploads/'+room[index].thumbnail;
+        thumbnail.setAttribute('src',image);
     }
 }
 var state_password_show = 0;

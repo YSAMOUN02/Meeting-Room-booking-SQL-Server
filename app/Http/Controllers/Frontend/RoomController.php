@@ -98,7 +98,11 @@ class RoomController extends Controller
         $id = $request->id;
 
         $room = room::where('id',$id)->first();
-
+        if($request->thumbnail != null){
+            $file = $request->file('thumbnail');
+            $thumbnail = $this->upload_file($file);
+            $room->thumbnail =$thumbnail;
+        }
         $room->room_name = $request->name??'';
         $room->seat = $request->seat??0;
         $room->description = $request->description??'';

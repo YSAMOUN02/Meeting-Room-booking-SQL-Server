@@ -250,6 +250,16 @@
         let user_name = @json($username);
         let code = @json($code);
 
+        const button = document.querySelector('#btn_login');
+
+            // id="search_button"
+            document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                button.click();
+            }
+            });
+
         if(user_name != ''){
                 document.getElementById("code").style.display = 'block';
                 document.getElementById("send").textContent = 'Send Again?'

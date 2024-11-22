@@ -252,7 +252,7 @@
         </div>
     </div>
         <section class="calendar drop_slow1 laptop_respond bg-white   flex  max-w-screen-xl px-4  py-2 mx-auto lg:gap-8 xl:gap-0 lg:py-4  ">
-            <div>
+            <div class="me-2">
                 @if (!empty($room))
                 <span class="text-xl font-semibold text-gray-900 dark:text-white">{{$room->room_name}}'s Meeting Schedule </span>
             @endif

@@ -37,7 +37,7 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="p-4 md:p-5">
-                <form action="/room/update/submit" method="POST">
+                <form action="/room/update/submit" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="w-full grid gap-6 mb-6 md:grid-cols-1">
 
@@ -49,6 +49,11 @@
                         <div>
                             <label for="seat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seat</label>
                             <input type="number" id="seat" name="seat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
+                        </div>
+                        <div>
+                            <label for="seat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail</label>
+                            <img id="thumbnail" src="" alt="">
+                            <input type="file"  name="thumbnail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="imageInput">
                         </div>
                         <div>
                             <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descrpition</label>
@@ -136,5 +141,38 @@
     <script>
         let room = @json($room);
 
+
+        const imageInput = document.getElementById('imageInput');
+       const preview = document.getElementById('thumbnail');
+       imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0]; // Get the first selected file
+            let filName  = imageInput.files.item(0).name;
+            let extension = filName.split(".").pop();
+            if (
+                extension == "jpg" ||
+                extension == "jpeg" ||
+                extension == "gif" ||
+                extension == "png"
+            ){
+                    if (file) {
+                    const reader = new FileReader();
+
+                    // When the file is loaded, update the preview image's src
+                    reader.onload = function(e) {
+                        preview.src = e.target.result; // Set the image source to the file data
+                        preview.style.display = 'block'; // Show the image
+                    };
+
+                    // Read the image file as a Data URL
+                    reader.readAsDataURL(file);
+                }
+            }else {
+                imageInput.value = '';
+                alert(
+                   "File is Unknown! , FIle allow is  JPG  JPEG  GIF PNG"
+                );
+            }
+
+        });
     </script>
 @endsection
