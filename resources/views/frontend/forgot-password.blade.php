@@ -346,15 +346,16 @@
                         // alert('Invalid Credentail.');
                         label.innerHTML = `Invalid Credentail.`;
                         tost.style.display = 'block';
+                        document.querySelector("#loading").style.display = 'none';
                     }else if(response.status == 404){
                         label.innerHTML = `Page Not found.`;
                         tost.style.display = 'block';
-
+                        document.querySelector("#loading").style.display = 'none';
                     }else{
                         label.innerHTML = `No Respond.`;
                         tost.style.display = 'block';
                     }
-
+                    document.querySelector("#loading").style.display = 'none';
 
                 }else{
                     document.querySelector("#loading").style.display = 'none';
