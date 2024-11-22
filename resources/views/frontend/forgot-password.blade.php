@@ -309,6 +309,7 @@
 
         }
         alert("Invalid Email or Name.");
+        document.querySelector("#loading").style.display = 'none';
     }
 
         async function submit_with_api() {
