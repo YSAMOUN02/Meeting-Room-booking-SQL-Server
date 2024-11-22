@@ -251,7 +251,7 @@
         let code = @json($code);
 
         const button = document.querySelector('#btn_login');
-
+        let state = 0;
         // id="search_button"
         document.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
@@ -270,6 +270,7 @@
         }
          async function find_name_email() {
         try {
+
             document.querySelector("#loading").style.display = 'block';
 
             const response = await fetch('/api/check/name', {
@@ -290,7 +291,9 @@
                         alert(data.message);
                         document.getElementById("code").style.display = 'block';
                         document.getElementById("send").textContent = 'Send Again?'
+                        state =1 ;
                         document.querySelector("#loading").style.display = 'none';
+                        return;
                         }
                     }else{
                         document.querySelector("#loading").style.display = 'none';
@@ -307,7 +310,12 @@
                 alert("Problem connection to database.");
 
         }
-        alert("Invalid Email or Name.");
+        if(state == 0 ){
+            alert("Invalid Email or Name.");
+            document.querySelector("#loading").style.display = 'none';
+        }else{
+            document.querySelector("#loading").style.display = 'none';
+        }
         document.querySelector("#loading").style.display = 'none';
     }
 
