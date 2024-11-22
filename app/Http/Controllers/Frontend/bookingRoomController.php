@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\room;
+
+use Illuminate\Support\Facades\DB;
 class bookingRoomController extends Controller
 {
     public function new_booking(Request $request)
@@ -120,16 +122,18 @@ class bookingRoomController extends Controller
     public function booked_room(){
         // $current_time =    \Carbon\Carbon::parse(today())->format('h:i A') ;
 
-        $data = booking::orderby('id','desc')
-        ->where('date', '>=' , today())
-        // ->where('status', 0)
-        ->get();
+
+        $data = booking::where('date', '>=', today())
+            ->orderBy(DB::raw('CAST(date AS DATE)'), 'asc') // Order by the `date` column as DATE
+            ->orderBy('id', 'desc') // Secondary order by ID, descending
+            ->get();
+
         $current_time = \Carbon\Carbon::now('Asia/Jakarta')->format('h:i A');
         $current_date = today();
         // return $data;
         return view('frontend.list-booked-room',['data'=>$data
     , 'current_time' =>$current_time,
-    'current_date' =>$current_date
+        'current_date' =>$current_date
 ]);
     }
     public function booked_room_history(){

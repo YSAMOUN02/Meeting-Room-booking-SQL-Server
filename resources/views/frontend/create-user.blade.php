@@ -34,7 +34,7 @@
                 <option value="Export">Export</option>
                 <option value="Finance">Finance</option>
                 <option value="HR">HR</option>
-                <option value="IT">IT</option>
+                <option value="MIS">MIS</option>
                 <option value="Logistic">Logistic</option>
                 <option value="Management">Management</option>
                 <option value="Marketing">Marketing</option>

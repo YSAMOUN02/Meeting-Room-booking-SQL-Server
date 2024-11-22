@@ -38,16 +38,33 @@ class UserController extends Controller
         $stored = $user->save();
 
         if($stored){
-            return redirect('/list/user')->with('success','Create User Success.');
+            return redirect('/list/user/1')->with('success','Create User Success.');
         }else{
-            return redirect('/list/user')->with('fail','Opp! Operation Fail.');
+            return redirect('/list/user/1')->with('fail','Opp! Operation Fail.');
         }
     }
 
 
-    public function list_user(){
-        $user =  User::orderby('id','desc')->get();
-        return view('frontend.list-user',['user' => $user]);
+    public function list_user($page){
+
+        $sql =  User::orderby('id','desc');
+        $count_post = $sql->count();
+        $limit = 30;
+        $total_page = ceil($count_post/$limit);
+        $offset = 0;
+        if($page != 0){
+            $offset = ($page - 1) * $limit;
+        }
+        $sql->limit($limit);
+        $sql->offset($offset);
+        $user = $sql->get();
+
+        return view('frontend.list-user',[
+            'user' => $user,
+            'total_page' => $total_page,
+            'total_record' => $count_post,
+            'page' => $page
+        ]);
     }
 
     public function delete_user_submit(request $request){
@@ -56,9 +73,9 @@ class UserController extends Controller
         $delete = $User->delete();
 
         if($delete){
-            return redirect('/list/user')->with('success','Delete User Success.');
+            return redirect('/list/user/1')->with('success','Delete User Success.');
         }else{
-            return redirect('/list/user')->with('fail','Opp! Operation Fail.');
+            return redirect('/list/user/1')->with('fail','Opp! Operation Fail.');
         }
     }
 
@@ -85,9 +102,9 @@ class UserController extends Controller
         }
 
         if($stored){
-            return redirect('/list/user')->with('success','Create User Success.');
+            return redirect('/list/user/1')->with('success','Create User Success.');
         }else{
-            return redirect('/list/user')->with('fail','Opp! Operation Fail.');
+            return redirect('/list/user/1')->with('fail','Opp! Operation Fail.');
         }
     }
 

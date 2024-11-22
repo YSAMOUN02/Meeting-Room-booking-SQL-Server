@@ -225,7 +225,7 @@
                         </div>
                         <div class="flex justify-between">
                             <div></div>
-                            <a href="/"
+                            <a href="/login"
                             class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
                             sign in?</a>
                         </div>

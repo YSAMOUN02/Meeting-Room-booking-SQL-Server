@@ -30,7 +30,7 @@ class AdminController extends Controller
 
                 // }
 
-            return redirect('/room')->with('success','Login Success.');
+            return redirect('/')->with('success','Login Success.');
         }
         elseif(Auth::attempt(['email' => $name_email , 'password' => $password],$remember)){
             // if(Auth::user()->status == 0){
@@ -40,7 +40,7 @@ class AdminController extends Controller
 
             // }
 
-            return redirect('/room')->with('success','Login Success.');
+            return redirect('/')->with('success','Login Success.');
         }else{
             return redirect('/')->with('fail','Invalid Credential.');
         }

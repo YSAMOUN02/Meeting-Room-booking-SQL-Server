@@ -229,8 +229,55 @@ class APIHandlerController extends Controller
 
 
     }
+
+    public function search_user(request $request){
+        $type = $request->type??'NA';
+        $value = $request->value??'NA';
+        $page = $request->page??1;
+        $limit = 30;
+
+        $count = 0;
+
+        $user =  User::orderby('id','desc');
+        $count_all = $user->count();
+
+        $offet = 0;
+        if($page != 0){
+            $offet = ($page - 1) * $limit;
+        }
+
+        $total_pages = ceil( $count_all/$limit);
+
+        if($type != 'NA' && $value != 'NA'){
+            $user->where($type,'LIKE','%'.$value.'%');
+        }
+        $user->offset($offet);
+        $user->limit($limit);
+        $datas = $user->get();
+
+        $data = new arr_obj();
+        $data->page = $page;
+        $data->total_page = $total_pages;
+        $data->total_record = $count_all;
+        $data->data = $datas;
+
+        $count = count($datas);
+        if($count > 0){
+            return response()->json($data, 200, );
+        }else{
+            return response()->json([], 200, );
+        }
+
+    }
 }
 class arr{
     public $message;
     public $status;
+}
+class arr_obj {
+    public $page;
+    public $total_page;
+    public $total_record;
+    public $data;
+
 }

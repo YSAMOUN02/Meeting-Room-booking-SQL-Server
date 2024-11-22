@@ -24,6 +24,7 @@ class RoomController extends Controller
     }
 
     public function room_detail($id ){
+
         $room = room::where('id',$id)->first();
 
         if(!empty($room)){
@@ -68,6 +69,7 @@ class RoomController extends Controller
             'room' => $room
         ]);
 
+
     }
 
     public function add_room(){
@@ -88,9 +90,9 @@ class RoomController extends Controller
         $stored = $room->save();
 
         if($stored){
-            return redirect('/room')->with('success','Create Room success.');
+            return redirect('/')->with('success','Create Room success.');
         }else{
-            return redirect('/room')->with('fail','Opps. Operation error');
+            return redirect('/')->with('fail','Opps. Operation error');
         }
     }
 

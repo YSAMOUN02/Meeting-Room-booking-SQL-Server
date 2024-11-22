@@ -23,20 +23,7 @@
 
 </head>
 <body>
-    {{-- <nav class="bg-white  dark:bg-sky-700">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl" id="aaa">
-          <a href="/room" class="flex items-center">
-            <img src="{{URL('assets/image/Logo_PPM.jpg')}}"
-              class=" item-left h-20 img-fluid ${1|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-              alt="" />
-          </a>
 
-          <div class="flex items-center space-x-6 rtl:space-x-reverse">
-
-          </div>
-        </div>
-      </nav> --}}
-      <!-- Form input  -->
       <div id="toast"
       class="max-auto bg-white border border-gray-200 rounded-xl shadow-lg dark:bg-neutral-800 dark:border-neutral-700"
       role="alert" tabindex="-1" aria-labelledby="hs-toast-warning-example-label">
@@ -144,7 +131,7 @@
                 </svg>
                 <span class="sr-only">Toggle sidebar</span>
               </button>
-              <a href="/room" class="flex items-center justify-between mr-4">
+              <a href="/" class="flex items-center justify-between mr-4">
                 <img
                   src="{{URL('assets/image/Logo_PPM.jpg')}}"
                   class="mr-3 h-8"
@@ -161,116 +148,126 @@
 
         <!-- Sidebar -->
 
+        @if(!empty(Auth::user()))
         <aside
-          class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-          aria-label="Sidenav"
-          id="drawer-navigation"
-        >
-          <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+        aria-label="Sidenav"
+        id="drawer-navigation"
+      >
+        <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
 
-            <ul class="space-y-2">
-              <li>
-                <a
-                  href="/room"
-                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                <i class="fa-solid fa-house-laptop"></i>
-                  <span class="ml-3">Meeting Room</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/list/room/booked"
-                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                <i class="fa-solid fa-calendar-days"></i>
-                  <span class="ml-3">Booked Room</span>
-                </a>
-              </li>
-              @if(!empty(Auth::user()))
-                @if(Auth::user()->role == 'admin')
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="/"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+              <i class="fa-solid fa-house-laptop"></i>
+                <span class="ml-3">Meeting Room</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/list/room/booked"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+              <i class="fa-solid fa-calendar-days"></i>
+                <span class="ml-3">Booked Room</span>
+              </a>
+            </li>
+            @if(!empty(Auth::user()))
+              @if(Auth::user()->role == 'admin')
 
-                    <li>
-                        <a
-                        href="/list/history/booked"
-                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <span class="ml-3">Meeting History</span>
-                        </a>
-                    </li>
+                  <li>
+                      <a
+                      href="/list/history/booked"
+                      class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      >
+                      <i class="fa-solid fa-clock-rotate-left"></i>
+                      <span class="ml-3">Meeting History</span>
+                      </a>
+                  </li>
 
-                    <li>
-                        <a
-                        href="/user/create"
-                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                        <i class="fa-solid fa-user-plus"></i>
-                        <span class="ml-3">Add User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href="/list/user"
-                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                        <i class="fa-solid fa-users"></i>
-                        <span class="ml-3">List User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href="/room/add"
-                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                        <i class="fa-solid fa-house-chimney-medical"></i>
-                        <span class="ml-3">Add Room</span>
-                        </a>
-                    </li>
+                  <li>
+                      <a
+                      href="/user/create"
+                      class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      >
+                      <i class="fa-solid fa-user-plus"></i>
+                      <span class="ml-3">Add User</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a
+                      href="/list/user/1"
+                      class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      >
+                      <i class="fa-solid fa-users"></i>
+                      <span class="ml-3">List User</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a
+                      href="/room/add"
+                      class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      >
+                      <i class="fa-solid fa-house-chimney-medical"></i>
+                      <span class="ml-3">Add Room</span>
+                      </a>
+                  </li>
 
-                    <li>
-                        <a
-                        href="/room/list"
-                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                        >
-                        <i class="fa-solid fa-house-circle-check"></i>
-                        <span class="ml-3">List Room</span>
-                        </a>
-                    </li>
+                  <li>
+                      <a
+                      href="/room/list"
+                      class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                      >
+                      <i class="fa-solid fa-house-circle-check"></i>
+                      <span class="ml-3">List Room</span>
+                      </a>
+                  </li>
 
-                @endif
               @endif
-              {{-- @if (Auth::user()->role == 'staff') --}}
-                <li>
-                    <a
-                    href="/user/profile"
-                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                    >
-                    <i class="fa-solid fa-user"></i>
-                    <span class="ml-3">Your Profile</span>
-                    </a>
-                </li>
-              {{-- @endif --}}
-              <li  data-modal-target="popup-modal3" data-modal-toggle="popup-modal3" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-
-
-
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                  <span class="ml-3">Log out</span>
-
+            @endif
+            {{-- @if (Auth::user()->role == 'staff') --}}
+              <li>
+                  <a
+                  href="/user/profile"
+                  class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                  <i class="fa-solid fa-user"></i>
+                  <span class="ml-3">Your Profile</span>
+                  </a>
               </li>
-            </ul>
+            {{-- @endif --}}
+            <li  data-modal-target="popup-modal3" data-modal-toggle="popup-modal3" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 
-            </div>
+
+
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span class="ml-3">Log out</span>
+
+            </li>
+          </ul>
+
           </div>
-        </aside>
-
+        </div>
+      </aside>
+        @endif
+        @if(!empty(Auth::user()))
         <main id="main" class="p-4 md:ml-64 h-auto pt-20">
 
 
             @yield('content')
 
         </main>
+        @else
+        <main id="main" style="margin: 0px;" class="p-4 md:ml-64 h-auto pt-20">
+
+
+            @yield('content')
+
+        </main>
+        @endif
       </div>
 
 

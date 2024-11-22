@@ -23,4 +23,8 @@ Route::post('/check/name', [ApiHandlerController::class, 'check_name_for_reset_p
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/validation', [APIHandlerController::class, 'checking_existing_room']);
+
+    Route::post('/fect/user/data', [APIHandlerController::class, 'search_user']);
+
+
 });

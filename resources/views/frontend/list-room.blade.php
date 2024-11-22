@@ -89,7 +89,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         @if(!empty($room))
                             @php
                                 $index = 0;

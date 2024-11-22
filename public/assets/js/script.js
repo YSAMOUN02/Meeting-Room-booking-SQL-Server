@@ -226,50 +226,53 @@ function delete_id(id){
     }
 
 }
-
+let temp_index = 100;
 function edit_user(index){
-    let fname = document.querySelector("#first_name");
+    if(index != temp_index){
+        let fname = document.querySelector("#first_name");
 
-    let company = document.querySelector("#company");
-    let department = document.querySelector("#department");
-    let role = document.querySelector("#role");
-    let phone = document.querySelector("#phone");
-    let id_card = document.querySelector("#id_card");
-    let email = document.querySelector("#email");
-    let user_login = document.querySelector("#user_login");
-    let id = document.querySelector("#id");
+        let company = document.querySelector("#company");
+        let department = document.querySelector("#department");
+        let role = document.querySelector("#role");
+        let phone = document.querySelector("#phone");
+        let id_card = document.querySelector("#id_card");
+        let email = document.querySelector("#email");
+        let user_login = document.querySelector("#user_login");
+        let id = document.querySelector("#id");
+        let password = document.querySelector("#password");
+        if(id){
+            id.value = users[index].id;
+        }
 
-    if(id){
-        id.value = users[index].id;
+        if(fname){
+            fname.value = users[index].name;
+        }
+        if(company){
+            company.value = users[index].company;
+        }
+        if(department ){
+            department.value = users[index].department;
+        }
+        if(role){
+            role.value = users[index].role;
+        }
+        if(phone){
+            phone.value = users[index].phone;
+        }
+        if(id_card){
+            id_card.value = users[index].id_card;
+        }
+        if(email){
+            email.value = users[index].email;
+        }
+        if(user_login){
+            user_login.value = users[index].user_login;
+        }
+        if(password){
+            password.value = '';
+        }
+        temp_index = index;
     }
-
-    if(fname){
-        fname.value = users[index].name;
-    }
-    if(company){
-        company.value = users[index].company;
-    }
-    if(department ){
-        department.value = users[index].department;
-    }
-    if(role){
-        role.value = users[index].role;
-    }
-    if(phone){
-        phone.value = users[index].phone;
-    }
-    if(id_card){
-        id_card.value = users[index].id_card;
-    }
-    if(email){
-        email.value = users[index].email;
-    }
-    if(user_login){
-        user_login.value = users[index].user_login;
-    }
-
-
-
 }
 function edit_room(index){
     let name = document.querySelector("#name");
@@ -305,7 +308,16 @@ function show_password() {
         state_password_show = 0;
     }
 }
-
+var state_password_show = 0;
+function show_password2() {
+    if (state_password_show == 0) {
+        document.querySelector("#password2").setAttribute("type", "text");
+        state_password_show++;
+    } else {
+        document.querySelector("#password2").setAttribute("type", "password");
+        state_password_show = 0;
+    }
+}
 
 function show_schedule(day,month,year){
     let schedule_show = document.querySelector("#schedule_show");
@@ -390,4 +402,253 @@ function formatTime(timeStr) {
         minute: '2-digit',
         hour12: true, // Use 12-hour format with AM/PM
     });
+}
+
+
+
+async function search_user(no) {
+
+    let other = document.querySelector("#type");
+    let value = document.querySelector("#value");
+    let type_val = "NA";
+    let value_val = "NA";
+    let page = 1;
+    if(no != ''){
+        page = no;
+    }
+    if (value) {
+        if (value.value != "") {
+            value_val = value.value;
+        }
+    }
+    if (other) {
+        type_val = other.value;
+    }
+
+    url = `/api/fect/user/data`;
+    // Loading label
+    document.querySelector("#loading").style.display = "block";
+
+    let data = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            type: type_val,
+            value: value_val,
+            page: page
+        }),
+    })
+        .then((res) => res.json())
+        .catch((error) => {
+            alert(error);
+        });
+    if (data) {
+        console.log(data);
+        if (data.data) {
+            if (data.data.length > 0) {
+                let pagination_search = document.querySelector(
+                    ".pagination_by_search"
+                );
+                if (pagination_search) {
+                    pagination_search.style.display = "block";
+
+                    if (data.page != 0) {
+                        let page = data.page;
+                        let totalPage = data.total_page;
+                        let totalRecord = data.total_record;
+                        render_pagination(page,totalPage,totalRecord);
+
+                    }
+                }
+                let body_change = document.querySelector("#users_tbody");
+                body_change.innerHTML = ""; // Clear the table body
+                renderTableRows(data.data)
+                users = data.data;
+            } else {
+                alert("Data not Found.");
+            }
+        } else {
+            alert("Data not Found.");
+        }
+    } else {
+        alert("Problem on database connection.");
+    }
+    document.querySelector("#loading").style.display = "none";
+}
+function renderTableRows(data) {
+    const bodyChange = document.querySelector("#users_tbody");
+    bodyChange.innerHTML = ""; // Clear the table body
+    data.forEach((item, index) => {
+        const row = `
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${item.id}</th>
+                <td class="px-4 py-3">${item.name}</td>
+                <td class="px-4 py-3">${item.id_card}</td>
+                <td class="px-4 py-3">${item.company}</td>
+                <td class="px-4 py-3">${item.department}</td>
+                <td class="px-4 py-3">${item.email}</td>
+                <td class="px-4 py-3">${item.role}</td>
+                <td class="px-4 py-3">${item.phone}</td>
+                <td class="hover_td px-4 py-3">
+                    <button type="button" onclick="update_user_via_search(${index})"  class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        ${auth.role === "admin"
+                            ? `<i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>`
+                            : `<i class="fa-solid fa-eye" style="color: #ffffff;"></i>`
+                        }
+                    </button>
+                    ${auth.role === "admin"
+                        ? `<button type="button" onclick="delete_user_via_search(${item.id})" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
+                           </button>`
+                        : ""
+                    }
+
+                </td>
+            </tr>`;
+        bodyChange.insertAdjacentHTML("beforeend", row);
+    });
+}
+
+function render_pagination(page,totalPage,totalRecord )
+{
+    let pagination_search = document.querySelector(
+        ".pagination_by_search"
+    );
+     // Start by building the entire HTML content in one go
+     let paginationHtml = `
+
+     <ul class="flex items-center -space-x-px h-8 text-sm">
+     `;
+            // Add the current page dynamically
+            let left_val = page - 5;
+            if (left_val < 1) {
+            left_val = 1;
+            }
+            if (page != 1 && totalPage != 1) {
+            paginationHtml += `
+                    <li onclick="search_user(${
+                        page - 1
+                    })"  class="flex items-center justify-center px-1 h-4   lg:px-3 lg:h-8  md:px-1 md:h-4 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <i class="fa-solid fa-angle-left"></i>
+                    </li>
+                `;
+            }
+            let right_val = page + 5;
+            if (right_val > totalPage) {
+            right_val = totalPage;
+            }
+            for (let i = left_val; i <= right_val; i++) {
+            if (i != page) {
+                paginationHtml += `
+                        <li onclick="search_user(${i})" class="flex items-center justify-center px-1 h-4   lg:px-3 lg:h-8  md:px-1 md:h-4 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >
+                                ${i}
+                        </li>
+                    `;
+            } else if (i == page) {
+                paginationHtml += `
+                        <li onclick="search_user(${i})" class="z-10 flex items-center justify-center px-1 h-4   lg:px-3 lg:h-8  md:px-1 md:h-4 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+
+                                ${i}
+                        </li>
+                    `;
+            }
+            }
+            if (page != totalPage) {
+            paginationHtml += `
+                    <li  onclick="search_user(${
+                        page + 1
+                    })" class="flex items-center justify-center px-1 h-4   lg:px-3 lg:h-8  md:px-1 md:h-4 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <i class="fa-solid fa-chevron-right"></i>
+                    </li>
+            `;
+            }
+            paginationHtml += `
+            <li class="mx-2" style="margin-left:10px;">
+                    <a href="1" aria-current="page"
+                        class="z-10 flex items-center justify-center px-1 h-4   lg:px-3 lg:h-8  md:px-1 md:h-4 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                        <i class="fa-solid fa-filter-circle-xmark" style="color: #ff0000;"></i>
+                    </a>
+                </li>
+                </ul>
+            </div>
+                `;
+            // Finally, assign the full HTML to the element
+            pagination_search.innerHTML = paginationHtml;
+}
+
+function close_div(div){
+    if(div){
+        document.querySelector('#'+div).style.display = 'none';
+    }
+
+}
+function delete_user_via_search(id){
+    let div_confirm = document.querySelector("#toast_search_delete");
+
+    if(div_confirm){
+        div_confirm.style.display = 'block';
+        let input_id_delete = document.querySelector("#value_delete_via_search");
+        if(input_id_delete){
+            console.log(id);
+
+            input_id_delete.value = id;
+            console.log( input_id_delete.value );
+        }
+    }
+}
+function update_user_via_search(index){
+    let div_confirm = document.querySelector("#toast_search_update");
+
+    if(div_confirm){
+        if(index != temp_index){
+            div_confirm.style.display = 'block';
+            let fname = document.querySelector("#first_name2");
+
+            let company = document.querySelector("#company2");
+            let department = document.querySelector("#department2");
+            let role = document.querySelector("#role2");
+            let phone = document.querySelector("#phone2");
+            let id_card = document.querySelector("#id_card2");
+            let email = document.querySelector("#email2");
+            let user_login = document.querySelector("#user_login2");
+            let id = document.querySelector("#id2");
+            let password = document.querySelector("#password2");
+            if(id){
+                id.value = users[index].id;
+            }
+
+            if(fname){
+                fname.value = users[index].name;
+            }
+            if(company){
+                company.value = users[index].company;
+            }
+            if(department ){
+                department.value = users[index].department;
+            }
+            if(role){
+                role.value = users[index].role;
+            }
+            if(phone){
+                phone.value = users[index].phone;
+            }
+            if(id_card){
+                id_card.value = users[index].id_card;
+            }
+            if(email){
+                email.value = users[index].email;
+            }
+            if(user_login){
+                user_login.value = users[index].user_login;
+            }
+            if(password){
+                password.value = '';
+            }
+            temp_index = index;
+        }
+    }
 }
