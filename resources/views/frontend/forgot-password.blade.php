@@ -225,7 +225,7 @@
                         </div>
                         <div class="flex justify-between">
                             <div></div>
-                            <a href="/login"
+                            <a href="/"
                             class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
                             sign in?</a>
                         </div>
@@ -252,13 +252,13 @@
 
         const button = document.querySelector('#btn_login');
 
-            // id="search_button"
-            document.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                button.click();
-            }
-            });
+        // id="search_button"
+        document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            button.click();
+        }
+        });
 
         if(user_name != ''){
                 document.getElementById("code").style.display = 'block';
@@ -293,14 +293,13 @@
                     document.querySelector("#loading").style.display = 'none';
                     }
                 }else{
-                    alert("Operation fail.");
                     document.querySelector("#loading").style.display = 'none';
+                    alert("Operation fail.");
                 }
 
             } else {
-                alert("Invalid Email or Name.");
                 document.querySelector("#loading").style.display = 'none';
-
+                alert("Invalid Email or Name.");
 
             }
             } catch (error) {
@@ -308,7 +307,6 @@
                 alert("Problem connection to database.");
 
         }
-        alert("Invalid Email or Name.");
         document.querySelector("#loading").style.display = 'none';
     }
 
@@ -347,16 +345,15 @@
                         // alert('Invalid Credentail.');
                         label.innerHTML = `Invalid Credentail.`;
                         tost.style.display = 'block';
-                        document.querySelector("#loading").style.display = 'none';
                     }else if(response.status == 404){
                         label.innerHTML = `Page Not found.`;
                         tost.style.display = 'block';
-                        document.querySelector("#loading").style.display = 'none';
+
                     }else{
                         label.innerHTML = `No Respond.`;
                         tost.style.display = 'block';
                     }
-                    document.querySelector("#loading").style.display = 'none';
+
 
                 }else{
                     document.querySelector("#loading").style.display = 'none';
