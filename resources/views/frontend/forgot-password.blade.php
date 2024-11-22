@@ -298,8 +298,9 @@
                 }
 
             } else {
-                document.querySelector("#loading").style.display = 'none';
                 alert("Invalid Email or Name.");
+                document.querySelector("#loading").style.display = 'none';
+
 
             }
             } catch (error) {
@@ -307,6 +308,7 @@
                 alert("Problem connection to database.");
 
         }
+        alert("Invalid Email or Name.");
     }
 
         async function submit_with_api() {
