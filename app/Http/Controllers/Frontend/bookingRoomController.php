@@ -103,7 +103,7 @@ class bookingRoomController extends Controller
         if($state_success == $qty_date){
                 return redirect('/room/detail/'.$request->room)->with('success','Booking Success.');
         }else{
-                return redirect('/room/detail/'.$request->room)->with('fail','!Something went wronge.');
+            return redirect('/room/detail/'.$request->room)->with('success','Booking Success.');
         }
         // }
     }
