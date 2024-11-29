@@ -493,14 +493,14 @@ function renderTableRows(data) {
                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.role}</td>
                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.phone}</td>
                 <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
-                    <button type="button" onclick="update_user_via_search(${index})"  class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    <button type="button" onclick="update_user_via_search(${index})"  class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5">
                         ${auth.role === "admin"
                             ? `<i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>`
                             : `<i class="fa-solid fa-eye" style="color: #ffffff;"></i>`
                         }
                     </button>
                     ${auth.role === "admin"
-                        ? `<button type="button" onclick="delete_user_via_search(${item.id})" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        ? `<button type="button" onclick="delete_user_via_search(${item.id})" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5">
                                 <i class="fa-solid fa-trash" style="color: #ffffff;"></i>
                            </button>`
                         : ""
@@ -605,12 +605,13 @@ function delete_user_via_search(id){
         }
     }
 }
+
 function update_user_via_search(index){
     let div_confirm = document.querySelector("#toast_search_update");
-
+    div_confirm.style.display = 'block';
     if(div_confirm){
         if(index != temp_index){
-            div_confirm.style.display = 'block';
+
             let fname = document.querySelector("#first_name2");
 
             let company = document.querySelector("#company2");
