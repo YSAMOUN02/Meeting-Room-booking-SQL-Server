@@ -38,20 +38,32 @@
                 @if (!empty($user->department))
                 <option value="{{$user->department}}">{{$user->department}}</option>
                 @endif
-                <option value="Accounting">Accounting</option>
+                <option selected>Choose Department</option>
+                <option value="Accounting & Finance">Accounting & Finance</option>
+                <option value="Administration & HR">Administration & HR</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Export and Marketing">Export and Marketing</option>
+                <option value="External Project & Special Project">External Project & Special Project</option>
+                <option value="Logistic">Logistic</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Management Marketing">Management Marketing</option>
+                <option value="MIS">MIS</option>
+                <option value="Planning">Planning</option>
+                <option value="Production">Production</option>
+                <option value="Purchase">Purchase</option>
+                <option value="Quality Assurance Quality Control">Quality Assurance Quality Control</option>
+                <option value="Quality Management Regulatory Affairs">Quality Management Regulatory Affairs</option>
+                <option value="Research & Development">Research & Development</option>
+                <option value="Research and Development">Research and Development</option>
+                <option value="Warehouse">Warehouse</option>
                 <option value="Admin">Admin</option>
-                <option value="Comercail">Commercial</option>
                 <option value="Design">Design</option>
                 <option value="Export">Export</option>
                 <option value="HR">HR</option>
                 <option value="Finance">Finance</option>
-                <option value="MIS">MIS</option>
-                <option value="Logistic">Logistic</option>
                 <option value="Management">Management</option>
                 <option value="Marketing">Marketing</option>
-                <option value="Planning">Planning</option>
-                <option value="Production">Production</option>
-                <option value="Purchase">Purchase</option>
                 <option value="Purchase DPM">Purchase DPM</option>
                 <option value="QA">QA</option>
                 <option value="QC">QC</option>
@@ -59,8 +71,8 @@
                 <option value="QP">QP</option>
                 <option value="RA">RA</option>
                 <option value="Sale">Sale</option>
-                <option value="Warehouse">Warehouse</option>
                 <option value="Other">Other</option>
+
                 <!-- Add other departments as needed -->
             </select>
         </div>
