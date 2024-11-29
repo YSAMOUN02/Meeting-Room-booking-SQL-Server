@@ -97,7 +97,9 @@
         <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
           <div class="flex flex-wrap justify-between items-center">
             <div class="flex justify-start items-center">
-              <button
+
+                @if(!empty(Auth::user()))
+                <button
                 data-drawer-target="drawer-navigation"
                 data-drawer-toggle="drawer-navigation"
                 aria-controls="drawer-navigation"
@@ -131,6 +133,9 @@
                 </svg>
                 <span class="sr-only">Toggle sidebar</span>
               </button>
+
+
+                @endif
               <a href="/" class="flex items-center justify-between mr-4">
                 <img
                   src="{{URL('assets/image/Logo_PPM.jpg')}}"
@@ -138,9 +143,16 @@
                   alt="Flowbite Logo"
                 />
 
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PPM Meeting Room</span>
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">PPM Meeting Room</span>
               </a>
+              @if (empty(Auth::user()))
+              <div class="float_btn">
+                <a href="/login">
 
+                    <button>Login</button>
+                </a>
+              </div>
+              @endif
             </div>
 
           </div>

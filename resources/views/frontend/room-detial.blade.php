@@ -127,30 +127,36 @@
                                         <option selected
                                             value="{{ old('staff_department', Auth::user()->department ?? '') }}">
                                             {{ Auth::user()->department }}</option>
-                                        <option value="Accounting">Accounting</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Comercail">Commercial</option>
-                                        <option value="Design">Design</option>
-                                        <option value="Export">Export</option>
-                                        <option value="HR">HR</option>
-                                        <option value="Finance">Finance</option>
-                                        <option value="MIS">MIS</option>
-                                        <option value="Logistic">Logistic</option>
-                                        <option value="Management">Management</option>
-                                        <option value="Marketing">Marketing</option>
+                                            <option selected>Choose Department</option>
+                                            <option value="Accounting">Accounting</option>
+                                            <option value="Administration & HR">Administration & HR</option>
+                                            <option value="Commercial">Commercial</option>
+                                            <option value="Consultant">Consultant</option>
+                                            <option value="Design">Design</option>
+                                            <option value="Export and Marketing">Export and Marketing</option>
+                                            <option value="External Project & Special Project">External Project & Special Project</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="MIS">MIS</option>
+                                            <option value="Logistic">Logistic</option>
+                                            <option value="Maintenance">Maintenance</option>
+                                            <option value="Management Marketing">Management Marketing</option>
+                                            <option value="Management">Management</option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="Planning">Planning</option>
+                                            <option value="Production">Production</option>
+                                            <option value="Purchase">Purchase</option>
+                                            <option value="Purchase DPM">Purchase DPM</option>
+                                            <option value="QA">QA</option>
+                                            <option value="QC">QC</option>
+                                            <option value="QM">QM</option>
+                                            <option value="QP">QP</option>
+                                            <option value="RA">RA</option>
+                                            <option value="Research & Development">Research & Development</option>
+                                            <option value="Sale">Sale</option>
+                                            <option value="Warehouse">Warehouse</option>
+                                            <option value="Other">Other</option>
 
-                                        <option value="Planning">Planning</option>
-                                        <option value="Production">Production</option>
-                                        <option value="Purchase">Purchase</option>
-                                        <option value="Purchase DPM">Purchase DPM</option>
-                                        <option value="QA">QA</option>
-                                        <option value="QC">QC</option>
-                                        <option value="QM">QM</option>
-                                        <option value="QP">QP</option>
-                                        <option value="RA">RA</option>
-                                        <option value="Sale">Sale</option>
-                                        <option value="Warehouse">Warehouse</option>
-                                        <option value="Other">Other</option>
                                         <!-- Add other departments as needed -->
                                     </select>
                                 </div>

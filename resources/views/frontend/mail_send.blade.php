@@ -27,9 +27,9 @@
 
 
     <main class="main_mail">
-        <h3>This is the mail from Booking Meeting Room System.</h3><br>
-        <h4>The System has recieved Reset Password request.</h4><br>
-        <h3>This is your new password don't share to anyone: {{$mailData['temp_password']}}</h3>
+        <h3>The System has recieved Reset Password request. New password below:</h3>
+
+        <h1>{{$mailData['temp_password']}}</h1>
         <p>Name : {{$mailData['fullName']}}</p>
         <p>Company : {{$mailData['company']}}</p>
         <p>Department: {{$mailData['department']}}</p>

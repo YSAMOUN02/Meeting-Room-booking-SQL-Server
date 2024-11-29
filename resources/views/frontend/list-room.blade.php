@@ -74,17 +74,17 @@
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 
-            <div class="overflow-x-auto">
-                <table class="table w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <div class="table_user_container overflow-x-auto">
+                <table class="standard-table table w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-4 py-3">Thumnail</th>
-                            <th scope="col" class="px-4 py-3">ID</th>
-                            <th scope="col" class="px-4 py-3">Name</th>
-                            <th scope="col" class="px-4 py-3">Descriptin</th>
-                            <th scope="col" class="px-4 py-3">Seat quantity</th>
-                            <th scope="col" class="px-4 py-3">Create By</th>
-                            <th scope="col" class="hover_td px-4 py-3">
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Thumnail</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">ID</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Name</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Descriptin</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Seat quantity</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Create By</th>
+                            <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                 Actions
                             </th>
                         </tr>
@@ -96,16 +96,16 @@
                             @endphp
                             @foreach ($room  as $item )
                                 <tr class="border-b dark:border-gray-700">
-                                    <th scope="row"  class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><img width="200px" src="/Uploads/{{$item->thumbnail}}" alt="Image"></th>
-                                    <td class="px-4 py-3">{{$item->id}}</td>
-                                    <td class="px-4 py-3">{{$item->room_name}}</td>
-                                    <td class="px-4 py-3">{{$item->description}}</td>
-                                    <td class="px-4 py-3">{{$item->seat}}</td>
-                                    <td class="px-4 py-3">{{$item->Created_by}}</td>
+                                    <th scope="row"  class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><img width="200px" src="/Uploads/{{$item->thumbnail}}" alt="Image"></th>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->id}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room_name}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->description}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->seat}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->Created_by}}</td>
 
 
-                                    <td class="hover_td px-4 py-3">
-                                        <button type="button" onclick="edit_room({{$index}})" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                    <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                        <button type="button" onclick="edit_room({{$index}})" data-modal-target="popup-modal2" data-modal-toggle="popup-modal2" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5">
                                            @if (Auth::user()->role == 'admin')
                                            <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
                                            @else
@@ -116,7 +116,7 @@
 
                                         </button>
                                         @if (Auth::user()->role == 'admin')
-                                        <button type="button"  onclick="delete_id({{$item->id}})"  data-modal-target="popup-modal" data-modal-toggle="popup-modal"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                        <button type="button"  onclick="delete_id({{$item->id}})"  data-modal-target="popup-modal" data-modal-toggle="popup-modal"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                                         @endif
                                     </td>
                                 </tr>

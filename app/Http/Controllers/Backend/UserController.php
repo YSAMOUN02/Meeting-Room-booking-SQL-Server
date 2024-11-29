@@ -102,7 +102,7 @@ class UserController extends Controller
         }
 
         if($stored){
-            return redirect('/list/user/1')->with('success','Create User Success.');
+            return redirect('/list/user/1')->with('success','Update User Success.');
         }else{
             return redirect('/list/user/1')->with('fail','Opp! Operation Fail.');
         }

@@ -34,7 +34,7 @@ class Mail_data extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Temporary password Login to System Booking Room' // Customize the subject as needed
+            subject: 'Password Reset Code.'  // Customize the subject as needed
         );
     }
 

@@ -16,11 +16,10 @@
         <div>
             <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
             <select id="company" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Choose Company</option>
-                <option value="Investco">Investco</option>
                 <option value="PPM">PPM</option>
-                <option value="Confirel">Confirel</option>
-                <option value="Depomix">Depomix</option>
+                <option value="CFR">CFR</option>
+                <option value="INV">INV</option>
+                <option value="other">Other</option>
             </select>
         </div>
         <div>
@@ -28,17 +27,20 @@
             <select id="department"  name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option selected>Choose Department</option>
                 <option value="Accounting">Accounting</option>
-                <option value="Admin">Admin</option>
-                <option value="Comercail">Commercial</option>
+                <option value="Administration & HR">Administration & HR</option>
+                <option value="Commercial">Commercial</option>
+                <option value="Consultant">Consultant</option>
                 <option value="Design">Design</option>
-                <option value="Export">Export</option>
-                <option value="Finance">Finance</option>
+                <option value="Export and Marketing">Export and Marketing</option>
+                <option value="External Project & Special Project">External Project & Special Project</option>
                 <option value="HR">HR</option>
+                <option value="Finance">Finance</option>
                 <option value="MIS">MIS</option>
                 <option value="Logistic">Logistic</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Management Marketing">Management Marketing</option>
                 <option value="Management">Management</option>
                 <option value="Marketing">Marketing</option>
-
                 <option value="Planning">Planning</option>
                 <option value="Production">Production</option>
                 <option value="Purchase">Purchase</option>
@@ -48,9 +50,11 @@
                 <option value="QM">QM</option>
                 <option value="QP">QP</option>
                 <option value="RA">RA</option>
+                <option value="Research & Development">Research & Development</option>
                 <option value="Sale">Sale</option>
                 <option value="Warehouse">Warehouse</option>
                 <option value="Other">Other</option>
+
                 <!-- Add other departments as needed -->
             </select>
         </div>

@@ -57,7 +57,7 @@
         <div class="p-4 md:p-5">
             <form action="/user/update/submit" method="POST">
                 @csrf
-                <div class="w-full grid gap-6 mb-6 md:grid-cols-2">
+                <div class="w-full grid gap-6 mb-6  grid-cols-2 md:grid-cols-2">
                     <div>
                         <label for="first_name2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                         <input type="text" id="first_name2" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
@@ -66,11 +66,10 @@
                     <div>
                         <label for="company2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
                         <select id="company2" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Choose Company</option>
-                            <option value="Investco">Investco</option>
                             <option value="PPM">PPM</option>
-                            <option value="Confirel">Confirel</option>
-                            <option value="Depomix">Depomix</option>
+                            <option value="CFR">CFR</option>
+                            <option value="INV">INV</option>
+                            <option value="other">Other</option>
                         </select>
                         <input type="text" class="hidden" name="id" id="id2">
                     </div>
@@ -79,14 +78,18 @@
                         <select id="department2"  name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option selected>Choose Department</option>
                             <option value="Accounting">Accounting</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Comercail">Commercial</option>
+                            <option value="Administration & HR">Administration & HR</option>
+                            <option value="Commercial">Commercial</option>
+                            <option value="Consultant">Consultant</option>
                             <option value="Design">Design</option>
-                            <option value="Export">Export</option>
+                            <option value="Export and Marketing">Export and Marketing</option>
+                            <option value="External Project & Special Project">External Project & Special Project</option>
                             <option value="HR">HR</option>
                             <option value="Finance">Finance</option>
                             <option value="MIS">MIS</option>
                             <option value="Logistic">Logistic</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Management Marketing">Management Marketing</option>
                             <option value="Management">Management</option>
                             <option value="Marketing">Marketing</option>
                             <option value="Planning">Planning</option>
@@ -98,10 +101,11 @@
                             <option value="QM">QM</option>
                             <option value="QP">QP</option>
                             <option value="RA">RA</option>
+                            <option value="Research & Development">Research & Development</option>
                             <option value="Sale">Sale</option>
                             <option value="Warehouse">Warehouse</option>
                             <option value="Other">Other</option>
-                            <!-- Add other departments as needed -->
+
                         </select>
                     </div>
                     @if(Auth::user()->role == 'admin')
@@ -164,7 +168,7 @@
             <div class="p-4 md:p-5">
                 <form action="/user/update/submit" method="POST">
                     @csrf
-                    <div class="w-full grid gap-6 mb-6 md:grid-cols-2">
+                    <div class="w-full grid gap-6 mb-6  grid-cols-2  md:grid-cols-2">
                         <div>
                             <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                             <input type="text" id="first_name" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
@@ -173,11 +177,10 @@
                         <div>
                             <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
                             <select id="company" name="company" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>Choose Company</option>
-                                <option value="Investco">Investco</option>
                                 <option value="PPM">PPM</option>
-                                <option value="Confirel">Confirel</option>
-                                <option value="Depomix">Depomix</option>
+                                <option value="CFR">CFR</option>
+                                <option value="INV">INV</option>
+                                <option value="other">Other</option>
                             </select>
                             <input type="text" class="hidden" name="id" id="id">
                         </div>
@@ -186,14 +189,18 @@
                             <select id="department"  name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option selected>Choose Department</option>
                                 <option value="Accounting">Accounting</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Comercail">Commercial</option>
+                                <option value="Administration & HR">Administration & HR</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Consultant">Consultant</option>
                                 <option value="Design">Design</option>
-                                <option value="Export">Export</option>
+                                <option value="Export and Marketing">Export and Marketing</option>
+                                <option value="External Project & Special Project">External Project & Special Project</option>
                                 <option value="HR">HR</option>
                                 <option value="Finance">Finance</option>
                                 <option value="MIS">MIS</option>
                                 <option value="Logistic">Logistic</option>
+                                <option value="Maintenance">Maintenance</option>
+                                <option value="Management Marketing">Management Marketing</option>
                                 <option value="Management">Management</option>
                                 <option value="Marketing">Marketing</option>
                                 <option value="Planning">Planning</option>
@@ -205,9 +212,11 @@
                                 <option value="QM">QM</option>
                                 <option value="QP">QP</option>
                                 <option value="RA">RA</option>
+                                <option value="Research & Development">Research & Development</option>
                                 <option value="Sale">Sale</option>
                                 <option value="Warehouse">Warehouse</option>
                                 <option value="Other">Other</option>
+
                                 <!-- Add other departments as needed -->
                             </select>
                         </div>
@@ -261,8 +270,8 @@
     </div>
 </div>
 <section class="drop_slow1 bg-gray-50 dark:bg-gray-900">
-    <div class="w-full">
-        <div class="w-full flex justify-between p-2">
+    <div  class="w-full">
+        <div class="w-full phone_respond flex justify-between p-2">
 
             <div id="search">
                 <select  id="type">
@@ -278,26 +287,29 @@
                 <input type="text" id="value" >
                 <button onclick="search_user(1)" id="btn_search" ><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
+            <div class="p-2 text-center">
+                <kbd id="total_user" class="px-4 py-1.5 text-lg font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">Total : {{$total_record}} User</kbd>
 
+            </div>
         </div>
 
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 
-            <div class="overflow-x-auto">
-                <table class="table w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-4 py-3">ID</th>
-                            <th scope="col" class="px-4 py-3">Name</th>
-                            <th scope="col" class="px-4 py-3">ID Card</th>
-                            <th scope="col" class="px-4 py-3">Company</th>
-                            <th scope="col" class="px-4 py-3">Department</th>
-                            <th scope="col" class="px-4 py-3">Email</th>
-                            <th scope="col" class="px-4 py-3">Role</th>
-                            <th scope="col" class="px-4 py-3">Phone</th>
+            <div  class="table_user_container overflow-x-auto">
+                <table class="standard-table table  w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="  text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr >
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">ID</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Name</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">ID Card</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Company</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Department</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Email</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Role</th>
+                            <th scope="col" class="ppx-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Phone</th>
 
-                            <th scope="col" class="hover_td px-4 py-3">
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                 Actions
                             </th>
                         </tr>
@@ -309,17 +321,17 @@
                             @endphp
                             @foreach ($user  as $item )
                                 <tr class="border-b dark:border-gray-700">
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->id}}</th>
+                                    <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->id}}</td>
 
-                                    <td class="px-4 py-3">{{$item->name}}</td>
-                                    <td class="px-4 py-3">{{$item->id_card}}</td>
-                                    <td class="px-4 py-3">{{$item->company}}</td>
-                                    <td class="px-4 py-3">{{$item->department}}</td>
-                                    <td class="px-4 py-3">{{$item->email}}</td>
-                                    <td class="px-4 py-3">{{$item->role}}</td>
-                                    <td class="px-4 py-3">{{$item->phone}}</td>
-                                    <td class="hover_td px-4 py-3" >
-                                        <button type="button" onclick="edit_user({{$index}})"  data-modal-target="popup-modal2"   data-modal-toggle="popup-modal2" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->name}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->id_card}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->company}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->department}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->email}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->role}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->phone}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3" >
+                                        <button type="button" onclick="edit_user({{$index}})"  data-modal-target="popup-modal2"   data-modal-toggle="popup-modal2" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5 ">
                                            @if (Auth::user()->role == 'admin')
                                            <i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i>
                                            @else
@@ -330,7 +342,7 @@
 
                                         </button>
                                         @if (Auth::user()->role == 'admin')
-                                        <button type="button"  onclick="delete_id({{$item->id}})"  data-modal-target="popup-modal" data-modal-toggle="popup-modal"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                        <button type="button"  onclick="delete_id({{$item->id}})"  data-modal-target="popup-modal" data-modal-toggle="popup-modal"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                                         @endif
                                     </td>
                                 </tr>

@@ -221,7 +221,7 @@
                             <div class="flex items-center justify-between">
 
                             </div>
-                                <button type="button" id="btn_login" class="mt-2" onclick="submit_with_api()">Login</button>
+                                <button type="button" id="btn_login" class="mt-2" onclick="submit_with_api()">Verify Code</button>
                         </div>
                         <div class="flex justify-between">
                             <div></div>

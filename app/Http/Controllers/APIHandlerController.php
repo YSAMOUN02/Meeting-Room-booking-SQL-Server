@@ -241,18 +241,22 @@ class APIHandlerController extends Controller
         $user =  User::orderby('id','desc');
         $count_all = $user->count();
 
+
+
+        if($type != 'NA' && $value != 'NA'){
+            $user->where($type,'LIKE','%'.$value.'%');
+        }
+        $count_all = $user->count();
+
+        $total_pages = ceil( $count_all/$limit);
         $offet = 0;
         if($page != 0){
             $offet = ($page - 1) * $limit;
         }
 
-        $total_pages = ceil( $count_all/$limit);
-
-        if($type != 'NA' && $value != 'NA'){
-            $user->where($type,'LIKE','%'.$value.'%');
-        }
         $user->offset($offet);
         $user->limit($limit);
+
         $datas = $user->get();
 
         $data = new arr_obj();

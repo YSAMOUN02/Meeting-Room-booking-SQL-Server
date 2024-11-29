@@ -36,20 +36,20 @@
         <!-- Start coding here -->
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 
-            <div class="overflow-x-auto">
-                <table class="table w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <div class="table_user_container overflow-x-auto">
+                <table class="standard-table  table w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-4 py-3">Meeting Room </th>
-                            <th scope="col" class="px-4 py-3">Topic </th>
-                            <th scope="col" class="px-4 py-3">Type</th>
-                            <th scope="col" class="px-4 py-3">Meeting Date</th>
-                            <th scope="col" class="px-4 py-3">From Time</th>
-                            <th scope="col" class="px-4 py-3">To Time</th>
-                            <th scope="col" class="px-4 py-3">Booked By</th>
-                            <th scope="col" class="px-4 py-3">Booked At</th>
-                            <th scope="col" class="px-4 py-3">Status</th>
-                            <th scope="col" class="hover_td px-4 py-3">
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Topic </th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Type</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Date</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">From Time</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">To Time</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked At</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
+                            <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                 Actions
                             </th>
                         </tr>
@@ -62,16 +62,16 @@
                             @if (Auth::user()->id == $item->created_by_id)
 
                                 <tr class="border-b dark:border-gray-700 selected">
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
-                                    <td class="px-4 py-3">{{$item->title}}</td>
-                                    <td class="px-4 py-3">{{$item->meeting_type}}</td>
+                                    <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
 
-                                    <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
-                                    <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
-                                    <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
-                                    <td class="px-4 py-3">{{$item->staff_name}}</td>
-                                    <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                         @if($item->status == 0)
                                             <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                                                 <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
@@ -85,7 +85,7 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td class="hover_td px-4 py-3">
+                                    <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                         @if(Auth::user()->id == $item->created_by_id && $item->status == 1)
 
                                         <button type="button" onclick="delete_id({{$item->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cancel</button>
@@ -99,16 +99,16 @@
                             @else
 
                             <tr class="border-b dark:border-gray-700 ">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
-                                <td class="px-4 py-3">{{$item->title}}</td>
-                                <td class="px-4 py-3">{{$item->meeting_type}}</td>
+                                <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
 
-                                <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
-                                <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
-                                <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
-                                <td class="px-4 py-3">{{$item->staff_name}}</td>
-                                <td class="px-4 py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
-                                <td class="px-4 py-3">
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @php
                                     $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
                                     $date = \Carbon\Carbon::parse($item->date); // Keep as Carbon instance
@@ -148,10 +148,10 @@
                                    @endif
 
                                 </td>
-                                <td class="hover_td px-4 py-3">
+                                <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @if (($item->created_by_id == Auth::user()->id || Auth::user()->role == 'admin')  && $ongoing == 1)
 
-                                        <button type="button" onclick="delete_id({{$item->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Cancel</button>
+                                        <button type="button" onclick="delete_id({{$item->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5">Cancel</button>
 
                                     @endif
                                 </td>
@@ -165,16 +165,16 @@
 
                         @if($state == 0)
                         <tr class="border-b dark:border-gray-700">
-                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">No Bookng Data</th>
+                            <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">No Bookng Data</th>
 
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3"></td>
-                            <td class="px-4 py-3">
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
 
                             </td>
                         </tr>
