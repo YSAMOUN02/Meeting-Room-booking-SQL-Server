@@ -27,10 +27,19 @@
 
 
     <main class="main_mail">
-        <h3>The System has recieved Reset Password request. New password below:</h3>
 
-        <h1>{{$mailData['temp_password']}}</h1>
-        <p>Name : {{$mailData['fullName']}}</p>
+        <div class="flex">
+
+            <img height="200px" src="{{URL('assets/image/Logo_PPM.jpg')}}"  alt="Flowbite Logo" />
+        </div>
+        <h1>Dear: {{$mailData['fullName']}}</h1>
+        <h1>The System has recieved Reset Password request. New password below:</h1>
+
+
+
+        <h3>User login : {{$mailData['user_login']}}</h3>
+        <h3>Password :  {{$mailData['temp_password']}}</h3>
+
         <p>Company : {{$mailData['company']}}</p>
         <p>Department: {{$mailData['department']}}</p>
         <p>Phone : {{$mailData['phone']}}</p>

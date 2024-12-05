@@ -5,6 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Hash;
+// use App\Mail\Mail_data;
+use App\Mail\register_mail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -63,5 +69,43 @@ class AdminController extends Controller
 
         return view('frontend.forgot-password',['username' => $username, 'code'=> $code]);
     }
-}
 
+
+    public function register_mail(){
+        $user = User::where('id',8)->first();
+
+
+        $temp_password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+        $user->password =  Hash::make($temp_password);
+        $user->save();
+
+        $mailData = [
+            'fullName' => $user->name,
+            'user_login' => $user->user_login,
+            'company' => $user->company,
+            'department' => $user->department,
+            'email' => $user->email,
+            'temp_password' => $temp_password,
+            'phone' => $user->phone,
+            'url' => url('/forgot/password/via/'.$user->user_login).'/'.$temp_password // Generate full URL for the forgot password page
+        ];
+        $data = new arr();
+        $data->message = "Code has sent to email:  ".$user->email.' within 2-3 minute Check your Inbox to recieve new register.';
+
+        $send = Mail::to($user->email)->send(new register_mail($mailData));
+
+        // return  $user;
+        if($send){
+            return redirect('/')->with('success','Send success.');
+        }else{
+
+            return redirect('/')->with('fail','Send fail.');
+        }
+
+
+    }
+}
+class arr{
+    public $message;
+    public $status;
+}

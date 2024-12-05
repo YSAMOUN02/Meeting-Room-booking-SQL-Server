@@ -76,13 +76,16 @@
                     <div>
                         <label for="department2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
                         <select id="department2"  name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected>Choose Department</option>
+                            <option value="Other" selected>Choose Department</option>
                             <option value="Accounting & Finance">Accounting & Finance</option>
                             <option value="Administration & HR">Administration & HR</option>
                             <option value="Commercial">Commercial</option>
                             <option value="Consultant">Consultant</option>
+                            <option value="Digital Marketing">Digital Marketing</option>
                             <option value="Export and Marketing">Export and Marketing</option>
                             <option value="External Project & Special Project">External Project & Special Project</option>
+                            <option value="Farm">Farm</option>
+                            <option value="INV External Project Villa">INV External Project Villa</option>
                             <option value="Logistic">Logistic</option>
                             <option value="Maintenance">Maintenance</option>
                             <option value="Management">Management</option>
@@ -94,10 +97,12 @@
                             <option value="Quality Assurance">Quality Assurance</option>
                             <option value="Quality Control">Quality Control</option>
                             <option value="Quality Management">Quality Management</option>
+                            <option value="Quality Production">Quality Production</option>
                             <option value="Regulatory Affairs">Regulatory Affairs</option>
                             <option value="Research & Development">Research & Development</option>
                             <option value="Research and Development">Research and Development</option>
                             <option value="Warehouse">Warehouse</option>
+                            <option value="Water Bank Cooperative">Water Bank Cooperative</option>
 
                             <option value="Other">Other</option>
 
@@ -182,13 +187,16 @@
                         <div>
                             <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
                             <select id="department"  name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>Choose Department</option>
+                                <option value="Other" selected>Choose Department</option>
                                 <option value="Accounting & Finance">Accounting & Finance</option>
                                 <option value="Administration & HR">Administration & HR</option>
                                 <option value="Commercial">Commercial</option>
                                 <option value="Consultant">Consultant</option>
+                                <option value="Digital Marketing">Digital Marketing</option>
                                 <option value="Export and Marketing">Export and Marketing</option>
                                 <option value="External Project & Special Project">External Project & Special Project</option>
+                                <option value="Farm">Farm</option>
+                                <option value="INV External Project Villa">INV External Project Villa</option>
                                 <option value="Logistic">Logistic</option>
                                 <option value="Maintenance">Maintenance</option>
                                 <option value="Management">Management</option>
@@ -200,10 +208,12 @@
                                 <option value="Quality Assurance">Quality Assurance</option>
                                 <option value="Quality Control">Quality Control</option>
                                 <option value="Quality Management">Quality Management</option>
+                                <option value="Quality Production">Quality Production</option>
                                 <option value="Regulatory Affairs">Regulatory Affairs</option>
                                 <option value="Research & Development">Research & Development</option>
                                 <option value="Research and Development">Research and Development</option>
                                 <option value="Warehouse">Warehouse</option>
+                                <option value="Water Bank Cooperative">Water Bank Cooperative</option>
 
                                 <option value="Other">Other</option>
 
@@ -292,6 +302,7 @@
                 <table class="standard-table table  w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="  text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr >
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">No</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">ID</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Name</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">ID Card</th>
@@ -312,9 +323,13 @@
                                 $index = 0;
                             @endphp
                             @foreach ($user  as $item )
+                                @php
+                                $index ++;
+                                @endphp
                                 <tr class="border-b dark:border-gray-700">
-                                    <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->id}}</td>
+                                    <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$index}}</td>
 
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->id}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->name}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->id_card}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->company}}</td>
@@ -338,9 +353,7 @@
                                         @endif
                                     </td>
                                 </tr>
-                                @php
-                                $index ++;
-                                @endphp
+
                             @endforeach
 
                         @endif

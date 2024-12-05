@@ -74,5 +74,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/logout', [AdminController::class, 'logout']);
 
+
+    // Test
+    Route::get('/user/send', [AdminController::class, 'register_mail']);
+
 });
 

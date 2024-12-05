@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Mail_data extends Mailable
+class register_mail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,7 +34,7 @@ class Mail_data extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Password Reset Code.'  // Customize the subject as needed
+            subject: 'Registered to System.'  // Customize the subject as needed
         );
     }
 
@@ -46,7 +46,7 @@ class Mail_data extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.reset_password', // Correct path without `.blade.php`
+            view: 'mail.register_alert', // Correct path without `.blade.php`
             with: ['mailData' => $this->mailData], // Pass data to the view
         );
     }

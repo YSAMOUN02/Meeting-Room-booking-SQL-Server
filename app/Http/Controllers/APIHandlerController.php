@@ -201,7 +201,7 @@ class APIHandlerController extends Controller
             return response()->json(["Invalid Name or Email."], 200 );
         }else{
 
-            $temp_password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6);
+            $temp_password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
             $user->password =  Hash::make($temp_password);
             $user->save();
 
@@ -210,6 +210,7 @@ class APIHandlerController extends Controller
 
             $mailData = [
                 'fullName' => $user->name,
+                'user_login' => $user->user_login,
                 'company' => $user->company,
                 'department' => $user->department,
                 'email' => $user->email,
@@ -218,7 +219,7 @@ class APIHandlerController extends Controller
                 'url' => url('/forgot/password/via/'.$user->user_login).'/'.$temp_password // Generate full URL for the forgot password page
             ];
             $data = new arr();
-            $data->message = "Code has sent to email:  ".$user->email.'  Check your Inbox to recieve Code.';
+            $data->message = "Code has sent to email:  ".$user->email.' within 2-3 minute Check your Inbox to recieve new Password.';
             $data->status = 'success';
 
 

@@ -66,7 +66,7 @@
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Booking Panol Room
+                                Booking Room
                             </h3>
                             <button type="button"
                                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -121,41 +121,14 @@
                                     <label for="department"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Department<span
                                             class="text-rose-700">*</span></label>
-                                    <select id="department" readonly name="staff_department"
+                                    <input type="text" id="department" readonly name="staff_department" class="hidden"   value="{{ old('staff_department', Auth::user()->department ?? '') }}">
+                                    <select id="department" readonly  disabled
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                                         <option selected
                                             value="{{ old('staff_department', Auth::user()->department ?? '') }}">
                                             {{ Auth::user()->department }}</option>
-                                            <option selected>Choose Department</option>
-                                            <option value="Accounting">Accounting</option>
-                                            <option value="Administration & HR">Administration & HR</option>
-                                            <option value="Commercial">Commercial</option>
-                                            <option value="Consultant">Consultant</option>
-                                            <option value="Design">Design</option>
-                                            <option value="Export and Marketing">Export and Marketing</option>
-                                            <option value="External Project & Special Project">External Project & Special Project</option>
-                                            <option value="HR">HR</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="MIS">MIS</option>
-                                            <option value="Logistic">Logistic</option>
-                                            <option value="Maintenance">Maintenance</option>
-                                            <option value="Management Marketing">Management Marketing</option>
-                                            <option value="Management">Management</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Planning">Planning</option>
-                                            <option value="Production">Production</option>
-                                            <option value="Purchase">Purchase</option>
-                                            <option value="Purchase DPM">Purchase DPM</option>
-                                            <option value="QA">QA</option>
-                                            <option value="QC">QC</option>
-                                            <option value="QM">QM</option>
-                                            <option value="QP">QP</option>
-                                            <option value="RA">RA</option>
-                                            <option value="Research & Development">Research & Development</option>
-                                            <option value="Sale">Sale</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="Other">Other</option>
+
 
                                         <!-- Add other departments as needed -->
                                     </select>
@@ -186,7 +159,8 @@
                                     <label for="description"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Meeting or
                                         Training
-                                        Title </label>
+                                        Title  <span
+                                        class="text-rose-700">*</span></label>
                                     <textarea id="description" name="description" required rows="4"
                                         class="block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write your thoughts here..."></textarea>

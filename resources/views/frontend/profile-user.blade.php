@@ -35,34 +35,7 @@
         <div>
             <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
             <select id="department" disabled   name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                @if (!empty($user->department))
                 <option value="{{$user->department}}">{{$user->department}}</option>
-                @endif
-                <option selected>Choose Department</option>
-                <option value="Accounting & Finance">Accounting & Finance</option>
-                <option value="Administration & HR">Administration & HR</option>
-                <option value="Commercial">Commercial</option>
-                <option value="Consultant">Consultant</option>
-                <option value="Export and Marketing">Export and Marketing</option>
-                <option value="External Project & Special Project">External Project & Special Project</option>
-                <option value="Logistic">Logistic</option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Management">Management</option>
-                <option value="Marketing">Marketing</option>
-                <option value="MIS">MIS</option>
-                <option value="Planning">Planning</option>
-                <option value="Production">Production</option>
-                <option value="Purchase">Purchase</option>
-                <option value="Quality Assurance">Quality Assurance</option>
-                <option value="Quality Control">Quality Control</option>
-                <option value="Quality Management">Quality Management</option>
-                <option value="Regulatory Affairs">Regulatory Affairs</option>
-                <option value="Research & Development">Research & Development</option>
-                <option value="Research and Development">Research and Development</option>
-                <option value="Warehouse">Warehouse</option>
-
-                <option value="Other">Other</option>
-
                 <!-- Add other departments as needed -->
             </select>
         </div>

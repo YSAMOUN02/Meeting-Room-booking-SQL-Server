@@ -43,7 +43,7 @@ async function validation_data(){
     let tost = document.getElementById('toast');
     let label = document.querySelector("#hs-toast-warning-example-label");
     let btn_submit = document.querySelector("#btn_submit_booking");
-
+    let bookable = 1;
     let total_time = 0;
     if (end_time_val !== 'NA' && start_time_val !== 'NA') {
         // Create Date objects with the same date but different times
@@ -97,10 +97,12 @@ async function validation_data(){
             if (!start_date.classList.contains('fail_attemp')) {
                 start_date.classList.add('fail_attemp');
             }
+            bookable = 0;
     }else{
         if (!start_date.classList.contains('fail_attemp')) {
             start_date.classList.remove('fail_attemp');
         }
+            bookable = 1;
     }
     // Null End  Date Prevention
     if(end_date_val == 'NA'){
@@ -108,10 +110,12 @@ async function validation_data(){
             if (!end_date.classList.contains('fail_attemp')) {
                 end_date.classList.add('fail_attemp');
             }
+            bookable = 0;
    }else{
-    if (!end_date.classList.contains('fail_attemp')) {
-        end_date.classList.remove('fail_attemp');
-    }
+            if (!end_date.classList.contains('fail_attemp')) {
+                end_date.classList.remove('fail_attemp');
+            }
+            bookable = 1;
    }
       // Null Start Time Prevention
    if(start_time_val == 'NA'){
@@ -119,10 +123,12 @@ async function validation_data(){
             if (!start_time.classList.contains('fail_attemp')) {
                 start_time.classList.add('fail_attemp');
             }
+            bookable = 0;
     }else{
         if (!start_time.classList.contains('fail_attemp')) {
             start_time.classList.remove('fail_attemp');
         }
+            bookable = 1;
     }
            // Null End Date Prevention
    if(end_time_val == 'NA'){
@@ -131,12 +137,13 @@ async function validation_data(){
             if (!end_time.classList.contains('fail_attemp')) {
                 end_time.classList.add('fail_attemp');
             }
+            bookable = 0;
     }else{
 
-        if (!end_time.classList.contains('fail_attemp')) {
-            end_time.classList.remove('fail_attemp');
-        }
-
+            if (!end_time.classList.contains('fail_attemp')) {
+                end_time.classList.remove('fail_attemp');
+            }
+            bookable = 1;
     }
 
 
@@ -150,6 +157,7 @@ async function validation_data(){
         if (!end_time.classList.contains('fail_attemp')) {
             end_time.classList.add('fail_attemp');
         }
+        bookable = 0;
     } else {
 
         if (start_time.classList.contains('fail_attemp')) {
@@ -158,16 +166,19 @@ async function validation_data(){
         if (end_time.classList.contains('fail_attemp')) {
             end_time.classList.remove('fail_attemp');
         }
+        bookable = 1;
     }
 
     if(daysSelected < 0){
-        message += '- Date selected is Invalid. Please select From Date to Date Properly.';
-        if (start_date.classList.contains('fail_attemp')) {
+        message += '- Date is invalid. Please select date Properly.';
+
+        if (!start_date.classList.contains('fail_attemp')) {
             start_date.classList.add('fail_attemp');
         }
-        if (end_date.classList.contains('fail_attemp')) {
+        if (!end_date.classList.contains('fail_attemp')) {
             end_date.classList.add('fail_attemp');
         }
+        bookable = 0;
     }else{
         if (start_date.classList.contains('fail_attemp')) {
             start_date.classList.remove('fail_attemp');
@@ -175,6 +186,7 @@ async function validation_data(){
         if (end_date.classList.contains('fail_attemp')) {
             end_date.classList.remove('fail_attemp');
         }
+        bookable = 1;
     }
 
     label.innerHTML = message;
@@ -202,12 +214,15 @@ async function validation_data(){
             alert(error);
         });
         if(data){
-                if(data.bookable == 1){
+            // data.bookable
+
+                if(bookable == 1 && data.bookable == 1){
+
                     tost.style.display = 'none';
                     btn_submit.style.backgroundColor = 'blue';
                     btn_submit.setAttribute('type','submit');
                 }else{
-                    console.log(data.message);
+
                     message +=  data.message;
                     label.innerHTML = ``;
                     label.innerHTML += message;
@@ -484,7 +499,8 @@ function renderTableRows(data) {
     data.forEach((item, index) => {
         const row = `
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${item.id}</td>
+                <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index+1}</td>
+                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.id}</td>
                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.name}</td>
                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.id_card}</td>
                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">${item.company}</td>
