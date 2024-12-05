@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // Booked Data
     Route::get('/list/room/booked',[bookingRoomController::class, 'booked_room']);
 
-    Route::get('/list/history/booked',[bookingRoomController::class, 'booked_room_history']);
+    Route::get('/list/history/booked/{page}',[bookingRoomController::class, 'booked_room_history']);
 
     // Room
 

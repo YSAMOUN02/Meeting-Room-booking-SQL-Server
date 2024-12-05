@@ -43,7 +43,7 @@ async function validation_data(){
     let tost = document.getElementById('toast');
     let label = document.querySelector("#hs-toast-warning-example-label");
     let btn_submit = document.querySelector("#btn_submit_booking");
-    let bookable = 1;
+
     let total_time = 0;
     if (end_time_val !== 'NA' && start_time_val !== 'NA') {
         // Create Date objects with the same date but different times
@@ -90,6 +90,7 @@ async function validation_data(){
     }
 
 
+    let start_null = 0;
     // Null Start Date Prevention
     if(start_date_val == 'NA'){
             message += '- Start Date is Invalid.<br>';
@@ -97,39 +98,45 @@ async function validation_data(){
             if (!start_date.classList.contains('fail_attemp')) {
                 start_date.classList.add('fail_attemp');
             }
-            bookable = 0;
+            start_null = 1;
     }else{
         if (!start_date.classList.contains('fail_attemp')) {
             start_date.classList.remove('fail_attemp');
         }
-            bookable = 1;
+            start_null = 0;
     }
+
+    let end_null = 0;
     // Null End  Date Prevention
     if(end_date_val == 'NA'){
             message +=  '- End Date is Invalid.<br>';
             if (!end_date.classList.contains('fail_attemp')) {
                 end_date.classList.add('fail_attemp');
             }
-            bookable = 0;
+            end_null = 1;
    }else{
             if (!end_date.classList.contains('fail_attemp')) {
                 end_date.classList.remove('fail_attemp');
             }
-            bookable = 1;
+            end_null = 0;
    }
+
+   let time_start_null = 0;
       // Null Start Time Prevention
    if(start_time_val == 'NA'){
             message +=  '- Start Time is Invalid.<br>';
             if (!start_time.classList.contains('fail_attemp')) {
                 start_time.classList.add('fail_attemp');
             }
-            bookable = 0;
+            time_start_null = 1;
     }else{
         if (!start_time.classList.contains('fail_attemp')) {
             start_time.classList.remove('fail_attemp');
         }
-            bookable = 1;
+            time_start_null = 0;
     }
+
+    let time_end_null = 0;
            // Null End Date Prevention
    if(end_time_val == 'NA'){
             message += '- End Time is Invalid.<br>';
@@ -137,18 +144,18 @@ async function validation_data(){
             if (!end_time.classList.contains('fail_attemp')) {
                 end_time.classList.add('fail_attemp');
             }
-            bookable = 0;
+            time_end_null =1;
     }else{
 
             if (!end_time.classList.contains('fail_attemp')) {
                 end_time.classList.remove('fail_attemp');
             }
-            bookable = 1;
+            time_end_null = 0;
     }
 
 
+    let zero_time = 0;
     // 0 Min Prevention
-
     if (total_time <= 0) {
         message += '- Time Invalid. 0 min Booking is not allowed.<br>';
         if (!start_time.classList.contains('fail_attemp')) {
@@ -157,7 +164,7 @@ async function validation_data(){
         if (!end_time.classList.contains('fail_attemp')) {
             end_time.classList.add('fail_attemp');
         }
-        bookable = 0;
+        zero_time =1;
     } else {
 
         if (start_time.classList.contains('fail_attemp')) {
@@ -166,9 +173,10 @@ async function validation_data(){
         if (end_time.classList.contains('fail_attemp')) {
             end_time.classList.remove('fail_attemp');
         }
-        bookable = 1;
+        zero_time = 0;
     }
 
+    let total_date = 0;
     if(daysSelected < 0){
         message += '- Date is invalid. Please select date Properly.';
 
@@ -178,7 +186,7 @@ async function validation_data(){
         if (!end_date.classList.contains('fail_attemp')) {
             end_date.classList.add('fail_attemp');
         }
-        bookable = 0;
+        total_date  = 1;
     }else{
         if (start_date.classList.contains('fail_attemp')) {
             start_date.classList.remove('fail_attemp');
@@ -186,14 +194,22 @@ async function validation_data(){
         if (end_date.classList.contains('fail_attemp')) {
             end_date.classList.remove('fail_attemp');
         }
+        total_date  = 0;
+    }
+    let bookable = 0;
+
+    if(start_null == 0 && time_start_null  == 0  && time_end_null  == 0  && end_null == 0 && total_date ==0   && zero_time ==0){
         bookable = 1;
     }
+
 
     label.innerHTML = message;
     tost.style.display = 'block';
     btn_submit.style.backgroundColor = 'red';
 
-    if(start_date_val != 'NA' && end_date_val != 'NA' && start_time_val != 'NA'  && end_time_val != 'NA' && total_time > 0  && daysSelected >= 0){
+
+
+    if(bookable == 1){
         let url = `/api/validation`;
         let data = await fetch(url, {
             method: "POST",
@@ -214,10 +230,8 @@ async function validation_data(){
             alert(error);
         });
         if(data){
-            // data.bookable
-
+            console.log('bookable'+bookable + "data.bookable " + data.bookable);
                 if(bookable == 1 && data.bookable == 1){
-
                     tost.style.display = 'none';
                     btn_submit.style.backgroundColor = 'blue';
                     btn_submit.setAttribute('type','submit');
@@ -231,6 +245,8 @@ async function validation_data(){
                     btn_submit.setAttribute('type','button');
                 }
         }
+    }else{
+        btn_submit.setAttribute('type','button');
     }
 }
 
@@ -674,3 +690,164 @@ function update_user_via_search(index){
         }
     }
 }
+let same_search = 1;
+function validation(){
+    let input = document.querySelector("#value");
+    let type = document.querySelector("#type");
+    let type2 = document.querySelector("#type2");
+    if(type){
+        if(type.value == 'year'){
+            input.setAttribute('type','number');
+        }else{
+
+            input.setAttribute('type','text');
+        }
+    }
+    if(type){
+        if(type2){
+            if(type.value == type2.value){
+                same_search = 1;
+            }else{
+                same_search = 0;
+            }
+        }
+    }
+
+}
+let state_more_search = 0;
+function more_search(state){
+    let input2 = document.querySelector("#hidden_search");
+    let more_btn = document.querySelector("#more_button");
+    if(state == 1){
+        if(input2){
+            state_more_search = 1;
+            input2.style.display = 'block';
+            more_btn.style.opacity = 0;
+
+        }
+    }else{
+        if(input2){
+            state_more_search = 0;
+            more_btn.style.opacity = 1;
+            input2.style.display = 'none';
+
+        }
+    }
+}
+
+// async function search_book_data(no) {
+
+//     let other = document.querySelector("#type");
+//     let value = document.querySelector("#value");
+
+//     let other2 = document.querySelector("#type2");
+//     let value2 = document.querySelector("#value2");
+
+//     let type_val = "NA";
+//     let value_val = "NA";
+
+//     let type_val2 = "NA";
+//     let value_val2= "NA";
+
+//     let page = 1;
+//     if(no != ''){
+//         page = no;
+//     }
+//     if (value) {
+//         if (value.value != "") {
+//             value_val = value.value;
+//         }
+//     }
+//     if (other) {
+//         type_val = other.value;
+//     }
+//     if (value2) {
+//         if (value2.value != "") {
+//             value_val2 = value2.value;
+//         }
+//     }
+//     if (other2) {
+//         type_val2 = other2.value;
+//     }
+
+//     url = `/api/fect/booked/data`;
+//     // Loading label
+//     document.querySelector("#loading").style.display = "block";
+
+//     let data;
+//     if(state_more_search == 1){
+//          data = await fetch(url, {
+//             method: "POST",
+//             headers: {
+//                 Authorization: `Bearer ${token}`,
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 type: type_val,
+//                 value: value_val,
+//                 type2: type_val2,
+//                 value2: value_val2,
+//                 same_type: same_search,
+//                 page: page
+//             }),
+//         })
+//             .then((res) => res.json())
+//             .catch((error) => {
+//                 alert(error);
+//         });
+//     }else{
+//         data = await fetch(url, {
+//             method: "POST",
+//             headers: {
+//                 Authorization: `Bearer ${token}`,
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({
+//                 type: type_val,
+//                 value: value_val,
+//                 page: page
+//             }),
+//         })
+//             .then((res) => res.json())
+//             .catch((error) => {
+//                 alert(error);
+//         });
+//     }
+
+
+
+
+
+//     if (data) {
+//         console.log(data);
+//         // if (data.data) {
+//         //     if (data.data.length > 0) {
+//         //         let pagination_search = document.querySelector(
+//         //             ".pagination_by_search"
+//         //         );
+//         //         if (pagination_search) {
+//         //             pagination_search.style.display = "block";
+
+//         //             if (data.page != 0) {
+//         //                 let page = data.page;
+//         //                 let totalPage = data.total_page;
+//         //                 let totalRecord = data.total_record;
+//         //                 render_pagination(page,totalPage,totalRecord);
+
+//         //             }
+//         //         }
+//         //         let body_change = document.querySelector("#users_tbody");
+//         //         body_change.innerHTML = ""; // Clear the table body
+//         //         renderTableRows(data.data)
+//         //         users = data.data;
+//         //     } else {
+//         //         alert("Data not Found.");
+//         //     }
+//         // } else {
+//         //     alert("Data not Found.");
+//         // }
+//     } else {
+//         alert("Problem on database connection.");
+//     }
+//     document.querySelector("#loading").style.display = "none";
+// }

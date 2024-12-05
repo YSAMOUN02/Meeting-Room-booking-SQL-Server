@@ -216,7 +216,7 @@ table{
 
 /* Optional: Style the header */
 .standard-table thead th {
-    text-align: center;
+    text-align: left;
     font-weight: bold;
 }
 
@@ -230,19 +230,19 @@ table{
     display: none;
 }
 
-#search{
+.search{
     border: 1px solid black;
 }
-#search input{
+.search input{
     height: 100%;
 
     padding: 5px;
 }
-#search select{
+.search select{
     height: 100%;
     border-right: 1px solid black;
 }
-#search button {
+.search button {
     height: 100%;
     padding: 5px 10px;
     background-color: blue;
@@ -265,7 +265,7 @@ table{
     position: fixed;
     left: 50%;
     top: 400px;
-   
+
     transform: translate(-50%,-50%);
     display: none;
 }
@@ -275,6 +275,9 @@ table{
     padding: 5px 10px;
     border-radius: 5px;
     color: white;
+}
+#hidden_search{
+    display: none;
 }
 @keyframes fade {
     0%{

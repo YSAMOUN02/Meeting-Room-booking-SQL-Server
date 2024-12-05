@@ -26,5 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/fect/user/data', [APIHandlerController::class, 'search_user']);
 
+    Route::post('/fect/booked/data', [APIHandlerController::class, 'search_data']);
 
 });

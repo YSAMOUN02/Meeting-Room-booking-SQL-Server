@@ -274,6 +274,85 @@ class APIHandlerController extends Controller
         }
 
     }
+
+    // public function search_data(request $request){
+
+    //     return response()->json([123], 200, $headers);
+    //     $type = $request->type??'NA';
+    //     $value = $request->value??'NA';
+
+    //     $type2 = $request->type2??'NA';
+    //     $value2= $request->value2??'NA';
+    //     $page = $request->page??1;
+    //     $same_search = $request->same_type;
+
+    //     // return response()->json([$type,$value,$type2,$value2], 200);
+    //     $limit = 1000;
+
+    //     $count = 0;
+
+    //     $sql =  booking::orderby('id','desc');
+    //     $count_all = $sql->count();
+
+    //     if($type2 != 'NA' && $value2 != 'NA'){
+    //         if($same_search == 1){
+
+    //             $sql->where(function ($query) use ($request) {
+    //                 $query->where($type,'LIKE','%'.$value.'%')
+    //                         ->where($type2,'LIKE','%'.$value2.'%');
+    //             });
+
+    //         }else{
+    //             if($type != 'NA' && $value != 'NA'){
+    //                 $sql->where($type,'LIKE','%'.$value.'%');
+    //             }
+    //             if($type2 != 'NA' && $value2 != 'NA'){
+    //                 $sql->where($type2,'LIKE','%'.$value.'%');
+    //             }
+    //         }
+    //     }else{
+    //         if($type != 'NA' && $value != 'NA'){
+    //             $sql->where($type,'LIKE','%'.$value.'%');
+    //         }
+    //     }
+
+    //     $count_all = $sql->count();
+
+    //     $total_pages = ceil( $count_all/$limit);
+    //     $offet = 0;
+    //     if($page != 0){
+    //         $offet = ($page - 1) * $limit;
+    //     }
+
+    //     $sql->offset($offet);
+    //     $sql->limit($limit);
+
+    //     $datas = $sql->get();
+
+    //     $data = new arr_obj();
+    //     $data->page = $page;
+    //     $data->total_page = $total_pages;
+    //     $data->total_record = $count_all;
+    //     $data->data = $datas;
+
+    //     $count = count($datas);
+    //     if($count > 0){
+    //         return response()->json($data, 200, );
+    //     }else{
+    //         return response()->json([], 200, );
+    //     }
+
+    // }
+
+
+
+
+
+
+
+
+
+
 }
 class arr{
     public $message;

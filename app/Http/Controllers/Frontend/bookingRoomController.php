@@ -136,20 +136,35 @@ class bookingRoomController extends Controller
         'current_date' =>$current_date
 ]);
     }
-    public function booked_room_history(){
-                // $current_time =    \Carbon\Carbon::parse(today())->format('h:i A') ;
+    public function booked_room_history($page){
 
-                $data = booking::orderby('id','desc')
-                // ->where('date', '>' , today())
-                // ->where('status', 0)
-                ->get();
+                $sql = booking::orderby('id','desc');
+
+                $count_post = $sql->count();
+
+                $limit = 100;
+
+                $total_page = ceil($count_post/$limit);
+
+                $offset = 0;
+                if($page != 0){
+                    $offset = ($page - 1) * $limit;
+                }
+                $sql->limit($limit);
+                $sql->offset($offset);
+
+                $data = $sql->get();
+
+
 
                 $current_time = \Carbon\Carbon::now('Asia/Jakarta')->format('h:i A');
                 $current_date = today();
                 return view('frontend.list-booking-history',[
                     'data'=>$data,
-                    'current_time' =>$current_time,
-                    'current_date' =>$current_date
+                    'current_date' =>$current_date,
+                    'total_page' => $total_page,
+                    'total_record' => $count_post,
+                    'page' => $page
                 ]);
     }
 
