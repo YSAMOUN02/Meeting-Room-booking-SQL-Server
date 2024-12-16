@@ -137,7 +137,7 @@
                                     $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
                                     $date = \Carbon\Carbon::parse($item->date); // Keep as Carbon instance
                                     $today = \Carbon\Carbon::parse($current_date); // Keep as Carbon instance
-                                    $ongoing = 0;
+
                                    @endphp
 
                                    @if($item->status == 0)
@@ -145,30 +145,12 @@
                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
                                            Canceled
                                        </span>
-                                       @elseif($item->status == 1 && $today   > $date  )
-                                       {{ $today  .">". $date}}
-                                       <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                           <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-
-                                           Completed
-                                       </span>
-
-                                       @elseif($item->status == 1 && $current_time  >  $end && $today  == $date  )
-
-                                       <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                           <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-
-                                           Completed
-                                       </span>
-                                       @elseif($item->status == 1)
+                                       @else
                                        <span class="inline-flex items-center bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                                            <span class="w-2 h-2 me-1 bg-amber-500 rounded-full"></span>
                                            On Going
                                        </span>
-                                       @php
-                                                 $ongoing  = 1;
 
-                                       @endphp
                                    @endif
 
                                 </td>
@@ -182,7 +164,7 @@
                                     {{$item->cancel_date}}
                                 </td>
                                 <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
-                                    @if (($item->created_by_id == Auth::user()->id || Auth::user()->role == 'admin')  && $ongoing == 1)
+                                    @if (($item->created_by_id == Auth::user()->id || Auth::user()->role == 'admin'))
 
                                         <button type="button" onclick="delete_id({{$item->id}})" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-4 py-1 text-center me-2 mb-2 md:px-5 md:py-2.5">Cancel</button>
 
