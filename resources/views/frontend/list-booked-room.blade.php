@@ -54,10 +54,12 @@
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Topic </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Type</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Date</th>
+
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">From Time</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">To Time</th>
-                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
+
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked At</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel By</th>
@@ -79,11 +81,11 @@
                                     <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
-
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
-                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
+
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                         @if($item->status == 0)
@@ -126,11 +128,11 @@
                                 <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
-
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
-                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
+
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @php
