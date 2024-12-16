@@ -275,74 +275,82 @@ class APIHandlerController extends Controller
 
     }
 
-    // public function search_data(request $request){
+    public function search_data(request $request){
 
-    //     return response()->json([123], 200, $headers);
-    //     $type = $request->type??'NA';
-    //     $value = $request->value??'NA';
 
-    //     $type2 = $request->type2??'NA';
-    //     $value2= $request->value2??'NA';
-    //     $page = $request->page??1;
-    //     $same_search = $request->same_type;
+        $type = $request->type??'NA';
+        $value = $request->value??'NA';
 
-    //     // return response()->json([$type,$value,$type2,$value2], 200);
-    //     $limit = 1000;
+        $type2 = $request->type2??'NA';
+        $value2= $request->value2??'NA';
+        $page = $request->page??1;
+        $same_search = $request->same_type;
 
-    //     $count = 0;
+        // return response()->json([$type,$value,$type2,$value2], 200);
+        $limit = 1000;
 
-    //     $sql =  booking::orderby('id','desc');
-    //     $count_all = $sql->count();
+        $count = 0;
 
-    //     if($type2 != 'NA' && $value2 != 'NA'){
-    //         if($same_search == 1){
+        $sql =  booking::orderby('id','desc');
+        $count_all = $sql->count();
 
-    //             $sql->where(function ($query) use ($request) {
-    //                 $query->where($type,'LIKE','%'.$value.'%')
-    //                         ->where($type2,'LIKE','%'.$value2.'%');
-    //             });
+        if($type2 != 'NA' && $value2 != 'NA'){
+            if($same_search == 1){
+                if($type == 'year'){
 
-    //         }else{
-    //             if($type != 'NA' && $value != 'NA'){
-    //                 $sql->where($type,'LIKE','%'.$value.'%');
-    //             }
-    //             if($type2 != 'NA' && $value2 != 'NA'){
-    //                 $sql->where($type2,'LIKE','%'.$value.'%');
-    //             }
-    //         }
-    //     }else{
-    //         if($type != 'NA' && $value != 'NA'){
-    //             $sql->where($type,'LIKE','%'.$value.'%');
-    //         }
-    //     }
+                    $sql->where(function ($query) use ($request) {
+                        $query->where($type,DB::raw('year(date)'))
+                        ->where($type2,DB::raw('year(date)'));
+                        });
+                }else{
 
-    //     $count_all = $sql->count();
+                        $sql->where(function ($query) use ($request) {
+                        $query->where($type,'LIKE','%'.$value.'%')
+                        ->where($type2,'LIKE','%'.$value2.'%');
+                        });
+                }
 
-    //     $total_pages = ceil( $count_all/$limit);
-    //     $offet = 0;
-    //     if($page != 0){
-    //         $offet = ($page - 1) * $limit;
-    //     }
+            }else{
+                if($type != 'NA' && $value != 'NA'){
+                    $sql->where($type,'LIKE','%'.$value.'%');
+                }
+                if($type2 != 'NA' && $value2 != 'NA'){
+                    $sql->where($type2,'LIKE','%'.$value.'%');
+                }
+            }
+        }else{
+            if($type != 'NA' && $value != 'NA'){
+                $sql->where($type,'LIKE','%'.$value.'%');
+            }
+        }
 
-    //     $sql->offset($offet);
-    //     $sql->limit($limit);
+        $count_all = $sql->count();
 
-    //     $datas = $sql->get();
+        $total_pages = ceil( $count_all/$limit);
+        $offet = 0;
+        if($page != 0){
+            $offet = ($page - 1) * $limit;
+        }
 
-    //     $data = new arr_obj();
-    //     $data->page = $page;
-    //     $data->total_page = $total_pages;
-    //     $data->total_record = $count_all;
-    //     $data->data = $datas;
+        $sql->offset($offet);
+        $sql->limit($limit);
 
-    //     $count = count($datas);
-    //     if($count > 0){
-    //         return response()->json($data, 200, );
-    //     }else{
-    //         return response()->json([], 200, );
-    //     }
+        $datas = $sql->get();
 
-    // }
+        $data = new arr_obj();
+        $data->page = $page;
+        $data->total_page = $total_pages;
+        $data->total_record = $count_all;
+        $data->data = $datas;
+        // return response()->json([123], 200);
+        $count = count($datas);
+        if($count > 0){
+            return response()->json($data, 200, );
+        }else{
+            return response()->json([], 200, );
+        }
+
+    }
 
 
 

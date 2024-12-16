@@ -32,7 +32,7 @@
         class="mr-3 h-8"
         alt="Flowbite Logo"
         />
-        <h1>Dear {{$mailData['fullName']}}.</h1>
+        <h1>Dear Ms./Mrs. {{$mailData['fullName']}}.</h1>
         <h1>Your Mail has been selected to register to the System booking Meeting Room PPM. Your credentail to Access the system is below:</h1>
         <h3>User login : {{$mailData['user_login']}}</h3>
 
@@ -44,7 +44,7 @@
         <p>Email : {{$mailData['email']}}</p>
         <p>Click Link Below to quick sign in</p>
         <a href="{{$mailData['url']}}">{{$mailData['url']}}</a>
-
+        <p style="color: red">(Support PPM Local Network only)</p>
     </main>
 
 

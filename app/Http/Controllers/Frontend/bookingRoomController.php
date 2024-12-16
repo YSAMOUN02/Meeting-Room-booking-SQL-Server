@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\room;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\alert;
+use App\Mail\alert_self_cancel;
 
 use Illuminate\Support\Facades\DB;
 class bookingRoomController extends Controller
@@ -171,10 +175,49 @@ class bookingRoomController extends Controller
 
     public function cancel_booking(request $request){
        $id = $request->id;
+        $reason = $request->reason;
+        $now = today();
 
-       $meeting = booking::where('id',$id)->first();
-       $meeting->status = 0;
+
+        $meeting = booking::where('id',$id)->first();
+        $meeting->status = 0;
+        $meeting->cancel_by_name = Auth::user()->name;
+        $meeting->cancel_reason =  $reason;
+        $meeting->cancel_date =  $now ;
         $save =   $meeting->save();
+
+        $canceler = Auth::user()->name;
+
+        $book_data_owner = User::where('id', $meeting->created_by_id)->first();
+
+
+
+
+        // state 0 is when other user cancel
+        $state = 0;
+
+        if($book_data_owner->id == Auth::user()->id ){
+            $state = 1;
+        }
+
+        $mailData = [
+            'state' => $state,
+            'fullName' => $meeting->staff_name,
+            'room' => $meeting->room,
+            'topic' => $meeting->title,
+            'canceler' =>  $canceler,
+            'reason' => $reason,
+            'cancel_date' => $now,
+            'url' => 'http://192.168.1.71:8700/login'// Generate full URL for the forgot password page
+        ];
+
+        if($state == 0){
+            Mail::to($book_data_owner->email)->send(new alert($mailData));
+        }else{
+            Mail::to($book_data_owner->email)->send(new alert_self_cancel($mailData));
+
+        }
+
 
         if($save){
             return redirect('/list/room/booked')->with('success','Canceled Room Success.');

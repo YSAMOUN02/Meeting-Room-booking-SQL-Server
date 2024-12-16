@@ -323,11 +323,9 @@
                                 $index = 0;
                             @endphp
                             @foreach ($user  as $item )
-                                @php
-                                $index ++;
-                                @endphp
+
                                 <tr class="border-b dark:border-gray-700">
-                                    <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$index}}</td>
+                                    <td scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$index+1}}</td>
 
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->id}}</td>
                                     <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->name}}</td>
@@ -353,7 +351,9 @@
                                         @endif
                                     </td>
                                 </tr>
-
+                                @php
+                                $index ++;
+                                @endphp
                             @endforeach
 
                         @endif

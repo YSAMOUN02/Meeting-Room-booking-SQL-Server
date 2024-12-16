@@ -67,8 +67,11 @@
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Department</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked At</th>
-                            <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
 
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel By</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Reason</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel Date</th>
+                            <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,6 +98,16 @@
                                 @endif
 
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
+
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_by_name}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_reason}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_date}}
+                                </td>
                                 <td class=" hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @php
                                      $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
@@ -146,7 +159,6 @@
                                         @endif
 
                                 </td>
-
                             </tr>
                         @php
                             $state++;

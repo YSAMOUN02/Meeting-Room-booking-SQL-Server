@@ -32,8 +32,8 @@
 
             <img height="200px" src="{{URL('assets/image/Logo_PPM.jpg')}}"  alt="Flowbite Logo" />
         </div>
-        <h1>Dear: {{$mailData['fullName']}}</h1>
-        <h1>The System has recieved Reset Password request. New password below:</h1>
+        <h3>Dear: {{$mailData['fullName']}}</h3>
+        <h3>The System has recieved Reset Password request. New password below:</h3>
 
 
 

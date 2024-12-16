@@ -162,7 +162,7 @@ body{
 }
 
 .selected{
-    background-color: rgb(219, 255, 219);
+    background-color: rgb(219, 255, 219)!important;
 }
 .table th{
     white-space: nowrap;

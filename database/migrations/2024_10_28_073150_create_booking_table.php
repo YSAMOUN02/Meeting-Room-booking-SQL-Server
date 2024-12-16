@@ -28,6 +28,9 @@ return new class extends Migration
             $table->time('end_time')->nullable();
             $table->string('created_by_id')->nullable();
             $table->string('created_by_name')->nullable();
+            $table->string('cancel_by_name')->nullable();
+            $table->string('cancel_reason')->nullable();
+            $table->date('cancel_date')->nullable();
             $table->string('status')->default(1);
             $table->timestamps();
         });

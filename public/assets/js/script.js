@@ -805,6 +805,8 @@ function more_search(state){
 //             body: JSON.stringify({
 //                 type: type_val,
 //                 value: value_val,
+//                 type2: 'NA',
+//                 value2: 'NA',
 //                 page: page
 //             }),
 //         })

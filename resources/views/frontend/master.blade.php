@@ -257,7 +257,7 @@
                 class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                 <i class="fa-solid fa-user"></i>
-                <span class="ml-3">Register Data</span>
+                <span class="ml-3">Register Mail</span>
                 </a>
             </li> --}}
             <li  data-modal-target="popup-modal3" data-modal-toggle="popup-modal3" class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">

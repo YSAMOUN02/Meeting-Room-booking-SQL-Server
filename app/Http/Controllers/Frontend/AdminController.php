@@ -71,39 +71,55 @@ class AdminController extends Controller
     }
 
 
-    public function register_mail(){
-        $user = User::where('id',8)->first();
+    // public function register_mail(){
+    //     $users = User::orderby('id','desc')
+    //     ->where(function ($query)  {
+    //         $query->where('id',105)
+    //         ->orwhere('id',106)
+    //         ->orwhere('id',107)
+    //         ->orwhere('id',108);
+    //         })
+    //     ->get();
 
 
-        $temp_password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
-        $user->password =  Hash::make($temp_password);
-        $user->save();
-
-        $mailData = [
-            'fullName' => $user->name,
-            'user_login' => $user->user_login,
-            'company' => $user->company,
-            'department' => $user->department,
-            'email' => $user->email,
-            'temp_password' => $temp_password,
-            'phone' => $user->phone,
-            'url' => url('/forgot/password/via/'.$user->user_login).'/'.$temp_password // Generate full URL for the forgot password page
-        ];
-        $data = new arr();
-        $data->message = "Code has sent to email:  ".$user->email.' within 2-3 minute Check your Inbox to recieve new register.';
-
-        $send = Mail::to($user->email)->send(new register_mail($mailData));
-
-        // return  $user;
-        if($send){
-            return redirect('/')->with('success','Send success.');
-        }else{
-
-            return redirect('/')->with('fail','Send fail.');
-        }
 
 
-    }
+
+    //         // return $users;
+    //     foreach($users as $user){
+    //         $update_user = User::where('id',$user->id)->first();
+    //         $temp_password = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 8);
+
+    //         $update_user->password =  Hash::make($temp_password);
+    //         $update_user->save();
+
+    //         $mailData = [
+    //             'fullName' => $user->name,
+    //             'user_login' => $user->user_login,
+    //             'company' => $user->company,
+    //             'department' => $user->department,
+    //             'email' => $user->email,
+    //             'temp_password' => $temp_password,
+    //             'phone' => $user->phone,
+    //             'url' => 'http://192.168.1.71:8700/forgot/password/via/'.$user->user_login.'/'.$temp_password // Generate full URL for the forgot password page
+    //         ];
+    //         $data = new arr();
+    //         $data->message = "Code has sent to email:  ".$user->email.' within 2-3 minute Check your Inbox to recieve new register.';
+
+    //         $send = Mail::to($user->email)->send(new register_mail($mailData));
+    //     }
+
+
+    //     // return  $user;
+    //     // if($send){
+    //     //     return redirect('/')->with('success','Send success.');
+    //     // }else{
+
+    //     //     return redirect('/')->with('fail','Send fail.');
+    //     // }
+
+
+    // }
 }
 class arr{
     public $message;

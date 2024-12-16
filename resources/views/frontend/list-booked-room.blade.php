@@ -15,15 +15,26 @@
                 </button>
                 <div class="p-4 md:p-5 text-center">
                     <form action="/room/cancel" method="post">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Enter Reason code to cancel.</h3>
+
+
                         @csrf
-                        <input type="text" class="hidden" id="value_delete" name="id">
-                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                    </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to cancel of booking room ?</h3>
-                    <button  data-modal-hide="popup-modal" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                        Yes, I'm sure
-                    </button>
+                        <div class="flex flex-col">
+                            <input type="text" class="hidden" id="value_delete" name="id">
+
+                        </div>
+                        <input type="text" id="reason"
+                        name="reason"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Reason" required />
+
+
+                        <button  type="submit" class="mt-5 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                            Cancel Booking
+                        </button>
                     <button data-modal-hide="popup-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, cancel</button>
                     </form>
                 </div>
@@ -49,6 +60,9 @@
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked At</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel By</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Reason</th>
+                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel Date</th>
                             <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                 Actions
                             </th>
@@ -79,11 +93,20 @@
                                             </span>
 
                                         @else
-                                            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-                                                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                        <span class="inline-flex items-center bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                            <span class="w-2 h-2 me-1 bg-amber-500 rounded-full"></span>
                                                 On Going
                                             </span>
                                         @endif
+                                    </td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                        {{$item->cancel_by_name}}
+                                    </td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                        {{$item->cancel_reason}}
+                                    </td>
+                                    <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                        {{$item->cancel_date}}
                                     </td>
                                     <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                         @if(Auth::user()->id == $item->created_by_id && $item->status == 1)
@@ -92,6 +115,7 @@
 
                                         @endif
                                     </td>
+
                                 </tr>
                                 @php
                                     $state++;
@@ -148,6 +172,15 @@
                                    @endif
 
                                 </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_by_name}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_reason}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_date}}
+                                </td>
                                 <td class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @if (($item->created_by_id == Auth::user()->id || Auth::user()->role == 'admin')  && $ongoing == 1)
 
@@ -155,6 +188,7 @@
 
                                     @endif
                                 </td>
+
                             </tr>
                         @php
                             $state++;
@@ -167,16 +201,19 @@
                         <tr class="border-b dark:border-gray-700">
                             <th scope="row" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">No Bookng Data</th>
 
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
-                            <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
-
-                            </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         </tr>
 
                         @endif
