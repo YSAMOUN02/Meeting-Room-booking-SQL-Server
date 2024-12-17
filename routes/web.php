@@ -33,6 +33,9 @@ Route::get('/',[RoomController::class, 'all_room']);
 
 Route::get('/room/detail/{id}',[RoomController::class, 'room_detail']);
 
+Route::get('/room/detail/{id}/schedule={meeting_id}',[RoomController::class, 'room_detail_by_meeting_id']);
+
+
 Route::middleware(['auth'])->group(function () {
 
     // Access Booking

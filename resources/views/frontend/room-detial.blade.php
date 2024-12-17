@@ -270,7 +270,49 @@
 
                         @endphp
                         @foreach ($booking_today as $item)
-                            @if ($length == $last)
+
+                            @php
+                                if (empty($meeting_id )){
+                                    $meeting_id = 0;
+                                }
+                            @endphp
+                            @if ($meeting_id == $item->id)
+                            
+                                <li class="mb-10 ms-6 ">
+                                    <span
+                                        class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                        <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                        </svg>
+                                    </span>
+                                    <h3 class="alert_notification flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                       Upcomming's Schedule
+
+                                    </h3>
+                                    <h3 class="alert_notification flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                        {{ $item->meeting_type }} ({{ $item->department }})
+                                        @if ($length == $last)
+                                        <span
+                                            class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">Latest</span>
+                                        @endif
+                                    </h3>
+                                    <h3 class="alert_notification flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                        Topic : {{ $item->title }}</h3>
+                                    <span
+                                        class="alert_notification block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Booked
+                                        By: {{ $item->staff_name }}</span>
+                                    <time
+                                        class="alert_notification block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Meeting
+                                        Date: {{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</time>
+                                    <time
+                                        class=" alert_notification block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Meeting
+                                        Time: {{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}
+                                        To {{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</time>
+
+                                </li>
+                            @else
                                 <li class="mb-10 ms-6 ">
                                     <span
                                         class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -281,8 +323,11 @@
                                         </svg>
                                     </span>
                                     <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                        {{ $item->meeting_type }} ({{ $item->department }}) <span
+                                        {{ $item->meeting_type }} ({{ $item->department }})
+                                        @if ($length == $last)
+                                        <span
                                             class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3">Latest</span>
+                                        @endif
                                     </h3>
                                     <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
                                         Topic : {{ $item->title }}</h3>
@@ -298,28 +343,7 @@
                                         To {{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</time>
 
                                 </li>
-                            @else
-                                <li class="mb-10 ms-6">
-                                    <span
-                                        class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                        <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
-                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                        </svg>
-                                    </span>
-                                    <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                        {{ $item->meeting_type }} ({{ $item->department }})</h3>
-                                    <h3 class="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                        Topic : {{ $item->title }}</h3>
-                                    <time
-                                        class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Meeting
-                                        Date: {{ \Carbon\Carbon::parse($item->date)->format('d F Y') }}</time>
-                                    <time
-                                        class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Meeting
-                                        Time: {{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}
-                                        To {{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</time>
-                                </li>
+
                             @endif
 
                             @php
@@ -346,11 +370,11 @@
                     <h1 class=" leading-6 text-gray-900 text-2xl  font-bold">
                         @php
                             $today = today(); // Get today's date
-use Carbon\Carbon;
+                            use Carbon\Carbon;
 
-$currentDate = now(); // Current date
-$month = request('month', $currentDate->month); // Get month from query or default to current
-$year = request('year', $currentDate->year); // Get year from query or default to current
+                            $currentDate = now(); // Current date
+                            $month = request('month', $currentDate->month); // Get month from query or default to current
+                            $year = request('year', $currentDate->year); // Get year from query or default to current
 
                             // Generate the first and last day of the selected month
                             $startOfMonth = Carbon::createFromDate($year, $month, 1);

@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\alert;
 use App\Mail\alert_self_cancel;
 
+
+
 use Illuminate\Support\Facades\DB;
 class bookingRoomController extends Controller
 {
@@ -190,9 +192,6 @@ class bookingRoomController extends Controller
 
         $book_data_owner = User::where('id', $meeting->created_by_id)->first();
 
-
-
-
         // state 0 is when other user cancel
         $state = 0;
 
@@ -217,7 +216,6 @@ class bookingRoomController extends Controller
             Mail::to($book_data_owner->email)->send(new alert_self_cancel($mailData));
 
         }
-
 
         if($save){
             return redirect('/list/room/booked')->with('success','Canceled Room Success.');

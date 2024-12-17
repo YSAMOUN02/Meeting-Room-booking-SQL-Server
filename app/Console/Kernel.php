@@ -13,13 +13,19 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    // protected function schedule(Schedule $schedule)
+    // {
+    //     // Run the command every 20 minutes
+    //     $schedule->command('alert:meetings')->everyTenMinutes();
+    // }
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Run the command every 1 minute (for testing purposes)
+        $schedule->command('alert:meetings')->everyMinute();
     }
-
     /**
-     * Register the commands for the application.
+     * Register the commands for the application.   
      *
      * @return void
      */

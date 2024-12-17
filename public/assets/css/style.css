@@ -279,6 +279,21 @@ table{
 #hidden_search{
     display: none;
 }
+.alert_notification{
+
+    color: rgb(255, 0, 0);
+
+    animation: boundcing 1s infinite;
+}
+
+@keyframes boundcing{
+    0%{
+        transform: translateY(10px);
+    }
+    100%{
+        transform: translateY(0px);
+    }
+}
 @keyframes fade {
     0%{
         display: block;

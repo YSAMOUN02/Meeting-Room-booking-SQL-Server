@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('cancel_reason')->nullable();
             $table->date('cancel_date')->nullable();
             $table->string('status')->default(1);
+            $table->integer('alerted')->default(0);
             $table->timestamps();
         });
 

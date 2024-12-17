@@ -36,15 +36,6 @@ class RoomController extends Controller
             ->where('status', 1)
             ->get();
         }
-        // $booking_today = booking::where('date', today())
-        // ->orderBy('start_time', 'asc')
-        // ->orderBy('end_time', 'asc')
-
-        // ->where('room',$room)
-        // ->where('end_time','>',\Carbon\Carbon::now('Asia/Jakarta')->format('h:i A'))
-        // ->where('status', 1)
-        // ->get();
-
 
         $booking_data = booking::orderBy('date', 'asc')
             ->orderBy('start_time', 'asc')
@@ -71,7 +62,45 @@ class RoomController extends Controller
 
 
     }
+    public function room_detail_by_meeting_id( $id ,$meeting_id){
+        $room = room::where('id',$id)->first();
 
+        if(!empty($room)){
+            $booking_today = booking::where('date', today())
+            ->orderBy('start_time', 'asc')
+            ->orderBy('end_time', 'asc')
+            ->where('room_id',$room->id)
+            // ->where('end_time','>',\Carbon\Carbon::now('Asia/Jakarta')->format('h:i A'))
+            ->where('status', 1)
+            ->get();
+        }
+
+        $booking_data = booking::orderBy('date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->where(function ($query) {
+                $query->whereMonth('date', Carbon::now()->month) // Current month
+                      ->orWhereMonth('date', Carbon::now()->addMonth()->month); // Next month
+            })
+            ->where('room_id', $room->id)
+            ->where('status', 1)
+            ->get();
+
+
+
+
+        // return $room_name;
+        $last_booking = count( $booking_today );
+
+        return view('frontend.room-detial',[
+            'booking_today'=> $booking_today,
+            'last'=>$last_booking,
+            'booking_data' => $booking_data,
+            'room' => $room,
+            'meeting_id' => $meeting_id
+        ]);
+
+
+    }
     public function add_room(){
 
         return view('frontend.create-room');
