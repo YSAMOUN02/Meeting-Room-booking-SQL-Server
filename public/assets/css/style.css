@@ -178,6 +178,11 @@ table{
     right: 0;
     background-color: rgb(255, 255, 255);
 }
+.hover_td_left{
+    position: sticky;
+    left: 0;
+    background-color: rgb(255, 255, 255);
+}
 /* The table container with scrolling */
 .table_user_container {
     max-height: 75vh;  /* Adjust this based on your needs */
