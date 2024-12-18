@@ -176,12 +176,12 @@ table{
 .hover_td{
     position: sticky;
     right: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(218, 218, 218);
 }
 .hover_td_left{
     position: sticky;
     left: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(212, 212, 212);
 }
 /* The table container with scrolling */
 .table_user_container {
