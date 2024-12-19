@@ -144,7 +144,7 @@ class bookingRoomController extends Controller
     }
     public function booked_room_history($page){
 
-                $sql = booking::orderby('id','desc');
+                $sql = booking::orderby('date','desc');
 
                 $count_post = $sql->count();
 
