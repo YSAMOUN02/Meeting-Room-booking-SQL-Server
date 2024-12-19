@@ -85,7 +85,7 @@
 
                             <tr class="border-b dark:border-gray-700  selected">
 
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state}}</th>
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state+1}}</th>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
@@ -169,7 +169,7 @@
                             @else
 
                             <tr class="border-b dark:border-gray-700">
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state}}</th>
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state+1}}</th>
 
 
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
