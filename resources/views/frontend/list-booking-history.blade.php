@@ -57,7 +57,7 @@
                 <table class="standard-table  table w-full text-sm  text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-
+                            <th>No</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Topic </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Type</th>
@@ -84,8 +84,9 @@
                             @if (Auth::user()->id == $item->created_by_id)
 
                             <tr class="border-b dark:border-gray-700  selected">
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
 
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state}}</th>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
@@ -168,8 +169,10 @@
                             @else
 
                             <tr class="border-b dark:border-gray-700">
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state}}</th>
 
+
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
