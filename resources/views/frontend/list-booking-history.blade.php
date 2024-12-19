@@ -57,7 +57,7 @@
                 <table class="standard-table  table w-full text-sm  text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booking ID</th>
+
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Topic </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Type</th>
@@ -81,10 +81,11 @@
                         @endphp
                         @foreach ($data as  $item)
 
+                            @if (Auth::user()->id == $item->created_by_id)
 
-                            <tr class="border-b dark:border-gray-700 ">
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->id}}</th>
-                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
+                            <tr class="border-b dark:border-gray-700  selected">
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
+
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
@@ -164,7 +165,89 @@
                         @php
                             $state++;
                         @endphp
+                            @else
 
+                            <tr class="border-b dark:border-gray-700">
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$item->room}}</th>
+
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->date)->format('d F Y') }} </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->start_time)->format('h:i A') }}</td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->end_time)->format('h:i A') }}</td>
+
+                                @if ($item->department == 'Choose Department')
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3"></td>
+                                @else
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->department}}</td>
+                                @endif
+
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y') }}</td>
+
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_by_name}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_reason}}
+                                </td>
+                                <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    {{$item->cancel_date}}
+                                </td>
+                                <td class=" hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                    @php
+                                     $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
+                                     $day = \Carbon\Carbon::parse($item->date)->format('d');
+                                     $booked_month =  \Carbon\Carbon::parse($item->date)->format('m');
+                                     $booked_year =  \Carbon\Carbon::parse($item->date)->format('Y');
+                                     $today =  \Carbon\Carbon::parse($current_date)->format('d');
+                                     $current_month =  \Carbon\Carbon::parse($current_date)->format('m');
+                                     $current_year =  \Carbon\Carbon::parse($current_date)->format('Y');
+                                    @endphp
+
+                                        @if($item->status == 0)
+                                        <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                            <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                            Canceled
+                                        </span>
+                                        @elseif($item->status == 1 &&  $current_month > $booked_month && $current_year >=  $booked_year )
+
+                                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+
+                                            Completed
+                                        </span>
+
+
+
+                                        @elseif($item->status == 1 &&  $current_month == $booked_month  && $today > $day  )
+
+                                        <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                            <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+
+                                            Completed
+                                        </span>
+
+
+                                        @elseif($item->status == 1 && $today <= $day  )
+                                        <span class="inline-flex items-center bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                            <span class="w-2 h-2 me-1 bg-amber-500 rounded-full"></span>
+
+                                            On Going
+                                        </span>
+                                        @elseif($item->status == 1 && $current_year <  $booked_year  )
+                                        <span class="inline-flex items-center bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                            <span class="w-2 h-2 me-1 bg-amber-500 rounded-full"></span>
+
+                                            On Going
+                                        </span>
+
+                                        @endif
+
+                                </td>
+                            </tr>
+
+                            @endif
 
                         @endforeach
 
