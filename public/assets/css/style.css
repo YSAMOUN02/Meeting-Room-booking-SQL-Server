@@ -181,7 +181,7 @@ table{
 .hover_td_left{
     position: sticky;
     left: 0;
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(235, 235, 235);
 }
 /* The table container with scrolling */
 .table_user_container {
