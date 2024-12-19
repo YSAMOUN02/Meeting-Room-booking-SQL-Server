@@ -246,7 +246,9 @@
 
                                 </td>
                             </tr>
-
+                            @php
+                            $state++;
+                            @endphp
                             @endif
 
                         @endforeach
