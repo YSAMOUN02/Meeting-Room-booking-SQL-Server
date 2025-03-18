@@ -70,9 +70,8 @@ Route::middleware(['auth'])->group(function () {
     // Test
     Route::get('/user/send', [AdminController::class, 'register_mail']);
 
-});
 
-   // User
+       // User
    Route::get('/list/user/{page}',[UserController::class, 'list_user']);
 
    Route::post('/user/delete/submit',[UserController::class, 'delete_user_submit']);
@@ -84,3 +83,6 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/user/create', [UserController::class, 'create_user_form']);
 
    Route::post('/user/create/submit', [UserController::class, 'create_user_submit']);
+
+});
+
