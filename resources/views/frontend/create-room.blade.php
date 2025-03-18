@@ -6,19 +6,19 @@
     @csrf
     <div class="w-full grid gap-6 mb-6 md:grid-cols-1">
         <div>
-            <label for="room_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Name</label>
+            <label for="room_name" class="block mb-2 text-sm font-medium text-gray-900">Room Name</label>
             <input type="text" id="room_name" name="room_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
         </div>
         <div>
-            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room Description</label>
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Room Description</label>
             <input type="text" id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
         </div>
         <div>
-            <label for="seat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Qty Seat</label>
+            <label for="seat" class="block mb-2 text-sm font-medium text-gray-900">Qty Seat</label>
             <input type="number" id="seat" name="seat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required  placeholder="number only"/>
         </div>
         <div>
-            <label for="thumbnail" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Thumbnail Room</label>
+            <label for="thumbnail" class="block mb-2 text-sm font-medium text-gray-900 ">Thumbnail Room</label>
             <input type="file" id="imageInput" name="thumbnail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
         </div>
         <img id="preview" src="" required alt="Image Preview" style="display: none; max-width: 300px;">

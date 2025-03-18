@@ -1,9 +1,9 @@
 @extends('frontend.master')
 @section('content')
 
-    <section class="drop_slow1 laptop_respond dark:bg-sky-800">
-        <div class="grid max-w-screen-xl py-1 px-4 md:px-4 lg:mx-auto lg:gap-8 xl:gap-0 lg:py-4 lg:px-0 lg:grid-cols-12">
-            <div class="mr-auto place-self-center lg:col-span-7">
+    <section class="drop_slow1 laptop_respond ">
+        <div class="grid max-w-screen-xl py-1 px-4 md:px-4 lg:mx-auto lg:gap-8 xl:gap-0 lg:py-4 lg:px-0 lg:grid-cols-12 bg-white  dark:bg-gray-700">
+            <div class="mr-auto place-self-center lg:col-span-7 px-6">
                 @if (!empty($room))
                     <h1
                         class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
@@ -86,7 +86,7 @@
                             <div class="p-5">
                                 <div class="mb-5">
                                     <label for="room"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Room selected
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room selected
                                         <span class="text-rose-700">*</span></label>
                                     <input type="text" value="{{ old('room', $room->id ?? '') }}" id="room"
                                         name="room" class="hidden" required />
@@ -98,7 +98,7 @@
 
                                 <div class="mb-5">
                                     <label for="name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Name <span
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span
                                             class="text-rose-600">*</span></label>
                                     <input type="text" id="name" value="{{ old('name', Auth::user()->name ?? '') }}"
                                         readonly name="staff_name"
@@ -108,7 +108,7 @@
 
                                 <div class="mb-5">
                                     <label for="id"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Staff ID <span
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Staff ID <span
                                             class="text-rose-600">*</span></label>
                                     <input type="text" readonly
                                         value="{{ old('staff_id', Auth::user()->id_card ?? '') }}" id="id"
@@ -119,7 +119,7 @@
 
                                 <div class="mb-5">
                                     <label for="department"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Department<span
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department<span
                                             class="text-rose-700">*</span></label>
                                     <input type="text" id="department" readonly name="staff_department" class="hidden"   value="{{ old('staff_department', Auth::user()->department ?? '') }}">
                                     <select id="department" readonly  disabled
@@ -136,7 +136,7 @@
 
                                 <div class="mb-5">
                                     <label for="meeting_type"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Meeting Type
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meeting Type
                                         <span class="text-rose-600">*</span></label>
                                     <div class="mx-auto grid grid-cols-2 gap-4">
                                         <div class="flex items-center mb-4">
@@ -144,20 +144,20 @@
                                                 name="meeting_type"
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="meeting"
-                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-900">Meeting</label>
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Meeting</label>
                                         </div>
                                         <div class="flex items-center">
                                             <input id="training" type="radio" value="Training" name="meeting_type"
                                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                             <label for="training"
-                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-900">Training</label>
+                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Training</label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mb-5">
                                     <label for="description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Meeting or
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meeting or
                                         Training
                                         Title  <span
                                         class="text-rose-700">*</span></label>
@@ -168,7 +168,7 @@
                                 <div class="mb-5 grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="from_date"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">From Date
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From Date
                                             <span class="text-rose-600">*</span></label>
                                         <input type="date" onchange="validation_data()" id="from_date"
                                             value="{{ date('Y-m-d') }}" name="from_date"
@@ -177,7 +177,7 @@
                                     </div>
                                     <div>
                                         <label for="to_date"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">To Date
+                                            class="block mb-2 text-sm font-medium text-gray-900  dark:text-white">To Date
                                             <span class="text-rose-600">*</span></label>
                                         <input onchange="validation_data()" type="date" id="to_date"
                                             value="{{ date('Y-m-d') }}" name="to_date"
@@ -188,7 +188,7 @@
                                 <div class="mb-5 grid grid-cols-2 gap-4">
                                     <div>
                                         <label for="start_time"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">Start Time
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Time
                                             <span class="text-rose-600">*</span></label>
                                         <input onchange="validation_data()" type="time" id="start_time"
                                             name="start_time"
@@ -197,7 +197,7 @@
                                     </div>
                                     <div>
                                         <label for="end_time"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray">End Time
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Time
                                             <span class="text-rose-600">*</span></label>
                                         <input onchange="validation_data()" type="time" id="end_time"
                                             name="end_time"
@@ -230,7 +230,7 @@
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         @if (!empty($room))
                             <span class="text-xl font-semibold text-gray-900 dark:text-white">{{ $room->room_name }}'s
-                                Meeting Schedule </span>
+                                Meeting Schedule</span>
                         @endif
                         <button type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -254,7 +254,7 @@
             </div>
         </div>
         <section
-            class="calendar drop_slow1 laptop_respond bg-white   flex  max-w-screen-xl px-4  py-2 mx-auto lg:gap-8 xl:gap-0 lg:py-4  ">
+            class="calendar drop_slow1 laptop_respond bg-white   flex  max-w-screen-xl px-4  py-2 mx-auto lg:gap-8 xl:gap-0 lg:py-4    dark:bg-gray-700  p-4">
             <div class="me-2">
                 @if (!empty($room))
                     <span class="text-xl font-semibold text-gray-900 dark:text-white">{{ $room->room_name }}'s Meeting
@@ -277,7 +277,7 @@
                                 }
                             @endphp
                             @if ($meeting_id == $item->id)
-                            
+
                                 <li class="mb-10 ms-6 ">
                                     <span
                                         class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
@@ -395,7 +395,7 @@
                         @endphp
 
 
-                        <time datetime="{{ $today->format('Y-m') }}">
+                        <time datetime="{{ $today->format('Y-m') }}" class="dark:text-white">
                             {{ $today->format('F Y') }}
                         </time>
 

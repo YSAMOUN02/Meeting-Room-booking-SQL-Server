@@ -5,7 +5,7 @@
     @csrf
     <div class="w-full grid gap-6 mb-6 md:grid-cols-2">
         <div>
-            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+            <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
             @if (!empty($user->name))
             <input type="text" id="first_name" disabled  value="{{$user->name}}" name="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
             @else
@@ -15,8 +15,8 @@
         </div>
 
         <div>
-            <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Company</label>
-            <select id="company" name="company" disabled  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <label for="company" class="block mb-2 text-sm font-medium text-gray-900">Company</label>
+            <select id="company" name="company" disabled  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 @if (!empty($user->company))
 
                 <option value="{{$user->company}}">{{$user->company}}</option>
@@ -33,17 +33,17 @@
             @endif
         </div>
         <div>
-            <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
-            <select id="department" disabled   name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <label for="department" class="block mb-2 text-sm font-medium text-gray-900">Department</label>
+            <select id="department" disabled   name="department" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="{{$user->department}}">{{$user->department}}</option>
                 <!-- Add other departments as needed -->
             </select>
         </div>
         @if(Auth::user()->role == 'admin')
         <div>
-            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role </label>
+            <label for="role" class="block mb-2 text-sm font-medium text-gray-900 ">Role </label>
 
-                <select id="role" name="role" disabled  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="role" name="role" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     @if (!empty($user->role))
                     <option value="{{$user->role}}" selected>{{$user->role}}</option>
                     @endif
@@ -55,7 +55,7 @@
         </div>
         @endif
         <div>
-            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone number</label>
+            <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Phone number</label>
             @if (!empty($user->phone))
             <input type="phone" disabled  value="{{$user->phone}}" id="phone" name="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
 
@@ -65,7 +65,7 @@
 
         </div>
         <div>
-            <label for="id_card" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID Card</label>
+            <label for="id_card" class="block mb-2 text-sm font-medium text-gray-900 ">ID Card</label>
             @if (!empty($user->id_card))
             <input type="text" disabled  id="id_card" value="{{$user->id_card}}" name="id_card" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  />
             @else
@@ -77,7 +77,7 @@
 
     </div>
     <div class="mb-6">
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email address</label>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email address</label>
 
         @if (!empty($user->email))
         <input type="email" disabled  value="{{$user->email}}" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jonh@gamil.com" />
@@ -88,7 +88,7 @@
 
     </div>
     <div class="mb-6">
-        <label for="user_login" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Login</label>
+        <label for="user_login" class="block mb-2 text-sm font-medium text-gray-900">User Login</label>
         @if (!empty($user->user_login))
         <input type="text"  value="{{$user->user_login}}" id="user_login" name="user_login" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="..." />
         @else
@@ -97,7 +97,7 @@
     </div>
 
     <div class="mb-6">
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
         <input type="password"  id="password"  name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="..." />
     </div>
 

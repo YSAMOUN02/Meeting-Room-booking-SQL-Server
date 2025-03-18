@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Khmer&display=swap');
+
+
 *{
+    font-family: 'Noto Serif Khmer', serif;
     box-sizing: border-box;
     margin: 0;
 }
@@ -176,12 +180,12 @@ table{
 .hover_td{
     position: sticky;
     right: 0;
-    background-color: rgb(218, 218, 218);
+
 }
 .hover_td_left{
     position: sticky;
     left: 0;
-    background-color: rgb(235, 235, 235);
+
 }
 /* The table container with scrolling */
 .table_user_container {
@@ -208,7 +212,7 @@ table{
 .standard-table td:last-child, .standard-table th:last-child {
     position: sticky;
     right: 0;
-    background-color: white; /* Background for the sticky last column */
+
     z-index: 2; /* Keep it on top of other table cells */
 }
 

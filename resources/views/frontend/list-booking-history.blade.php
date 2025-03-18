@@ -58,7 +58,7 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th>No</th>
-                            <th scope="col" class="hover_td_left  px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
+                            <th scope="col" class="hover_td_left z-20  bg-gray-50 dark:bg-gray-700 px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Meeting Room </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Topic </th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Type</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Booked By</th>
@@ -72,7 +72,8 @@
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel By</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Reason</th>
                             <th scope="col" class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Cancel Date</th>
-                            <th scope="col" class="hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
+                            <th scope="col" class="hover_td  bg-gray-50 dark:bg-gray-700 px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">Status</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -85,8 +86,8 @@
 
                             <tr class="border-b dark:border-gray-700  selected">
 
-                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state+1}}</th>
-                                <td class="hover_td_left  px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
+                                <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-black">{{$state+1}}</th>
+                                <td class="hover_td_left selected px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
@@ -111,7 +112,7 @@
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     {{$item->cancel_date}}
                                 </td>
-                                <td class=" hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                <td class=" hover_td   text-xs  selected px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @php
                                      $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
                                      $day = \Carbon\Carbon::parse($item->date)->format('d');
@@ -171,8 +172,7 @@
                             <tr class="border-b dark:border-gray-700">
                                 <th class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$state+1}}</th>
 
-
-                                <td class="hover_td_left  px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
+                                <td class="hover_td_left  bg-gray-50 dark:bg-gray-700  px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->room}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->title}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->meeting_type}}</td>
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">{{$item->staff_name}}</td>
@@ -197,7 +197,7 @@
                                 <td class="px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     {{$item->cancel_date}}
                                 </td>
-                                <td class=" hover_td px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
+                                <td class=" hover_td  bg-gray-50 dark:bg-gray-700 px-3 py-3 md:px-4 md:py-3 lg:px-4 lg:py-3">
                                     @php
                                      $end = \Carbon\Carbon::parse($item->end_time)->format('h:i A');
                                      $day = \Carbon\Carbon::parse($item->date)->format('d');

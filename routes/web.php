@@ -60,18 +60,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/room/create/submit',[RoomController::class, 'create_room_submit']);
 
-    // User
-    Route::get('/list/user/{page}',[UserController::class, 'list_user']);
 
-    Route::post('/user/delete/submit',[UserController::class, 'delete_user_submit']);
-
-    Route::post('/user/update/submit',[UserController::class, 'update_user']);
-
-    Route::post('/user/update/profile/submit',[UserController::class, 'update_user_profile']);
-
-    Route::get('/user/create', [UserController::class, 'create_user_form']);
-
-    Route::post('/user/create/submit', [UserController::class, 'create_user_submit']);
 
     Route::get('/user/profile',[UserController::class, 'my_profile']);
 
@@ -83,3 +72,15 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+   // User
+   Route::get('/list/user/{page}',[UserController::class, 'list_user']);
+
+   Route::post('/user/delete/submit',[UserController::class, 'delete_user_submit']);
+
+   Route::post('/user/update/submit',[UserController::class, 'update_user']);
+
+   Route::post('/user/update/profile/submit',[UserController::class, 'update_user_profile']);
+
+   Route::get('/user/create', [UserController::class, 'create_user_form']);
+
+   Route::post('/user/create/submit', [UserController::class, 'create_user_submit']);

@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="preconnect" href="https://fonts.bunny.net">
 
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/5041c59df8.js" crossorigin="anonymous"></script>
+
+
+
+    <link rel="stylesheet" href="{{URL('assets/fonts6/css/all.css')}}">
+
+    <link rel="stylesheet" href="{{ URL('assets/css/style.css') }}">
+    <link rel="shortcut icon" href="{{ URL('assets/image/office.ico') }}" type="image/x-icon">
+
+    @vite('resources/css/app.css')
+
+
 
     <link rel="shortcut icon" href="{{ URL('assets/image/office.ico') }}" type="image/x-icon">
 
@@ -179,7 +184,7 @@
                 class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <div class="flex">
-                  
+
                     <h1
                         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Sign in to your account
