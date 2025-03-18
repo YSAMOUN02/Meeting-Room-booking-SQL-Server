@@ -9,11 +9,12 @@
     @vite('resources/css/app.css')
 
 
-
-
     <link rel="stylesheet" href="{{URL('assets/fonts6/css/all.css')}}">
 
+
+
     <link rel="stylesheet" href="{{ URL('assets/css/style.css') }}">
+
     <link rel="shortcut icon" href="{{ URL('assets/image/office.ico') }}" type="image/x-icon">
     <title>Meeting-Room-Booking</title>
 
@@ -272,10 +273,7 @@
 
 
     <script src="{{ URL('assets/js/flowbite.min.js') }}"></script>
-    <link rel="stylesheet" href="{{URL('/assets/Icon/all.min.css')}}" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-    <script src="{{ URL('assets/js/script.js') }}"></script>
+      <script src="{{ URL('assets/js/script.js') }}"></script>
     <script>
         let toast = document.querySelector("#toast");
         toast.addEventListener('click', () => {

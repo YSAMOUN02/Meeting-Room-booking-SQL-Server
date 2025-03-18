@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Khmer&display=swap');
+
+@import url('/assets/css/font.css');
 
 
 *{
@@ -8,7 +9,7 @@
 }
 body{
 
-    background: url('https://img.freepik.com/free-vector/blue-curve-background_53876-113112.jpg');
+    background: url('/assets/startic_img/blue-curve-background_53876-113112.avif');
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
@@ -117,8 +118,7 @@ body{
 }
 #main{
     min-height: 100vh;
-
-    background: url('https://img.freepik.com/free-vector/blue-curve-background_53876-113112.jpg');
+    background: url('/assets/startic_img/blue-curve-background_53876-113112.avif');
     background-position: center;
     background-attachment: fixed;
     background-size: cover;

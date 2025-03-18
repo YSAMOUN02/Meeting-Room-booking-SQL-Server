@@ -600,7 +600,8 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="{{ URL('assets/js/flowbite.min.js') }}"></script>
+
     <script>
         let book_data = @json($booking_data);
 
