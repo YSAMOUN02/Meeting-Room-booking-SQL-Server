@@ -113,18 +113,9 @@
                                         type: 'bar',
                                         label: 'Monthly Records',
                                         data: dataValues_{{ $id }},
-                                        backgroundColor: (context) => {
-                                            const index = context.dataIndex;
-                                            if (index === 0) return "gray";
-                                            const prev = dataValues_{{ $id }}[index - 1];
-                                            const curr = dataValues_{{ $id }}[index];
-                                            const diff = curr - prev;
-
-                                            if (diff > 5) return "rgba(255,0,0,0.4)";
-                                            if (diff > 0) return "rgba(255,165,0,0.4)";
-                                            if (diff < -5) return "rgba(0,128,0,0.4)";
-                                            return "rgba(50,205,50,0.4)";
-                                        },
+                                        backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
+                                        borderColor: "cyan", // optional border
+                                        borderWidth: 1, // optional
                                         borderSkipped: false,
                                         borderRadius: 0,
                                         barPercentage: 0.6,
@@ -138,32 +129,15 @@
                                         type: 'line',
                                         label: 'Trend ' + year,
                                         data: dataValues_{{ $id }},
-                                        borderColor: "rgba(0,0,0,0)",
-                                        backgroundColor: "rgba(0,0,0,0)",
-                                        fill: false,
+                                        borderColor: "cyan", // cyan line
+                                        backgroundColor: "rgba(0,255,255,0.2)", // cyan fill under the line
+                                        fill: true, // fill under the line
                                         tension: 0.4,
                                         pointRadius: 4,
                                         pointHoverRadius: 6,
-                                        pointBackgroundColor: (ctx) => {
-                                            if (ctx.dataIndex === 0) return "gray";
-                                            const prev = ctx.dataset.data[ctx.dataIndex - 1];
-                                            const curr = ctx.dataset.data[ctx.dataIndex];
-                                            const diff = curr - prev;
-
-                                            if (diff > 5) return "red";
-                                            if (diff > 0) return "orange";
-                                            if (diff < -5) return "green";
-                                            return "limegreen";
-                                        },
+                                        pointBackgroundColor: "cyan", // cyan points
                                         segment: {
-                                            borderColor: (ctx) => {
-                                                if (!ctx.p0 || !ctx.p1) return "gray";
-                                                const diff = ctx.p1.parsed.y - ctx.p0.parsed.y;
-                                                if (diff > 5) return "red";
-                                                if (diff > 0) return "orange";
-                                                if (diff < -5) return "green";
-                                                return "limegreen";
-                                            },
+                                            borderColor: "cyan", // make segments cyan
                                             borderWidth: 2
                                         }
                                     }
@@ -202,19 +176,23 @@
                                         },
                                         tooltip: {
                                             mode: 'index',
+                                            filter: function(tooltipItem) {
+                                                // Only show tooltip for line dataset
+                                                return tooltipItem.dataset.type === 'line';
+                                            },
                                             intersect: false,
                                             callbacks: {
                                                 label: (context) => {
                                                     const value = context.parsed.y;
                                                     if (value === 0) return '';
                                                     const index = context.dataIndex;
-                                                    if (index === 0) return `${value} Issue`;
+                                                    if (index === 0) return `${value} Booking`;
                                                     const prev = context.dataset.data[index - 1];
-                                                    if (prev === 0) return `${value} Issue`;
+                                                    if (prev === 0) return `${value} Booking`;
                                                     const diff = value - prev;
                                                     const percent = ((diff / prev) * 100).toFixed(1);
                                                     const sign = percent > 0 ? '+' : '';
-                                                    return `${value} Issue (${sign}${percent}%)`;
+                                                    return `${value} Booking (${sign}${percent}%)`;
                                                 }
                                             }
                                         },
