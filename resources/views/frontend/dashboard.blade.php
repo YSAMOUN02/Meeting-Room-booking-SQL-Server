@@ -107,41 +107,36 @@
 
                             const chartData_{{ $id }} = {
                                 labels: months,
-                                datasets: [
-                                    // Bar
-                                    {
-                                        type: 'bar',
-                                        label: 'Monthly Records',
-                                        data: dataValues_{{ $id }},
-                                        backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
-                                        borderColor: "cyan", // optional border
-                                        borderWidth: 1, // optional
-                                        borderSkipped: false,
-                                        borderRadius: 0,
-                                        barPercentage: 0.6,
-                                        categoryPercentage: 0.8,
-                                        datalabels: {
-                                            display: false
-                                        }
-                                    },
-                                    // Trend line
-                                    {
-                                        type: 'line',
-                                        label: 'Trend ' + year,
-                                        data: dataValues_{{ $id }},
-                                        borderColor: "cyan", // cyan line
-                                        backgroundColor: "rgba(0,255,255,0.2)", // cyan fill under the line
-                                        fill: true, // fill under the line
-                                        tension: 0.4,
-                                        pointRadius: 4,
-                                        pointHoverRadius: 6,
-                                        pointBackgroundColor: "cyan", // cyan points
-                                        segment: {
-                                            borderColor: "cyan", // make segments cyan
-                                            borderWidth: 2
+                                datasets: [{
+                                    type: 'bar',
+                                    label: 'Monthly Records',
+                                    data: dataValues_{{ $id }},
+                                    backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
+                                    borderColor: "cyan", // optional border
+                                    borderWidth: 1,
+                                    borderSkipped: false,
+                                    borderRadius: 0,
+                                    barPercentage: 0.6,
+                                    categoryPercentage: 0.8,
+                                    datalabels: {
+                                        display: true,
+                                        color: '#000',
+                                        font: {
+                                            weight: 'bold'
+                                        },
+                                        formatter: (value, context) => {
+                                            if (value === 0) return '';
+                                            const index = context.dataIndex;
+                                            if (index === 0) return value; // first month
+                                            const prev = context.dataset.data[index - 1];
+                                            if (prev === 0) return value;
+                                            const diff = value - prev;
+                                            if (diff === 0) return value; // no change
+                                            const arrow = diff > 0 ? '↑' : '↓';
+                                            return `${value} ${arrow}`;
                                         }
                                     }
-                                ]
+                                }]
                             };
 
                             new Chart(ctx_{{ $id }}, {
