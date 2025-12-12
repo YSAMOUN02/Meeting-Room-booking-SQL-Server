@@ -195,11 +195,11 @@
                 ];
             @endphp
 
-            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
+            <div class="hidden p-10  m-5 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
                 role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
 
-                <h2 class="font-bold mb-3 text-lg">{{ $room }}</h2>
-                <div class="chart_control">
+                <h2 class="font-bold mb-10  text-lg">{{ $room }}</h2>
+                <div class="chart_control ">
                     <canvas id="Donut_{{ $roomId }}"></canvas>
                 </div>
 
