@@ -246,37 +246,46 @@
                                             }
                                         }
                                     },
-                                    outlabels: {
-                                        text: '%l: %p', // %l = label, %p = percentage
-                                        color: '#000',
-                                        stretch: 25, // distance from chart
-                                        lineColor: '#000', // line color
-                                        lineWidth: 1,
-                                        font: {
-                                            weight: 'bold',
-                                            size: 12
-                                        },
-                                        textAlign: 'center',
-                                        // automatically moves small labels away
-                                    },
                                     datalabels: {
                                         display: true,
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
-                                            size: 12
+                                            size: 10
                                         },
-                                        anchor: 'end', // outside
-                                        align: 'end', // outside
-                                        offset: 10,
-                                        formatter: (value, context) => {
-                                            const label = context.chart.data.labels[context
-                                                .dataIndex]; // get company name
+                                        anchor: 'end',
+                                        align: function(context) {
+                                            const value = Number(context.dataset.data[context.dataIndex]);
+                                            const total = context.dataset.data.reduce((sum, val) => sum + Number(
+                                                val), 0);
+                                            const percent = (value / total) * 100;
+
+                                            // Small slices (<10%) → always left or right
+                                            if (percent < 10) {
+                                                const angle = (context.chart.getDatasetMeta(0).data[context
+                                                        .dataIndex].startAngle +
+                                                    context.chart.getDatasetMeta(0).data[context.dataIndex]
+                                                    .endAngle) / 2;
+                                                return (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) ? 'left' :
+                                                    'right';
+                                            }
+
+                                            // Big slices → keep default outside
+                                            return 'end';
+                                        },
+                                        offset: function(context) {
+                                            const value = Number(context.dataset.data[context.dataIndex]);
+                                            const total = context.dataset.data.reduce((sum, val) => sum + Number(
+                                                val), 0);
+                                            const percent = (value / total) * 100;
+                                            return percent < 10 ? 20 : 10; // push small slices further out
+                                        },
+                                        formatter: function(value, context) {
+                                            const label = context.chart.data.labels[context.dataIndex];
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
-                                            if (total === 0) return label + ': ' + value + ' (0%)';
-                                            const percent = ((value / total) * 100).toFixed(1) + '%';
-                                            return label + ': ' + value + ' (' + percent + ')';
+                                            const percent = total === 0 ? 0 : ((value / total) * 100).toFixed(1);
+                                            return `${label} (${percent}%)`;
                                         }
                                     }
                                 }
