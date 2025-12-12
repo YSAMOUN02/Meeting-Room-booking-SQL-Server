@@ -247,45 +247,35 @@
                                         }
                                     },
                                     datalabels: {
-                                        display: true,
+                                        display: function(context) {
+                                            // only show label if slice is at least 5% of the total
+                                            return context.chart.getDatasetMeta(0).data[context.dataIndex]
+                                                .circumference > 0.05;
+                                        },
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
                                             size: 10
                                         },
                                         anchor: 'end',
-                                        align: function(context) {
-                                            const value = Number(context.dataset.data[context.dataIndex]);
-                                            const total = context.dataset.data.reduce((sum, val) => sum + Number(
-                                                val), 0);
-                                            const percent = (value / total) * 100;
-
-                                            // Small slices (<10%) → always left or right
-                                            if (percent < 10) {
-                                                const angle = (context.chart.getDatasetMeta(0).data[context
-                                                        .dataIndex].startAngle +
-                                                    context.chart.getDatasetMeta(0).data[context.dataIndex]
-                                                    .endAngle) / 2;
-                                                return (angle > Math.PI / 2 && angle < 3 * Math.PI / 2) ? 'left' :
-                                                    'right';
-                                            }
-
-                                            // Big slices → keep default outside
-                                            return 'end';
-                                        },
-                                        offset: function(context) {
-                                            const value = Number(context.dataset.data[context.dataIndex]);
-                                            const total = context.dataset.data.reduce((sum, val) => sum + Number(
-                                                val), 0);
-                                            const percent = (value / total) * 100;
-                                            return percent < 10 ? 20 : 10; // push small slices further out
-                                        },
-                                        formatter: function(value, context) {
+                                        align: 'end',
+                                        offset: 15,
+                                        clamp: true, // prevents going outside canvas
+                                        formatter: (value, context) => {
                                             const label = context.chart.data.labels[context.dataIndex];
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
-                                            const percent = total === 0 ? 0 : ((value / total) * 100).toFixed(1);
-                                            return `${label} (${percent}%)`;
+                                            const percent = ((value / total) * 100).toFixed(1) + '%';
+
+                                            // If slice is small, show inside
+                                            if ((value / total) < 0.05) {
+                                                context.anchor = 'center';
+                                                context.align = 'center';
+                                            } else {
+                                                context.anchor = 'end';
+                                                context.align = 'end';
+                                            }
+                                            return label + ': ' + value + ' (' + percent + ')';
                                         }
                                     }
                                 }
