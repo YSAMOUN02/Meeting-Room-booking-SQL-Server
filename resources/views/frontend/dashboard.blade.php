@@ -198,7 +198,7 @@
             <div class="hidden p-10  m-5 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
                 role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
 
-                <h2 class="font-bold mb-10  text-lg">{{ $room }}</h2>
+                <h2 class="font-bold mb-10  p-5 text-lg">{{ $room }}</h2>
                 <div class="chart_control ">
                     <canvas id="Donut_{{ $roomId }}"></canvas>
                 </div>
@@ -226,6 +226,14 @@
                                 responsive: true,
                                 maintainAspectRatio: false,
                                 cutout: '70%',
+                                layout: {
+                                    padding: {
+                                        top: 40,
+                                        bottom: 40,
+                                        left: 40, // extra space for left labels
+                                        right: 40 // extra space for right labels
+                                    }
+                                },
                                 plugins: {
                                     legend: {
                                         display: false
@@ -248,13 +256,19 @@
                                         anchor: 'end', // outside
                                         align: 'end', // outside
                                         offset: 10,
-                                        formatter: function(value, context) {
-                                            const percent = ((Number(value) / totalSum) * 100).toFixed(1);
-                                            return `${context.chart.data.labels[context.dataIndex]} (${percent}%)`;
+                                        formatter: (value, context) => {
+                                            const label = context.chart.data.labels[context
+                                            .dataIndex]; // get company name
+                                            const dataArr = context.chart.data.datasets[0].data.map(Number);
+                                            const total = dataArr.reduce((sum, val) => sum + val, 0);
+                                            if (total === 0) return label + ': ' + value + ' (0%)';
+                                            const percent = ((value / total) * 100).toFixed(1) + '%';
+                                            return label + ': ' + value + ' (' + percent + ')';
                                         }
                                     }
                                 }
                             },
+
                             plugins: [ChartDataLabels]
                         });
                     });
