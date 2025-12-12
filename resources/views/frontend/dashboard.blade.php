@@ -204,80 +204,86 @@
                 </div>
 
 
-             <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
-    const totals = @json($departmentTotals);
-    const totalSum = totals.reduce((a, b) => a + b, 0);
+                        const totals = @json($departmentTotals);
+                        const totalSum = totals.reduce((a, b) => a + b, 0);
 
-    new Chart(ctx, {
-        type: "doughnut",
-        data: {
-            labels: @json($departmentNames),
-            datasets: [{
-                data: totals,
-                backgroundColor: @json($bgColors),
-                borderColor: @json($borderColors),
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            layout: {
-                padding: {
-                    top: 40,
-                    bottom: 120, // enough space for legend
-                    left: 40,
-                    right: 40
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 20,
-                        padding: 15,
-                        font: {
-                            size: 9
-                        }
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const percent = ((context.raw / totalSum) * 100).toFixed(1);
-                            return `${context.label}: ${context.raw} bookings (${percent}%)`;
-                        }
-                    }
-                },
-                datalabels: {
-                    display: true, // show all labels
-                    color: '#000',
-                    font: {
-                        weight: 'bold',
-                        size: 10
-                    },
-                    anchor: 'center', // center of slice
-                    align: 'center',  // center of slice
-                    offset: 0,
-                    formatter: (value, context) => {
-                        const label = context.chart.data.labels[context.dataIndex];
-                        const dataArr = context.chart.data.datasets[0].data.map(Number);
-                        const total = dataArr.reduce((sum, val) => sum + val, 0);
-                        const percent = ((value / total) * 100).toFixed(1) + '%';
-                        return label + ': ' + value + ' (' + percent + ')';
-                    }
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-});
-</script>
+                        new Chart(ctx, {
+                            type: "doughnut",
+                            data: {
+                                labels: @json($departmentNames),
+                                datasets: [{
+                                    data: totals,
+                                    backgroundColor: @json($bgColors),
+                                    borderColor: @json($borderColors),
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '70%',
+                                layout: {
+                                    padding: {
+                                        top: 40,
+                                        bottom: 120, // enough space for legend
+                                        left: 40,
+                                        right: 40
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            boxWidth: 20,
+                                            padding: 15,
+                                            font: {
+                                                size: 9
+                                            }
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const percent = ((context.raw / totalSum) * 100).toFixed(1);
+                                                return `${context.label}: ${context.raw} bookings (${percent}%)`;
+                                            }
+                                        }
+                                    },
+                                    datalabels: {
+                                        color: '#000',
+                                        font: {
+                                            weight: 'bold',
+                                            size: 10
+                                        },
+                                        anchor: 'center',
+                                        align: 'center',
+                                        offset: 0,
+                                        display: function(context) {
+                                            const value = context.dataset.data[context.dataIndex];
+                                            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                            const percent = value / total;
+                                            // Only show label if slice is at least 5% of total
+                                            return percent >= 0.05;
+                                        },
+                                        formatter: (value, context) => {
+                                            const label = context.chart.data.labels[context.dataIndex];
+                                            const dataArr = context.chart.data.datasets[0].data.map(Number);
+                                            const total = dataArr.reduce((sum, val) => sum + val, 0);
+                                            const percent = ((value / total) * 100).toFixed(1) + '%';
+                                            return label + ': ' + value + ' (' + percent + ')';
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: [ChartDataLabels]
+                        });
+                    });
+                </script>
 
 
 
