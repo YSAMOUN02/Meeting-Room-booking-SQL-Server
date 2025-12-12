@@ -270,9 +270,11 @@
                                         align: 'center', // center of slice
                                         offset: 0,
                                         formatter: (value, context) => {
-                                            const label = context.chart.data.labels[context.dataIndex];
+                                            const label = context.chart.data.labels[context
+                                            .dataIndex]; // get company name
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
+                                            if (total === 0) return label + ': ' + value + ' (0%)';
                                             const percent = ((value / total) * 100).toFixed(1) + '%';
                                             return label + ': ' + value + ' (' + percent + ')';
                                         }
