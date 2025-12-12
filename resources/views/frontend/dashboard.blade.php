@@ -75,7 +75,7 @@
                 <script>
                     // Manual months array
                     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    const chart = 'bar';
+                    const chart = 'line';
                 </script>
                 @foreach ($chartData as $room)
                     @php
@@ -108,11 +108,12 @@
                                     data: dataValues_{{ $id }},
                                     backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
                                     borderColor: "cyan",
-                                    borderWidth: 1,
+                                    borderWidth: 3, // <-- increased line thickness
                                     borderSkipped: false,
                                     borderRadius: 0,
                                     barPercentage: 0.6,
                                     categoryPercentage: 0.8,
+                                    tension: 0.4, // <-- optional for smoother line (works for line charts)
                                     datalabels: {
                                         display: true,
                                         color: '#000',
@@ -155,6 +156,7 @@
                                         axis: 'x',
                                         intersect: false
                                     }
+
                                 },
                                 plugins: [ChartDataLabels]
                             });
@@ -206,12 +208,15 @@
                     document.addEventListener("DOMContentLoaded", function() {
                         const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
+                        const totals = @json($departmentTotals);
+                        const totalSum = totals.reduce((a, b) => a + b, 0);
+
                         new Chart(ctx, {
                             type: "doughnut",
                             data: {
                                 labels: @json($departmentNames),
                                 datasets: [{
-                                    data: @json($departmentTotals),
+                                    data: totals,
                                     backgroundColor: @json($bgColors),
                                     borderColor: @json($borderColors),
                                     borderWidth: 1
@@ -223,16 +228,12 @@
                                 cutout: '70%',
                                 plugins: {
                                     legend: {
-                                        position: "bottom",
-                                        labels: {
-                                            usePointStyle: true
-                                        }
+                                        display: false
                                     },
                                     tooltip: {
                                         callbacks: {
                                             label: function(context) {
-                                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                                const percent = ((context.raw / total) * 100).toFixed(1);
+                                                const percent = ((context.raw / totalSum) * 100).toFixed(1);
                                                 return `${context.label}: ${context.raw} bookings (${percent}%)`;
                                             }
                                         }
@@ -242,11 +243,15 @@
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
-                                            size: 10
+                                            size: 12
                                         },
-                                        formatter: function(value) {
-                                            return value;
-                                        } // show only value
+                                        anchor: 'end', // outside
+                                        align: 'end', // outside
+                                        offset: 10,
+                                        formatter: function(value, context) {
+                                            const percent = ((value / totalSum) * 100).toFixed(1);
+                                            return `${context.chart.data.labels[context.dataIndex]} (${percent}%)`;
+                                        }
                                     }
                                 }
                             },
@@ -254,6 +259,7 @@
                         });
                     });
                 </script>
+
 
             </div>
         @endforeach
