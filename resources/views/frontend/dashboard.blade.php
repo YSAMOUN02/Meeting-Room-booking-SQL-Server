@@ -249,7 +249,7 @@
                                         align: 'end', // outside
                                         offset: 10,
                                         formatter: function(value, context) {
-                                            const percent = ((value / totalSum) * 100).toFixed(1);
+                                            const percent = ((Number(value) / totalSum) * 100).toFixed(1);
                                             return `${context.chart.data.labels[context.dataIndex]} (${percent}%)`;
                                         }
                                     }
