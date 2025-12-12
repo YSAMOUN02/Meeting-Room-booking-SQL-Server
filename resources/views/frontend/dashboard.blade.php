@@ -41,32 +41,29 @@
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center bg-white mt-2 dark:bg-white " id="default-tab"
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center bg-white mt-2 dark:bg-white" id="default-tab"
             data-tabs-toggle="#default-tab-content" role="tablist">
+
             <li class="me-2" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile"
-                    type="button" role="tab" aria-controls="profile" aria-selected="false">Booking by Year</button>
-            </li>
-            <li class="me-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard"
-                    aria-selected="false">...</button>
+                    type="button" role="tab" aria-controls="profile" aria-selected="true">
+                    Booking by Year
+                </button>
             </li>
 
+            @foreach ($rooms as $room)
+                @php
+                    $roomId = Str::slug($room, '_'); // convert to safe ID
+                @endphp
 
-            <li class="me-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="settings-tab" data-tabs-target="#Company" type="button" role="tab" aria-controls="Company"
-                    aria-selected="false">...</button>
-            </li>
-            <li class="me-2" role="presentation">
-                <button
-                    class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                    id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings"
-                    aria-selected="false">...</button>
-            </li>
+                <li class="me-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                        id="room_123{{ $roomId }}" data-tabs-target="#test_room123{{ $roomId }}" type="button"
+                        role="tab" aria-controls="test_room123{{ $roomId }}" aria-selected="false">
+                        {{ $room }}
+                    </button>
+                </li>
+            @endforeach
         </ul>
     </div>
     <div id="default-tab-content">
@@ -78,6 +75,7 @@
                 <script>
                     // Manual months array
                     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const chart = 'bar';
                 </script>
                 @foreach ($chartData as $room)
                     @php
@@ -105,7 +103,7 @@
                             const chartData_{{ $id }} = {
                                 labels: months,
                                 datasets: [{
-                                    type: 'line',
+                                    type: chart,
                                     label: 'Monthly Records',
                                     data: dataValues_{{ $id }},
                                     backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
@@ -129,7 +127,7 @@
                             };
 
                             new Chart(ctx_{{ $id }}, {
-                                type: 'bar',
+                                type: chart,
                                 data: chartData_{{ $id }},
                                 options: {
                                     responsive: true,
@@ -163,70 +161,110 @@
                         </script>
                     </div>
                 @endforeach
-
-
-
             </div>
-
-
-
-
-
-
-
-
 
         </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel"
-            aria-labelledby="dashboard-tab">
-            <div class="grid grid-cols-2 gap-2">
-                Department Booking
-                {{-- 📊 Department This Year --}}
+        @foreach ($rooms as $room)
+            @php
+                $roomId = Str::slug($room, '_');
 
+                $departmentChartData = \App\Models\Booking::select('department', DB::raw('COUNT(*) as total'))
+                    ->whereYear('date', $year)
+                    ->where('room', $room)
+                    ->where('status', 1)
+                    ->groupBy('department')
+                    ->get();
+
+                $departmentNames = $departmentChartData->pluck('department');
+                $departmentTotals = $departmentChartData->pluck('total');
+
+                // Pastel background colors
+                $bgColors = ['#FFB3BA', '#BAE1FF', '#BAFFC9', '#FFFFBA', '#FFDFBA', '#E0BBE4', '#C1F0F6', '#FFDAC1'];
+                // Slightly darker borders
+                $borderColors = [
+                    '#FF8C8C',
+                    '#8CC2FF',
+                    '#8CFF99',
+                    '#FFFF8C',
+                    '#FFB78C',
+                    '#D099D9',
+                    '#8CC6CC',
+                    '#FFB780',
+                ];
+            @endphp
+
+            <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
+                role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
+
+                <h2 class="font-bold mb-3 text-lg">{{ $room }}</h2>
+                <div class="chart_control">
+                    <canvas id="Donut_{{ $roomId }}"></canvas>
+                </div>
+
+
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
+
+                        new Chart(ctx, {
+                            type: "doughnut",
+                            data: {
+                                labels: @json($departmentNames),
+                                datasets: [{
+                                    data: @json($departmentTotals),
+                                    backgroundColor: @json($bgColors),
+                                    borderColor: @json($borderColors),
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false, // important! lets chart fit the div
+                                plugins: {
+                                    legend: {
+                                        position: "bottom",
+                                        labels: {
+                                            usePointStyle: true
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                                const percent = ((context.raw / total) * 100).toFixed(1);
+                                                return `${context.label}: ${context.raw} bookings (${percent}%)`;
+                                            }
+                                        }
+                                    },
+                                    datalabels: {
+                                        display: true,
+                                        color: '#000',
+                                        formatter: function(value, context) {
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percent = ((value / total) * 100).toFixed(0);
+                                            const label = context.chart.data.labels[context
+                                            .dataIndex]; // get department name
+                                            return `${label}\n${value} (${percent}%)`; // show department + value + %
+                                        },
+                                        font: {
+                                            weight: 'bold',
+                                            size: 12
+                                        }
+                                    }
+
+                                }
+                            },
+                            plugins: [ChartDataLabels]
+                        });
+                    });
+                </script>
 
             </div>
+        @endforeach
 
 
-
-
-
-
-
-        </div>
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel"
-            aria-labelledby="settings-tab">
-            <div class="grid grid-cols-2">
-
-
-            </div>
-            <div class="grid grid-cols-1 mt-5">
-
-
-
-            </div>
-
-
-
-
-
-        </div>
-        <div class="hidden p-0 rounded-lg bg-gray-50 dark:bg-gray-800" id="Company" role="tabpanel"
-            aria-labelledby="Company">
-
-            {{-- 📊 Company This Year --}}
-            <div class="flex items-center justify-center">
-                <canvas id="CompanyThisYear" class="canvas_control3"></canvas>
-            </div>
-            {{-- 📊 Department This Year --}}
-            <div class="w-full flex items-center justify-center">
-
-                <canvas id="ChartLast12Months_company" class="canvas_control4"></canvas>
-            </div>
-
-
-
-        </div>
     </div>
+
     </div>
 
     <script>

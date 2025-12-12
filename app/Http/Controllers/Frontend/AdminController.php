@@ -132,17 +132,40 @@ class AdminController extends Controller
 
 
 
+        // Get all departments that have bookings in the selected year
+        $departments = Booking::select('department')
+            ->whereYear('date', $year)
+            ->where('status', 1)
+            ->distinct()
+            ->pluck('department');
+
+        // Prepare chart data for departments
+        $departmentChartData = [];
+
+        foreach ($departments as $dept) {
+            $count = Booking::where('department', $dept)
+                ->whereYear('date', $year)
+                ->where('status', 1)
+                ->count();
+
+            $departmentChartData[] = [
+                'department' => $dept,
+                'total' => $count,
+            ];
+        }
 
 
 
-        // return $chartData;
 
         return view('frontend.dashboard', [
             'month' => $month,
             'year' => $year,
+            'rooms' => $rooms,
             'years_exist' => $years_exist,
             'chartData' => $chartData,
             'months_label' => $months_label,
+
+            'departmentChartData' => $departmentChartData,
         ]);
     }
 }
