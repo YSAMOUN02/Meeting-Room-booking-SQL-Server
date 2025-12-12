@@ -37,7 +37,7 @@
     <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/chartjs-plugin-datalabels.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script>
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -246,29 +246,32 @@
                                             }
                                         }
                                     },
+                                    outlabels: {
+                                        text: '%l: %p', // %l = label, %p = percentage
+                                        color: '#000',
+                                        stretch: 25, // distance from chart
+                                        lineColor: '#000', // line color
+                                        lineWidth: 1,
+                                        font: {
+                                            weight: 'bold',
+                                            size: 12
+                                        },
+                                        textAlign: 'center',
+                                        // automatically moves small labels away
+                                    },
                                     datalabels: {
                                         display: true,
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
-                                            size: 10
+                                            size: 12
                                         },
                                         anchor: 'end', // outside
                                         align: 'end', // outside
-                                        offset: function(context) {
-                                            // get slice value and total
-                                            const value = Number(context.dataset.data[context.dataIndex]);
-                                            const total = context.dataset.data.reduce((sum, val) => sum + Number(
-                                                val), 0);
-                                            const percent = (value / total) * 100;
-
-                                            // push small slices farther
-                                            if (percent < 5) return 20; // small slice -> bigger offset
-                                            if (percent < 10) return 15; // medium slice
-                                            return 10; // default
-                                        },
+                                        offset: 10,
                                         formatter: (value, context) => {
-                                            const label = context.chart.data.labels[context.dataIndex];
+                                            const label = context.chart.data.labels[context
+                                                .dataIndex]; // get company name
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
                                             if (total === 0) return label + ': ' + value + ' (0%)';
