@@ -255,21 +255,20 @@
                                         }
                                     },
                                     datalabels: {
+                                        display: function(context) {
+                                            const value = context.dataset.data[context.dataIndex];
+                                            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                            const percent = (value / total) * 100;
+                                            return percent > 5; // hide labels for slices < 5%
+                                        },
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
                                             size: 10
                                         },
-                                        anchor: 'center',
-                                        align: 'center',
+                                        anchor: 'center', // center of slice
+                                        align: 'center', // center of slice
                                         offset: 0,
-                                        display: function(context) {
-                                            const value = context.dataset.data[context.dataIndex];
-                                            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
-                                            const percent = value / total;
-                                            // Only show label if slice is at least 5% of total
-                                            return percent >= 0.05;
-                                        },
                                         formatter: (value, context) => {
                                             const label = context.chart.data.labels[context.dataIndex];
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
