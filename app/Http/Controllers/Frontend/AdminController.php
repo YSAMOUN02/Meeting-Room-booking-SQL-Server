@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Mail\register_mail;
 use App\Models\booking;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -85,6 +86,11 @@ class AdminController extends Controller
 
 
 
+        // Get distinct years that have bookings
+        $years_exist = Booking::select(DB::raw('YEAR(created_at) as year'))
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year');
 
 
 
@@ -132,8 +138,9 @@ class AdminController extends Controller
         return view('frontend.dashboard', [
             'month' => $month,
             'year' => $year,
-             'chartData' => $chartData,
-                'months_label' => $months_label,
+            'years_exist' => $years_exist,
+            'chartData' => $chartData,
+            'months_label' => $months_label,
         ]);
     }
 }

@@ -20,12 +20,9 @@
                dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onchange="redirectToYearMonth()">
 
-                    @php
-                        $currentYear = \Carbon\Carbon::now()->year;
-                        $years = range($currentYear, $currentYear - 4); // Last 5 years
-                    @endphp
 
-                    @foreach ($years as $y)
+
+                    @foreach ($years_exist as $y)
                         <option value="{{ $y }}" {{ $y == $year ? 'selected' : '' }}>{{ $y }}</option>
                     @endforeach
                 </select>
@@ -112,7 +109,7 @@
                                     label: 'Monthly Records',
                                     data: dataValues_{{ $id }},
                                     backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
-                                    borderColor: "cyan", // optional border
+                                    borderColor: "cyan",
                                     borderWidth: 1,
                                     borderSkipped: false,
                                     borderRadius: 0,
@@ -124,22 +121,15 @@
                                         font: {
                                             weight: 'bold'
                                         },
-                                        formatter: (value, context) => {
-                                            if (value === 0) return '';
-                                            const index = context.dataIndex;
-                                            if (index === 0) return value; // first month
-                                            const prev = context.dataset.data[index - 1];
-                                            if (prev === 0) return value;
-                                            const diff = value - prev;
-                                            if (diff === 0) return value; // no change
-                                            const arrow = diff > 0 ? '↑' : '↓';
-                                            return `${value} ${arrow}`;
+                                        formatter: (value) => {
+                                            return value; // Only show number on top
                                         }
                                     }
                                 }]
                             };
 
                             new Chart(ctx_{{ $id }}, {
+                                type: 'bar',
                                 data: chartData_{{ $id }},
                                 options: {
                                     responsive: true,
@@ -150,44 +140,11 @@
                                         }
                                     },
                                     plugins: {
-                                        datalabels: {
-                                            align: 'top',
-                                            anchor: 'end',
-                                            color: '#000',
-                                            font: {
-                                                weight: 'bold'
-                                            },
-                                            formatter: (value, context) => {
-                                                if (value === 0) return '';
-                                                const index = context.dataIndex;
-                                                if (index === 0) return value;
-                                                const prev = context.dataset.data[index - 1];
-                                                if (prev === 0) return value;
-                                                const diff = value - prev;
-                                                const percent = ((diff / prev) * 100).toFixed(1);
-                                                const sign = percent > 0 ? '+' : '';
-                                                return `${value} (${sign}${percent}%)`;
-                                            }
-                                        },
                                         tooltip: {
-                                            mode: 'index',
-                                            filter: function(tooltipItem) {
-                                                // Only show tooltip for line dataset
-                                                return tooltipItem.dataset.type === 'line';
-                                            },
-                                            intersect: false,
                                             callbacks: {
                                                 label: (context) => {
                                                     const value = context.parsed.y;
-                                                    if (value === 0) return '';
-                                                    const index = context.dataIndex;
-                                                    if (index === 0) return `${value} Booking`;
-                                                    const prev = context.dataset.data[index - 1];
-                                                    if (prev === 0) return `${value} Booking`;
-                                                    const diff = value - prev;
-                                                    const percent = ((diff / prev) * 100).toFixed(1);
-                                                    const sign = percent > 0 ? '+' : '';
-                                                    return `${value} Booking (${sign}${percent}%)`;
+                                                    return `${value} Booking`; // Show full text on hover
                                                 }
                                             }
                                         },
