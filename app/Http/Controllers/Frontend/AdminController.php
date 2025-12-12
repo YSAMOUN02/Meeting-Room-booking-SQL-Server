@@ -111,6 +111,8 @@ class AdminController extends Controller
                 $count = Booking::where('room', $roomName)
                     ->whereYear('date', $year)
                     ->whereMonth('date', $m)
+                    ->orderby('room', 'desc')
+                    ->where('status', 1)
                     ->count();
 
                 $monthlyCount[] = $count;

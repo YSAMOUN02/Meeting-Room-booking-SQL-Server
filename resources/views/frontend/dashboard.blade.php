@@ -1,7 +1,7 @@
 @extends('frontend.master')
 @section('content')
     <div class="flex items-center justify-between">
-        <span class="mb-4 t xt-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
+        <span class="mb-4 t xt-3xl font-extrabold text-gray-900 dark:text-black md:text-5xl lg:text-6xl"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-amber-600 from-amber-400">Sumarry</span> Booking
             Data {{ $year }}
 
@@ -10,7 +10,7 @@
 
             <!-- Year Dropdown -->
             <div>
-                <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
                     Select a Year
                 </label>
                 <select id="year" name="year"
@@ -41,11 +41,11 @@
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
+        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center bg-white mt-2 dark:bg-white " id="default-tab"
             data-tabs-toggle="#default-tab-content" role="tablist">
             <li class="me-2" role="presentation">
                 <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile"
-                    type="button" role="tab" aria-controls="profile" aria-selected="false">Room Booking</button>
+                    type="button" role="tab" aria-controls="profile" aria-selected="false">Booking by Year</button>
             </li>
             <li class="me-2" role="presentation">
                 <button
@@ -70,7 +70,7 @@
         </ul>
     </div>
     <div id="default-tab-content">
-        <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel"
+        <div class="hidden p-4 rounded-lg bg-gray-50 dark:white" id="profile" role="tabpanel"
             aria-labelledby="profile-tab">
 
             <div class="grid grid-cols-2 gap-2">
@@ -105,7 +105,7 @@
                             const chartData_{{ $id }} = {
                                 labels: months,
                                 datasets: [{
-                                    type: 'bar',
+                                    type: 'line',
                                     label: 'Monthly Records',
                                     data: dataValues_{{ $id }},
                                     backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
