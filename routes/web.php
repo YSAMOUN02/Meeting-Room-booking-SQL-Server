@@ -70,19 +70,19 @@ Route::middleware(['auth'])->group(function () {
     // Test
     Route::get('/user/send', [AdminController::class, 'register_mail']);
 
-
-       // User
-   Route::get('/list/user/{page}',[UserController::class, 'list_user']);
-
-   Route::post('/user/delete/submit',[UserController::class, 'delete_user_submit']);
-
-   Route::post('/user/update/submit',[UserController::class, 'update_user']);
-
-   Route::post('/user/update/profile/submit',[UserController::class, 'update_user_profile']);
-
-   Route::get('/user/create', [UserController::class, 'create_user_form']);
-
-   Route::post('/user/create/submit', [UserController::class, 'create_user_submit']);
-
+    Route::get('/booking/dashboard/{year}', [AdminController::class, 'dashboard']);
 });
 
+
+       // User
+       Route::get('/list/user/{page}',[UserController::class, 'list_user']);
+
+       Route::post('/user/delete/submit',[UserController::class, 'delete_user_submit']);
+
+       Route::post('/user/update/submit',[UserController::class, 'update_user']);
+
+       Route::post('/user/update/profile/submit',[UserController::class, 'update_user_profile']);
+
+       Route::get('/user/create', [UserController::class, 'create_user_form']);
+
+       Route::post('/user/create/submit', [UserController::class, 'create_user_submit']);

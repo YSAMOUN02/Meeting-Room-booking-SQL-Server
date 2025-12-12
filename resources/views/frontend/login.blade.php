@@ -24,7 +24,7 @@
         .body {
             min-height: 100vh;
 
-            background: url('assets/image/gradient-blue-background_23-2149.png');
+            background: url('/assets/startic_img/test.jpg');
             background-position: center;
             background-attachment: fixed;
             background-size: cover;
