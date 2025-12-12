@@ -219,7 +219,8 @@
                             },
                             options: {
                                 responsive: true,
-                                maintainAspectRatio: false, // important! lets chart fit the div
+                                maintainAspectRatio: false,
+                                cutout: '70%',
                                 plugins: {
                                     legend: {
                                         position: "bottom",
@@ -239,19 +240,14 @@
                                     datalabels: {
                                         display: true,
                                         color: '#000',
-                                        formatter: function(value, context) {
-                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                            const percent = ((value / total) * 100).toFixed(0);
-                                            const label = context.chart.data.labels[context
-                                            .dataIndex]; // get department name
-                                            return `${label}\n${value} (${percent}%)`; // show department + value + %
-                                        },
                                         font: {
                                             weight: 'bold',
-                                            size: 12
-                                        }
+                                            size: 10
+                                        },
+                                        formatter: function(value) {
+                                            return value;
+                                        } // show only value
                                     }
-
                                 }
                             },
                             plugins: [ChartDataLabels]
