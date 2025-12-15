@@ -36,7 +36,7 @@
 
     <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/chartjs-plugin-datalabels.js') }}"></script>
-    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2') }}"></script>
+    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2.js') }}"></script>
 
 
 
@@ -90,7 +90,7 @@
                         <canvas id="Chart_{{ $id }}" class="canvas_control2"></canvas>
 
                         <script>
-
+                          
                             const dataValues_{{ $id }} = Array.isArray(@json($data)) ? @json($data) :
                                 [];
                             const maxValue_{{ $id }} = Math.max(...dataValues_{{ $id }});
@@ -182,7 +182,28 @@
                 $departmentTotals = $departmentChartData->pluck('total');
 
                 // Pastel background colors
-                $bgColors = ['#FFB3BA', '#BAE1FF', '#BAFFC9', '#FFFFBA', '#FFDFBA', '#E0BBE4', '#C1F0F6', '#FFDAC1'];
+                $bgColors = [
+                    '#FFB3BA',
+                    '#BAE1FF',
+                    '#BAFFC9',
+                    '#FFFFBA',
+                    '#FFDFBA',
+                    '#E0BBE4',
+                    '#C1F0F6',
+                    '#FFDAC1',
+                    '#F3C1FF',
+                    '#C1FFD7',
+                    '#FFD6C1',
+                    '#C1D4FF',
+                    '#FFE4C1',
+                    '#D1C1FF',
+                    '#C1FFF3',
+                    '#FFC1E3',
+                    '#E8FFC1',
+                    '#C1E8FF',
+                    '#FFE1F0',
+                    '#DFFFD6',
+                ];
                 // Slightly darker borders
                 $borderColors = [
                     '#FF8C8C',
@@ -193,6 +214,18 @@
                     '#D099D9',
                     '#8CC6CC',
                     '#FFB780',
+                    '#C77DFF',
+                    '#7DFFB2',
+                    '#FF9F7D',
+                    '#7D9FFF',
+                    '#FFB97D',
+                    '#9F7DFF',
+                    '#7DFFE8',
+                    '#FF7DB2',
+                    '#B2FF7D',
+                    '#7DB2FF',
+                    '#FF7DAA',
+                    '#9FFF7D',
                 ];
             @endphp
 
@@ -204,9 +237,8 @@
                     <canvas id="Donut_{{ $roomId }}" style="height: 400px;"></canvas>
                 </div>
 
-
                 <script>
-
+                    {
                         const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
                         const totals = @json($departmentTotals);
@@ -230,7 +262,7 @@
                                 layout: {
                                     padding: {
                                         top: 40,
-                                        bottom: 120, // enough space for legend
+                                        bottom: 120,
                                         left: 40,
                                         right: 40
                                     }
@@ -259,34 +291,31 @@
                                         display: function(context) {
                                             const value = context.dataset.data[context.dataIndex];
                                             const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
-                                            const percent = (value / total) * 100;
-                                            return percent > 5; // hide labels for slices < 5%
+                                            return (value / total) * 100 > 5;
                                         },
                                         color: '#000',
                                         font: {
                                             weight: 'bold',
                                             size: 10
                                         },
-                                        anchor: 'center', // center of slice
-                                        align: 'center', // center of slice
+                                        anchor: 'center',
+                                        align: 'center',
                                         offset: 0,
                                         formatter: (value, context) => {
-                                            const label = context.chart.data.labels[context
-                                                .dataIndex]; // get company name
+                                            const label = context.chart.data.labels[context.dataIndex];
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
-                                            if (total === 0) return label + ': ' + value + ' (0%)';
+                                            if (total === 0) return `${label}: ${value} (0%)`;
                                             const percent = ((value / total) * 100).toFixed(1) + '%';
-                                            return label + ': ' + value + ' (' + percent + ')';
+                                            return `${label}: ${value} (${percent})`;
                                         }
                                     }
                                 }
                             },
                             plugins: [ChartDataLabels]
                         });
-
+                    }
                 </script>
-
 
 
             </div>
