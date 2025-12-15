@@ -36,8 +36,9 @@
 
     <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/chartjs-plugin-datalabels.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script>
+    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2') }}"></script>
+
+
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -89,7 +90,7 @@
                         <canvas id="Chart_{{ $id }}" class="canvas_control2"></canvas>
 
                         <script>
-                            console.log(@json($data));
+                 
                             const dataValues_{{ $id }} = Array.isArray(@json($data)) ? @json($data) :
                                 [];
                             const maxValue_{{ $id }} = Math.max(...dataValues_{{ $id }});
@@ -271,7 +272,7 @@
                                         offset: 0,
                                         formatter: (value, context) => {
                                             const label = context.chart.data.labels[context
-                                            .dataIndex]; // get company name
+                                                .dataIndex]; // get company name
                                             const dataArr = context.chart.data.datasets[0].data.map(Number);
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
                                             if (total === 0) return label + ': ' + value + ' (0%)';
