@@ -238,85 +238,79 @@
                     <canvas id="Donut_{{ $roomId }}" style="height: 400px;"></canvas>
                 </div>
 
-                <script>
-                    {
-                        const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
+               <script>
+{
+    const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
-                        const totals = @json($departmentTotals);
-                        const totalSum = totals.reduce((a, b) => a + b, 0);
+    // Force totals to numbers
+    const totals = @json($departmentTotals).map(Number);
+    const totalSum = totals.reduce((a, b) => a + b, 0);
 
-                        new Chart(ctx, {
-                            type: "bar",
-                            data: {
-                                labels: @json($departmentNames),
-                                datasets: [{
-                                    data: totals,
-                                    backgroundColor: @json($bgColors),
-                                    borderColor: @json($borderColors),
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                cutout: '70%',
-                                layout: {
-                                    padding: {
-                                        top: 40,
-                                        bottom: 120,
-                                        left: 40,
-                                        right: 40
-                                    }
-                                },
-                                plugins: {
-                                    legend: {
-                                        display: true,
-                                        position: 'bottom',
-                                        labels: {
-                                            boxWidth: 20,
-                                            padding: 15,
-                                            font: {
-                                                size: 9
-                                            }
-                                        }
-                                    },
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(context) {
-                                                const percent = ((context.raw / totalSum) * 100).toFixed(1);
-                                                return `${context.label}: ${context.raw} bookings (${percent}%)`;
-                                            }
-                                        }
-                                    },
-                                    datalabels: {
-                                        display: function(context) {
-                                            const value = context.dataset.data[context.dataIndex];
-                                            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
-                                            return (value / total) * 100 > 5;
-                                        },
-                                        color: '#000',
-                                        font: {
-                                            weight: 'bold',
-                                            size: 10
-                                        },
-                                        anchor: 'center',
-                                        align: 'center',
-                                        offset: 0,
-                                        formatter: (value, context) => {
-                                            const dataArr = context.chart.data.datasets[0].data.map(
-                                                Number); // force to numbers
-                                            const total = dataArr.reduce((sum, val) => sum + val, 0);
-                                            if (total === 0) return value + ' (0%)'; // handle no data
-                                            const percent = ((value / total) * 100).toFixed(1) + '%';
-                                            return value + ' (' + percent + ')';
-                                        }
-                                    }
-                                }
-                            },
-                            plugins: [ChartDataLabels]
-                        });
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: @json($departmentNames),
+            datasets: [{
+                data: totals,
+                backgroundColor: @json($bgColors),
+                borderColor: @json($borderColors),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    top: 40,
+                    bottom: 40,
+                    left: 40,
+                    right: 40
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        boxWidth: 20,
+                        padding: 15,
+                        font: { size: 9 }
                     }
-                </script>
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            const percent = ((value / totalSum) * 100).toFixed(1);
+                            return `${context.label}: ${value} bookings (${percent}%)`;
+                        }
+                    }
+                },
+                datalabels: {
+                    anchor: 'end',       // put label above bar
+                    align: 'end',
+                    color: '#000',
+                    font: { weight: 'bold', size: 10 },
+                    formatter: function(value, context) {
+                        const total = context.chart.data.datasets[0].data
+                                      .map(Number)
+                                      .reduce((sum, val) => sum + val, 0);
+                        const percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                        return value + ' (' + percent + '%)';
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+</script>
 
 
             </div>
