@@ -177,6 +177,7 @@
                     ->where('room', $room)
                     ->where('status', 1)
                     ->groupBy('department')
+                    ->orderByDesc('total') // ← Add this
                     ->get();
 
                 $departmentNames = $departmentChartData->pluck('department');
@@ -233,8 +234,8 @@
             <div class="hidden p-10  m-5 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
                 role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
 
-                <div >
-                    <canvas id="Donut_{{ $roomId }}"  style="max-height: 600px;"></canvas>
+                <div>
+                    <canvas id="Donut_{{ $roomId }}" style="max-height: 600px;"></canvas>
                 </div>
 
                 <script>

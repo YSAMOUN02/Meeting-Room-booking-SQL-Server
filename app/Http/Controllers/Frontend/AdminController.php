@@ -139,20 +139,6 @@ class AdminController extends Controller
             ->distinct()
             ->pluck('department');
 
-        // Prepare chart data for departments
-        $departmentChartData = [];
-
-        foreach ($departments as $dept) {
-            $count = Booking::where('department', $dept)
-                ->whereYear('date', $year)
-                ->where('status', 1)
-                ->count();
-
-            $departmentChartData[] = [
-                'department' => $dept,
-                'total' => $count,
-            ];
-        }
 
 
 
@@ -165,7 +151,6 @@ class AdminController extends Controller
             'chartData' => $chartData,
             'months_label' => $months_label,
 
-            'departmentChartData' => $departmentChartData,
         ]);
     }
 }
