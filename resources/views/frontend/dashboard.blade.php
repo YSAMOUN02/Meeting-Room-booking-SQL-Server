@@ -90,7 +90,7 @@
                         <canvas id="Chart_{{ $id }}" class="canvas_control2"></canvas>
 
                         <script>
-                 
+
                             const dataValues_{{ $id }} = Array.isArray(@json($data)) ? @json($data) :
                                 [];
                             const maxValue_{{ $id }} = Math.max(...dataValues_{{ $id }});
@@ -206,7 +206,7 @@
 
 
                 <script>
-                    document.addEventListener("DOMContentLoaded", function() {
+
                         const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
                         const totals = @json($departmentTotals);
@@ -284,7 +284,7 @@
                             },
                             plugins: [ChartDataLabels]
                         });
-                    });
+
                 </script>
 
 
