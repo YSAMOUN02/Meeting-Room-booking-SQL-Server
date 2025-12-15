@@ -63,4 +63,11 @@
     background-size: cover;
     position: relative;
 }
+.chart_control{
+    width: 80%;
+}
+.canvas_timeline{
+    min-height: 400px !important;
+    color: #2bff0048;
 
+}

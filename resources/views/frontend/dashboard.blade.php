@@ -234,83 +234,88 @@
                 role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
 
                 <h2 class="font-bold mb-10  p-5 text-lg">{{ $room }}</h2>
-                <div class="chart_control ">
-                    <canvas id="Donut_{{ $roomId }}" style="height: 400px;"></canvas>
+                <div >
+                    <canvas id="Donut_{{ $roomId }}"  height="400px"></canvas>
                 </div>
 
-               <script>
-{
-    const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
+                <script>
+                    {
+                        const ctx = document.getElementById("Donut_{{ $roomId }}").getContext("2d");
 
-    // Force totals to numbers
-    const totals = @json($departmentTotals).map(Number);
-    const totalSum = totals.reduce((a, b) => a + b, 0);
+                        // Force totals to numbers
+                        const totals = @json($departmentTotals).map(Number);
+                        const totalSum = totals.reduce((a, b) => a + b, 0);
 
-    new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: @json($departmentNames),
-            datasets: [{
-                data: totals,
-                backgroundColor: @json($bgColors),
-                borderColor: @json($borderColors),
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            layout: {
-                padding: {
-                    top: 40,
-                    bottom: 40,
-                    left: 40,
-                    right: 40
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                    labels: {
-                        boxWidth: 20,
-                        padding: 15,
-                        font: { size: 9 }
+                        new Chart(ctx, {
+                            type: "bar",
+                            data: {
+                                labels: @json($departmentNames),
+                                datasets: [{
+                                    data: totals,
+                                    backgroundColor: @json($bgColors),
+                                    borderColor: @json($borderColors),
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                layout: {
+                                    padding: {
+                                        top: 40,
+                                        bottom: 40,
+                                        left: 40,
+                                        right: 40
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'bottom',
+                                        labels: {
+                                            boxWidth: 20,
+                                            padding: 15,
+                                            font: {
+                                                size: 9
+                                            }
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const value = context.raw;
+                                                const percent = ((value / totalSum) * 100).toFixed(1);
+                                                return `${context.label}: ${value} bookings (${percent}%)`;
+                                            }
+                                        }
+                                    },
+                                    datalabels: {
+                                        anchor: 'end', // put label above bar
+                                        align: 'end',
+                                        color: '#000',
+                                        font: {
+                                            weight: 'bold',
+                                            size: 10
+                                        },
+                                        formatter: function(value, context) {
+                                            const total = context.chart.data.datasets[0].data
+                                                .map(Number)
+                                                .reduce((sum, val) => sum + val, 0);
+                                            const percent = total ? ((value / total) * 100).toFixed(1) : 0;
+                                            return value + ' (' + percent + '%)';
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: [ChartDataLabels]
+                        });
                     }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const value = context.raw;
-                            const percent = ((value / totalSum) * 100).toFixed(1);
-                            return `${context.label}: ${value} bookings (${percent}%)`;
-                        }
-                    }
-                },
-                datalabels: {
-                    anchor: 'end',       // put label above bar
-                    align: 'end',
-                    color: '#000',
-                    font: { weight: 'bold', size: 10 },
-                    formatter: function(value, context) {
-                        const total = context.chart.data.datasets[0].data
-                                      .map(Number)
-                                      .reduce((sum, val) => sum + val, 0);
-                        const percent = total ? ((value / total) * 100).toFixed(1) : 0;
-                        return value + ' (' + percent + '%)';
-                    }
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-}
-</script>
+                </script>
 
 
             </div>
