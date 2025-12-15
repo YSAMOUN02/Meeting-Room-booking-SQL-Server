@@ -34,14 +34,11 @@
 
 
 
-    {{-- <script src="{{ asset('assets/js/chart.js') }}"></script>
+    <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/chartjs-plugin-datalabels.js') }}"></script>
-    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2.js') }}"></script>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
-    </script>
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -112,7 +109,9 @@
                                     backgroundColor: "rgba(0,255,255,0.4)", // cyan bars
                                     borderColor: "cyan",
                                     borderWidth: 3, // <-- increased line thickness
-                                    borderSkipped: false,
+                                    borderColor: "cyan", // line color
+                                    fill: true, // <-- THIS enables the area under the line
+                                    tension: 0.4,
                                     borderRadius: 0,
                                     barPercentage: 0.6,
                                     categoryPercentage: 0.8,
@@ -247,7 +246,7 @@
                         const totalSum = totals.reduce((a, b) => a + b, 0);
 
                         new Chart(ctx, {
-                            type: "doughnut",
+                            type: "bar",
                             data: {
                                 labels: @json($departmentNames),
                                 datasets: [{
