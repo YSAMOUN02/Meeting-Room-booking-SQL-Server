@@ -34,11 +34,14 @@
 
 
 
-    <script src="{{ asset('assets/js/chart.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/chart.js') }}"></script>
     <script src="{{ asset('assets/js/chartjs-plugin-datalabels.js') }}"></script>
-    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2.js') }}"></script>
+    <script src="{{ asset('assets/js/chartjs-plugin-annotation@2.js') }}"></script> --}}
 
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js">
+    </script>
 
 
     <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
@@ -302,7 +305,7 @@
                                         offset: 0,
                                         formatter: (value, context) => {
                                             const dataArr = context.chart.data.datasets[0].data.map(
-                                            Number); // force to numbers
+                                                Number); // force to numbers
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
                                             if (total === 0) return value + ' (0%)'; // handle no data
                                             const percent = ((value / total) * 100).toFixed(1) + '%';
