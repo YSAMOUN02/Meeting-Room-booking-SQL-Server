@@ -90,7 +90,6 @@
                         <canvas id="Chart_{{ $id }}" class="canvas_control2"></canvas>
 
                         <script>
-                          
                             const dataValues_{{ $id }} = Array.isArray(@json($data)) ? @json($data) :
                                 [];
                             const maxValue_{{ $id }} = Math.max(...dataValues_{{ $id }});
@@ -302,12 +301,12 @@
                                         align: 'center',
                                         offset: 0,
                                         formatter: (value, context) => {
-                                            const label = context.chart.data.labels[context.dataIndex];
-                                            const dataArr = context.chart.data.datasets[0].data.map(Number);
+                                            const dataArr = context.chart.data.datasets[0].data.map(
+                                            Number); // force to numbers
                                             const total = dataArr.reduce((sum, val) => sum + val, 0);
-                                            if (total === 0) return `${label}: ${value} (0%)`;
+                                            if (total === 0) return value + ' (0%)'; // handle no data
                                             const percent = ((value / total) * 100).toFixed(1) + '%';
-                                            return `${label}: ${value} (${percent})`;
+                                            return value + ' (' + percent + ')';
                                         }
                                     }
                                 }
@@ -343,5 +342,9 @@
             'rgba(255, 159, 64, 0.2)'
         ];
         const borderColors = colors.map(c => c.replace('0.2', '1'));
+
+        if (window.ChartDataLabels) {
+            Chart.register(ChartDataLabels);
+        }
     </script>
 @endsection
