@@ -233,9 +233,8 @@
             <div class="hidden p-10  m-5 rounded-lg bg-gray-50 dark:bg-gray-800" id="test_room123{{ $roomId }}"
                 role="tabpanel" aria-labelledby="room_123{{ $roomId }}">
 
-                <h2 class="font-bold mb-10  p-5 text-lg">{{ $room }}</h2>
                 <div >
-                    <canvas id="Donut_{{ $roomId }}"  height="400px"></canvas>
+                    <canvas id="Donut_{{ $roomId }}"  style="max-height: 600px;"></canvas>
                 </div>
 
                 <script>
