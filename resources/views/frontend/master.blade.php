@@ -126,26 +126,27 @@
                     </a>
 
                 </div>
-                @if (!empty(Auth::user()->role == 'admin'))
-                <!-- Center -->
-                <div class="flex-1 overflow-hidden">
+                @if (Auth::check() && Auth::user()->role == 'admin')
 
-                    @php
-                        $feedbacks = \App\Models\Feedback::latest()->take(10)->get();
-                    @endphp
+                    <!-- Center -->
+                    <div class="flex-1 overflow-hidden">
 
-                    <marquee class="w-full text-center text-rose-700 font-semibold">
+                        @php
+                            $feedbacks = \App\Models\Feedback::latest()->take(10)->get();
+                        @endphp
 
-                        @foreach ($feedbacks as $item)
+                        <marquee class="w-full text-center text-rose-700 font-semibold">
 
-                            {{ \Illuminate\Support\Str::limit($item->message, 120) }}
+                            @foreach ($feedbacks as $item)
+                                {{ \Illuminate\Support\Str::limit($item->message, 120) }}
 
-                            &nbsp;&nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;&nbsp;
-                        @endforeach
+                                &nbsp;&nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;&nbsp;
+                            @endforeach
 
-                    </marquee>
+                        </marquee>
 
-                </div>
+                    </div>
+
                 @endif
                 <!-- Right -->
                 <div class="shrink-0 flex items-center gap-2">
@@ -249,14 +250,14 @@
                                 <span class="ml-3">Anonymous Feedback</span>
                             </a>
                         </li>
-                        @if(Auth::user()->role == 'admin')
+                        @if (Auth::user()->role == 'admin')
                             <li>
-                            <a href="/feedback/list"
-                                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                              <i class="fa-solid fa-comment-dots"></i>
-                                <span class="ml-3">Anonymous Feedback</span>
-                            </a>
-                        </li>
+                                <a href="/feedback/list"
+                                    class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                    <i class="fa-solid fa-comment-dots"></i>
+                                    <span class="ml-3">Anonymous Feedback</span>
+                                </a>
+                            </li>
                         @endif
                         <li>
                             <a href="/user/profile"
