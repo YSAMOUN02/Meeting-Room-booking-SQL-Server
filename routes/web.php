@@ -74,6 +74,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/feedback', [AdminController::class, 'view_feedback']);
     Route::post('/feedback/submit', [AdminController::class, 'submit']);
+
+        Route::get('/feedback/list', [AdminController::class, 'feedback_list']);
 });
 
 

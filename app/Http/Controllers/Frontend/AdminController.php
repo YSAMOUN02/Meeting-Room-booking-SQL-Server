@@ -176,6 +176,16 @@ class AdminController extends Controller
 
         return back()->with('success', 'Feedback submitted anonymously.');
     }
+    public function feedback_list()
+{
+    $feedbacks = \App\Models\Feedback::latest()->paginate(15);
+
+    return view('frontend.feed_back_list', [
+        'feedbacks' => $feedbacks,
+    ]);
+}
+
+
 }
 class arr
 {

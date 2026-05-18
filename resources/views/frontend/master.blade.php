@@ -126,7 +126,7 @@
                     </a>
 
                 </div>
-
+                @if (!empty(Auth::user()->role == 'admin'))
                 <!-- Center -->
                 <div class="flex-1 overflow-hidden">
 
@@ -146,7 +146,7 @@
                     </marquee>
 
                 </div>
-
+                @endif
                 <!-- Right -->
                 <div class="shrink-0 flex items-center gap-2">
 
@@ -249,6 +249,15 @@
                                 <span class="ml-3">Anonymous Feedback</span>
                             </a>
                         </li>
+                        @if(Auth::user()->role == 'admin')
+                            <li>
+                            <a href="/feedback/list"
+                                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                              <i class="fa-solid fa-comment-dots"></i>
+                                <span class="ml-3">Anonymous Feedback</span>
+                            </a>
+                        </li>
+                        @endif
                         <li>
                             <a href="/user/profile"
                                 class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
