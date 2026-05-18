@@ -71,6 +71,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/send', [AdminController::class, 'register_mail']);
 
     Route::get('/booking/dashboard/{year}', [AdminController::class, 'dashboard']);
+
+    Route::get('/feedback', [AdminController::class, 'view_feedback']);
+    Route::post('/feedback/submit', [AdminController::class, 'submit']);
 });
 
 

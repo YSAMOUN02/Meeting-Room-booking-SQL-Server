@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 // use App\Mail\Mail_data;
 use App\Mail\register_mail;
 use App\Models\booking;
+use App\Models\Feedback;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -152,6 +153,28 @@ class AdminController extends Controller
             'months_label' => $months_label,
 
         ]);
+    }
+
+    public function view_feedback()
+    {
+
+
+        return view('frontend.feedback');
+    }
+      public function submit(Request $request)
+    {
+        $request->validate([
+            'feedback_type' => 'required',
+            'message' => 'required',
+        ]);
+
+        Feedback::create([
+            'user_id' => auth()->id(),
+            'feedback_type' => $request->feedback_type,
+            'message' => $request->message,
+        ]);
+
+        return back()->with('success', 'Feedback submitted anonymously.');
     }
 }
 class arr

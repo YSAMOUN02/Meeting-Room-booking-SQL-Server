@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 
 
-    <link rel="stylesheet" href="{{URL('assets/fonts6/css/all.css')}}">
+    <link rel="stylesheet" href="{{ URL('assets/fonts6/css/all.css') }}">
 
 
 
@@ -110,49 +110,60 @@
     <div class="antialiased bg-gray-50 dark:bg-gray-900">
         <nav
             class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
-            <div class="flex flex-wrap justify-between items-center">
-                <div class="flex justify-start items-center">
+            <div class="flex items-center justify-between gap-4 w-full">
 
-                    @if (!empty(Auth::user()))
-                        <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
-                            aria-controls="drawer-navigation"
-                            class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <svg aria-hidden="true" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Toggle sidebar</span>
+                <!-- Left -->
+                <div class="flex items-center gap-3 shrink-0">
 
 
-                        </button>
-                    @endif
-                    <a href="/" class="flex items-center justify-between mr-4">
-                        <img src="{{ URL('assets/image/Logo_PPM.jpg') }}" class="mr-3 h-8" alt="Flowbite Logo" />
 
-                        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">PPM Meeting
-                            Room</span>
+                    {{-- logo --}}
+                    <a href="/" class="flex items-center gap-2">
+                        <img src="{{ URL('assets/image/Logo_PPM.jpg') }}" class="h-8" />
+                        <span class="text-xl font-semibold whitespace-nowrap dark:text-white">
+                            PPM Meeting Room
+                        </span>
                     </a>
+
+                </div>
+
+                <!-- Center -->
+                <div class="flex-1 overflow-hidden">
+
+                    @php
+                        $feedbacks = \App\Models\Feedback::latest()->take(10)->get();
+                    @endphp
+
+                    <marquee class="w-full text-center text-rose-700 font-semibold">
+
+                        @foreach ($feedbacks as $item)
+
+                            {{ \Illuminate\Support\Str::limit($item->message, 120) }}
+
+                            &nbsp;&nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;&nbsp;
+                        @endforeach
+
+                    </marquee>
+
+                </div>
+
+                <!-- Right -->
+                <div class="shrink-0 flex items-center gap-2">
+
                     @if (empty(Auth::user()))
                         <div class="float_btn">
                             <a href="/login">
-
                                 <button>Login</button>
                             </a>
                         </div>
                     @endif
-                </div>
-                <button id="dark-mode-toggle" class="p-2 rounded bg-gray-200 dark:bg-gray-800 text-black dark:text-white">
-                    <i id="dark-mode-icon" class="fa-solid fa-sun"></i>
-                </button>
 
+                    <button id="dark-mode-toggle"
+                        class="p-2 rounded bg-gray-200 dark:bg-gray-800 text-black dark:text-white">
+                        <i id="dark-mode-icon" class="fa-solid fa-sun"></i>
+                    </button>
+
+                </div>
 
             </div>
         </nav>
@@ -221,17 +232,23 @@
                                 </li>
                             @endif
                         @endif
-                                    <li>
-                                        @php
-                                            $year = date('Y');
-                                        @endphp
-                                    <a href="/booking/dashboard/{{$year}}"
-                                        class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                         <i class="fa-solid fa-chart-pie"></i>
-                                        <span class="ml-3">Chart</span>
-                                    </a>
-                                </li>
-
+                        <li>
+                            @php
+                                $year = date('Y');
+                            @endphp
+                            <a href="/booking/dashboard/{{ $year }}"
+                                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <i class="fa-solid fa-chart-pie"></i>
+                                <span class="ml-3">Chart</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/feedback"
+                                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <i class="fa-solid fa-comments"></i>
+                                <span class="ml-3">Anonymous Feedback</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="/user/profile"
                                 class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -283,7 +300,7 @@
 
 
     <script src="{{ URL('assets/js/flowbite.min.js') }}"></script>
-      <script src="{{ URL('assets/js/script.js') }}"></script>
+    <script src="{{ URL('assets/js/script.js') }}"></script>
     <script>
         let toast = document.querySelector("#toast");
         toast.addEventListener('click', () => {
@@ -292,7 +309,7 @@
 
         let button_dark = document.querySelector("#dark-mode-toggle");
 
-        button_dark.addEventListener("click",()=>{
+        button_dark.addEventListener("click", () => {
             updateButtonIcon("dark-mode-toggle");
             // localStorage.theme = "light";
 
@@ -304,20 +321,20 @@
 
         // localStorage.removeItem("theme");
 
-    // Function to update button icon based on theme
-    function updateButtonIcon(button_id) {
+        // Function to update button icon based on theme
+        function updateButtonIcon(button_id) {
 
-        let button = document.querySelector("#"+button_id);
+            let button = document.querySelector("#" + button_id);
 
 
 
-        if (button) {
-            button.classList.replace("fa-sun", "fa-moon"); // Change to moon 🌙 in dark mode
-        } else {
-            button.classList.replace("fa-moon", "fa-sun"); // Change to sun 🌞 in light mode
+            if (button) {
+                button.classList.replace("fa-sun", "fa-moon"); // Change to moon 🌙 in dark mode
+            } else {
+                button.classList.replace("fa-moon", "fa-sun"); // Change to sun 🌞 in light mode
+            }
+
         }
-
-    }
     </script>
 
 
