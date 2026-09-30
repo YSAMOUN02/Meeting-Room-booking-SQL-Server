@@ -37,12 +37,16 @@ class RoomController extends Controller
             ->get();
         }
 
+        // Month/year being shown on the calendar (defaults to the current month)
+        list($month, $year) = $this->calendar_month_year();
+        $startOfCalendar = Carbon::createFromDate($year, $month, 1)->startOfMonth()->startOfWeek();
+        $endOfCalendar = Carbon::createFromDate($year, $month, 1)->endOfMonth()->endOfWeek();
+
+        // Every day drawn on the grid, so the leading/trailing days of the
+        // previous and next month show their bookings too.
         $booking_data = booking::orderBy('date', 'asc')
             ->orderBy('start_time', 'asc')
-            ->where(function ($query) {
-                $query->whereMonth('date', Carbon::now()->month) // Current month
-                      ->orWhereMonth('date', Carbon::now()->addMonth()->month); // Next month
-            })
+            ->whereBetween('date', [$startOfCalendar->toDateString(), $endOfCalendar->toDateString()])
             ->where('room_id', $room->id)
             ->where('status', 1)
             ->get();
@@ -57,7 +61,9 @@ class RoomController extends Controller
             'booking_today'=> $booking_today,
             'last'=>$last_booking,
             'booking_data' => $booking_data,
-            'room' => $room
+            'room' => $room,
+            'month' => $month,
+            'year' => $year
         ]);
 
 
@@ -75,12 +81,16 @@ class RoomController extends Controller
             ->get();
         }
 
+        // Month/year being shown on the calendar (defaults to the current month)
+        list($month, $year) = $this->calendar_month_year();
+        $startOfCalendar = Carbon::createFromDate($year, $month, 1)->startOfMonth()->startOfWeek();
+        $endOfCalendar = Carbon::createFromDate($year, $month, 1)->endOfMonth()->endOfWeek();
+
+        // Every day drawn on the grid, so the leading/trailing days of the
+        // previous and next month show their bookings too.
         $booking_data = booking::orderBy('date', 'asc')
             ->orderBy('start_time', 'asc')
-            ->where(function ($query) {
-                $query->whereMonth('date', Carbon::now()->month) // Current month
-                      ->orWhereMonth('date', Carbon::now()->addMonth()->month); // Next month
-            })
+            ->whereBetween('date', [$startOfCalendar->toDateString(), $endOfCalendar->toDateString()])
             ->where('room_id', $room->id)
             ->where('status', 1)
             ->get();
@@ -96,10 +106,32 @@ class RoomController extends Controller
             'last'=>$last_booking,
             'booking_data' => $booking_data,
             'room' => $room,
-            'meeting_id' => $meeting_id
+            'meeting_id' => $meeting_id,
+            'month' => $month,
+            'year' => $year
         ]);
 
 
+    }
+    /**
+     * Month/year the calendar should draw, taken from the query string and
+     * falling back to the current month when missing or out of range.
+     */
+    private function calendar_month_year(){
+
+        $now = Carbon::now();
+
+        $month = (int) request('month', $now->month);
+        $year = (int) request('year', $now->year);
+
+        if ($month < 1 || $month > 12) {
+            $month = $now->month;
+        }
+        if ($year < 2000 || $year > 2100) {
+            $year = $now->year;
+        }
+
+        return [$month, $year];
     }
     public function add_room(){
 

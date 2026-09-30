@@ -22,10 +22,10 @@ class APIHandlerController extends Controller
         $password = $request->password ?? '';  // Default to empty string if no password is provided
         $remember = $request->remember ?? false;
 
-        // Log input data for debugging
+        // Who tried to log in. Never the password: anyone who can open the log
+        // file could read it.
         \Log::info('Login Attempt:', [
             'name_email' => $name_email,
-            'password' => $password,
             'remember' => $remember,
         ]);
 

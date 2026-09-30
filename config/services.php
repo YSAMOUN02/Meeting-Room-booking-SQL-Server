@@ -31,4 +31,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    // The IT team's request system (MIS_REPORTING_LAST_V, port 9800). A booking
+    // that needs a sound system or a microphone is filed there, and MIS posts it
+    // to the IT Telegram group. The key must match MIS's REQUEST_RELAY_KEY.
+    'mis' => [
+        'relay_url' => env('MIS_RELAY_URL'),
+        'relay_key' => env('MIS_RELAY_KEY'),
+    ],
+
 ];

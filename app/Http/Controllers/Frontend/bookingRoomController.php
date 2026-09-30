@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\alert;
 use App\Mail\alert_self_cancel;
+use App\Services\ItSupportRequest;
 
 
 
@@ -22,6 +23,7 @@ class bookingRoomController extends Controller
     public function new_booking(Request $request)
     {
         $exist_booked_room = 0;
+        $first_booking = null;
 
         $from_date = new \DateTime($request->from_date);
         $to_date = new \DateTime($request->to_date);
@@ -61,6 +63,7 @@ class bookingRoomController extends Controller
                 $stored = $stored = $room->save();
             if($stored){
                 $state_success++;
+                $first_booking = $room;
             }
 
         }elseif($qty_date > 1){
@@ -101,6 +104,7 @@ class bookingRoomController extends Controller
 
                         if($stored){
                             $state_success++;
+                            $first_booking = $first_booking ?? $room;
                         }
                 }
             }
@@ -108,12 +112,27 @@ class bookingRoomController extends Controller
         }else{
             $message = 'Date is 0 Day.';
         }
-        if($state_success == $qty_date){
-                return redirect('/room/detail/'.$request->room)->with('success','Booking Success.');
-        }else{
-            return redirect('/room/detail/'.$request->room)->with('success','Booking Success.');
+
+        $redirect = redirect('/room/detail/'.$request->room)->with('success','Booking Success.');
+
+        // Sound system / microphone ticked: ask the IT team for them. Only once
+        // the booking is saved, and once however many days it covers.
+        $needs = array_keys(array_filter([
+            'Sound system' => $request->boolean('need_sound'),
+            'Microphone' => $request->boolean('need_microphone'),
+        ]));
+
+        if (!empty($needs) && !empty($first_booking)) {
+            $it_request = ItSupportRequest::send($first_booking, $needs, $request->to_date ?? $first_booking->date, $request->ip());
+
+            $redirect->with('it_request', [
+                'needs' => implode(' and ', $needs),
+                'code' => $it_request['code'] ?? null,
+                'url' => $it_request['url'] ?? null,
+            ]);
         }
-        // }
+
+        return $redirect;
     }
 
 

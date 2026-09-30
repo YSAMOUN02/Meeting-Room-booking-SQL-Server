@@ -1,5 +1,30 @@
 @extends('frontend.master')
 @section('content')
+    <link rel="stylesheet" href="{{ URL('assets/css/booking-modal.css') }}">
+
+    {{-- After a booking that asked IT for a sound system or a microphone. Stays on
+         the page (unlike the fading flash) so the tracking link can be opened. --}}
+    @if (session('it_request'))
+        @php
+            $it_request = session('it_request');
+        @endphp
+        @if (!empty($it_request['code']))
+            <div class="bk-notice max-w-screen-xl mx-auto mb-4 p-4 text-sm rounded-lg border bg-blue-50 text-blue-800 border-blue-300">
+                <i class="fa-solid fa-headset mr-2"></i>
+                {{ $it_request['needs'] }} requested from the IT team. Your request code is
+                <span class="font-bold">{{ $it_request['code'] }}</span>.
+                @if (!empty($it_request['url']))
+                    <a href="{{ $it_request['url'] }}" target="_blank" class="font-medium underline">Track your request</a>
+                @endif
+            </div>
+        @else
+            <div class="bk-notice max-w-screen-xl mx-auto mb-4 p-4 text-sm rounded-lg border bg-yellow-50 text-yellow-800">
+                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+                Your booking is saved, but the request for {{ $it_request['needs'] }} did not reach the IT
+                team. Please contact IT directly.
+            </div>
+        @endif
+    @endif
 
     <section class="drop_slow1 laptop_respond ">
         <div class="grid max-w-screen-xl py-1 px-4 md:px-4 lg:mx-auto lg:gap-8 xl:gap-0 lg:py-4 lg:px-0 lg:grid-cols-12 bg-white  dark:bg-gray-700">
@@ -58,166 +83,141 @@
 
         <!-- Main modal -->
         @if (!empty(Auth::user()))
-            <div id="default-modal" tabindex="-1" aria-hidden="true"
-                class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-2xl max-h-full">
-                    <!-- Modal content -->
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            @php
+                // "CHHEUN Lyza" -> "CL", for the avatar beside the booker's name.
+                $booker = Auth::user();
+                $booker_initials = collect(preg_split('/\s+/', trim((string) $booker->name)))
+                    ->filter()
+                    ->take(2)
+                    ->map(fn ($word) => mb_strtoupper(mb_substr($word, 0, 1)))
+                    ->implode('');
+                $booker_meta = collect([$booker->id_card, $booker->department])->filter()->implode(' · ');
+            @endphp
+            <div id="default-modal" tabindex="-1" aria-hidden="true" aria-labelledby="bk_title"
+                class="bk-modal hidden fixed z-50 justify-center items-center overflow-y-auto overflow-x-hidden">
+                <div class="bk-dialog">
+                    <form class="bk-card" action="/room/detial/store" method="POST" onsubmit="disableSubmitButton(this)">
+                        @csrf
+                        {{-- Fixed by the page and the login, so sent rather than typed. --}}
+                        <input type="hidden" id="room" name="room" value="{{ old('room', $room->id ?? '') }}">
+                        <input type="hidden" name="ka" value="{{ old('ka', $room->room_name ?? '') }}">
+                        <input type="hidden" id="name" name="staff_name" value="{{ old('name', $booker->name ?? '') }}">
+                        <input type="hidden" id="id" name="staff_id" value="{{ old('staff_id', $booker->id_card ?? '') }}">
+                        <input type="hidden" id="department" name="staff_department"
+                            value="{{ old('staff_department', $booker->department ?? '') }}">
+
                         <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Booking Room
-                            </h3>
-                            <button type="button"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-hide="default-modal">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Close modal</span>
+                        <div class="bk-head">
+                            @if (!empty($room->thumbnail))
+                                <img class="bk-thumb" src="/Uploads/{{ $room->thumbnail }}" alt="">
+                            @else
+                                <span class="bk-badge"><i class="fa-solid fa-calendar-plus"></i></span>
+                            @endif
+                            <div class="bk-head-text">
+                                <h3 id="bk_title" class="bk-title">Book {{ $room->room_name ?? 'this room' }}</h3>
+                                <p class="bk-sub"><i class="fa-solid fa-chair"></i>Seats up to {{ $room->seat ?? '-' }} people</p>
+                            </div>
+                            <button type="button" class="bk-close" data-modal-hide="default-modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
+
                         <!-- Modal body -->
-                        <form action="/room/detial/store" method="POST" onsubmit="disableSubmitButton(this)">
-
-                            @csrf
-                            <div class="p-5">
-                                <div class="mb-5">
-                                    <label for="room"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Room selected
-                                        <span class="text-rose-700">*</span></label>
-                                    <input type="text" value="{{ old('room', $room->id ?? '') }}" id="room"
-                                        name="room" class="hidden" required />
-                                    <input type="text" name="ka" value="{{ old('ka', $room->room_name ?? '') }}"
-                                        readonly
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="name@gmail.com" required />
+                        <div class="bk-body">
+                            <div class="bk-person">
+                                <span class="bk-avatar">
+                                    @if ($booker_initials !== '')
+                                        {{ $booker_initials }}
+                                    @else
+                                        <i class="fa-solid fa-user"></i>
+                                    @endif
+                                </span>
+                                <div class="bk-person-text">
+                                    <span class="bk-overline">Booking as</span>
+                                    <span class="bk-person-name">{{ $booker->name }}</span>
+                                    <span class="bk-person-meta">{{ $booker_meta }}</span>
                                 </div>
+                            </div>
 
-                                <div class="mb-5">
-                                    <label for="name"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name <span
-                                            class="text-rose-600">*</span></label>
-                                    <input type="text" id="name" value="{{ old('name', Auth::user()->name ?? '') }}"
-                                        readonly name="staff_name"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="name@gmail.com" required />
-                                </div>
-
-                                <div class="mb-5">
-                                    <label for="id"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Staff ID <span
-                                            class="text-rose-600">*</span></label>
-                                    <input type="text" readonly
-                                        value="{{ old('staff_id', Auth::user()->id_card ?? '') }}" id="id"
-                                        name="staff_id"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required />
-                                </div>
-
-                                <div class="mb-5">
-                                    <label for="department"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department<span
-                                            class="text-rose-700">*</span></label>
-                                    <input type="text" id="department" readonly name="staff_department" class="hidden"   value="{{ old('staff_department', Auth::user()->department ?? '') }}">
-                                    <select id="department" readonly  disabled
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-                                        <option selected
-                                            value="{{ old('staff_department', Auth::user()->department ?? '') }}">
-                                            {{ Auth::user()->department }}</option>
-
-
-                                        <!-- Add other departments as needed -->
-                                    </select>
-                                </div>
-
-                                <div class="mb-5">
-                                    <label for="meeting_type"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meeting Type
-                                        <span class="text-rose-600">*</span></label>
-                                    <div class="mx-auto grid grid-cols-2 gap-4">
-                                        <div class="flex items-center mb-4">
-                                            <input id="meeting" checked type="radio" value="Meeting"
-                                                name="meeting_type"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="meeting"
-                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Meeting</label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input id="training" type="radio" value="Training" name="meeting_type"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="training"
-                                                class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Training</label>
-                                        </div>
+                            <div class="bk-field">
+                                <span class="bk-label">Type</span>
+                                <div class="bk-segment" role="radiogroup" aria-label="Meeting type">
+                                    <div class="bk-choice">
+                                        <input id="meeting" type="radio" value="Meeting" name="meeting_type" checked>
+                                        <label for="meeting"><i class="fa-solid fa-users"></i>Meeting</label>
+                                    </div>
+                                    <div class="bk-choice">
+                                        <input id="training" type="radio" value="Training" name="meeting_type">
+                                        <label for="training"><i class="fa-solid fa-chalkboard-user"></i>Training</label>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="mb-5">
-                                    <label for="description"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meeting or
-                                        Training
-                                        Title  <span
-                                        class="text-rose-700">*</span></label>
-                                    <textarea id="description" name="description" required rows="4"
-                                        class="block p-2.5 w-full text-sm bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Write your thoughts here..."></textarea>
-                                </div>
-                                <div class="mb-5 grid grid-cols-2 gap-4">
+                            <div class="bk-field">
+                                <label for="description" class="bk-label">Meeting or training title <span
+                                        class="bk-req">*</span></label>
+                                <textarea id="description" name="description" required rows="3" class="bk-input"
+                                    placeholder="e.g. Monthly sales review"></textarea>
+                            </div>
+
+                            <div class="bk-field">
+                                <span class="bk-label">When <span class="bk-req">*</span></span>
+                                <div class="bk-when">
                                     <div>
-                                        <label for="from_date"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From Date
-                                            <span class="text-rose-600">*</span></label>
+                                        <label for="from_date" class="bk-mini">From date</label>
                                         <input type="date" onchange="validation_data()" id="from_date"
-                                            value="{{ date('Y-m-d') }}" name="from_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            required />
+                                            value="{{ date('Y-m-d') }}" name="from_date" class="bk-input" required />
                                     </div>
                                     <div>
-                                        <label for="to_date"
-                                            class="block mb-2 text-sm font-medium text-gray-900  dark:text-white">To Date
-                                            <span class="text-rose-600">*</span></label>
-                                        <input onchange="validation_data()" type="date" id="to_date"
-                                            value="{{ date('Y-m-d') }}" name="to_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            required />
+                                        <label for="to_date" class="bk-mini">To date</label>
+                                        <input type="date" onchange="validation_data()" id="to_date"
+                                            value="{{ date('Y-m-d') }}" name="to_date" class="bk-input" required />
+                                    </div>
+                                    <div>
+                                        <label for="start_time" class="bk-mini">Start time</label>
+                                        <input type="time" onchange="validation_data()" id="start_time"
+                                            name="start_time" class="bk-input" required />
+                                    </div>
+                                    <div>
+                                        <label for="end_time" class="bk-mini">End time</label>
+                                        <input type="time" onchange="validation_data()" id="end_time"
+                                            name="end_time" class="bk-input" required />
                                     </div>
                                 </div>
-                                <div class="mb-5 grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label for="start_time"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Start Time
-                                            <span class="text-rose-600">*</span></label>
-                                        <input onchange="validation_data()" type="time" id="start_time"
-                                            name="start_time"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            required />
+                            </div>
+
+                            {{-- Optional and unticked: most meetings need neither. Ticking one
+                                 files a request with the IT team when the booking is saved. --}}
+                            <div class="bk-field">
+                                <span class="bk-label">Need from IT <span class="bk-optional">Optional</span></span>
+                                <div class="bk-chips">
+                                    <div class="bk-choice">
+                                        <input id="need_sound" type="checkbox" value="1" name="need_sound">
+                                        <label for="need_sound"><span class="bk-chip-icon"><i
+                                                    class="fa-solid fa-volume-high"></i></span>Sound system</label>
                                     </div>
-                                    <div>
-                                        <label for="end_time"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Time
-                                            <span class="text-rose-600">*</span></label>
-                                        <input onchange="validation_data()" type="time" id="end_time"
-                                            name="end_time"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            required />
+                                    <div class="bk-choice">
+                                        <input id="need_microphone" type="checkbox" value="1" name="need_microphone">
+                                        <label for="need_microphone"><span class="bk-chip-icon"><i
+                                                    class="fa-solid fa-microphone"></i></span>Microphone</label>
                                     </div>
                                 </div>
-
-
+                                <p class="bk-hint"><i class="fa-solid fa-circle-info"></i>Tick only what you need. The IT
+                                    team gets your request on Telegram when you book.</p>
                             </div>
-                            <!-- Modal footer -->
-                            <div
-                                class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                <button type="button" id="btn_submit_booking"
-                                    class="text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Booking</button>
-                                <button data-modal-hide="default-modal" type="button"
-                                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="bk-foot">
+                            <p id="bk_status" class="bk-status" aria-live="polite"><i class="fa-solid fa-clock"></i>Pick a
+                                date and time. We check the room is free.</p>
+                            <button data-modal-hide="default-modal" type="button" class="bk-btn bk-btn-ghost">Cancel</button>
+                            {{-- script.js makes this a submit button once the room is free;
+                                 clicking it before then runs that check. --}}
+                            <button type="button" id="btn_submit_booking" class="bk-btn"
+                                onclick="if (this.type === 'button') validation_data()">Book room</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         @endif
@@ -367,14 +367,22 @@
             </div>
             <div class=" w-full flex flex-col py-1 px-4 md:px-4 lg:mx-auto lg:gap-8 xl:gap-0 lg:pt-0 pb-4 lg:px-0">
                 <header class="flex items-center justify-between  border-gray-200 px-1 lg:px-0 pt-0 pb-4 lg:flex-none">
-                    <h1 class=" leading-6 text-gray-900 text-2xl  font-bold">
+                    <div class=" leading-6 text-gray-900 text-2xl  font-bold">
                         @php
                             $today = today(); // Get today's date
                             use Carbon\Carbon;
 
                             $currentDate = now(); // Current date
-                            $month = request('month', $currentDate->month); // Get month from query or default to current
-                            $year = request('year', $currentDate->year); // Get year from query or default to current
+                            // Month/year picked in the header, defaulting to the current month
+                            $month = (int) ($month ?? request('month', $currentDate->month));
+                            $year = (int) ($year ?? request('year', $currentDate->year));
+
+                            if ($month < 1 || $month > 12) {
+                                $month = $currentDate->month;
+                            }
+                            if ($year < 2000 || $year > 2100) {
+                                $year = $currentDate->year;
+                            }
 
                             // Generate the first and last day of the selected month
                             $startOfMonth = Carbon::createFromDate($year, $month, 1);
@@ -395,11 +403,25 @@
                         @endphp
 
 
-                        <time datetime="{{ $today->format('Y-m') }}" class="dark:text-white">
-                            {{ $today->format('F Y') }}
-                        </time>
+                        <form method="GET" action="{{ url()->current() }}" class="flex items-center gap-2">
+                            <select name="month" onchange="this.form.submit()"
+                                class="text-2xl font-bold text-gray-900 bg-white border border-gray-300 rounded px-2 py-1">
+                                @foreach (range(1, 12) as $month_option)
+                                    <option value="{{ $month_option }}" {{ $month == $month_option ? 'selected' : '' }}>
+                                        {{ date('F', mktime(0, 0, 0, $month_option, 1)) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <input type="text" name="year" value="{{ $year }}" inputmode="numeric" maxlength="4"
+                                onchange="this.form.submit()" style="width: 6rem;"
+                                class="text-2xl font-bold text-gray-900 bg-white border border-gray-300 rounded px-2 py-1">
+                            <noscript>
+                                <button type="submit"
+                                    class="text-sm font-bold text-gray-900 bg-white border border-gray-300 rounded px-2 py-1">Go</button>
+                            </noscript>
+                        </form>
 
-                    </h1>
+                    </div>
 
                 </header>
                 <div class="shadow w-full  mt-2 ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
@@ -622,5 +644,75 @@
         submitButton.disabled = true;
         submitButton.innerText = "Processing..."; // Optional: change the button text
     }
+
+        // Say beside the book button whether it can be pressed yet: script.js
+        // makes it a submit button only once it has checked the room is free.
+        (function () {
+            const button = document.getElementById('btn_submit_booking');
+            const status = document.getElementById('bk_status');
+
+            if (!button || !status) {
+                return;
+            }
+
+            const show = function () {
+                const ready = button.getAttribute('type') === 'submit';
+
+                status.classList.toggle('is-ready', ready);
+                status.innerHTML = ready
+                    ? '<i class="fa-solid fa-circle-check"></i>The room is free. Ready to book.'
+                    : '<i class="fa-solid fa-clock"></i>Pick a date and time. We check the room is free.';
+            };
+
+            new MutationObserver(show).observe(button, { attributes: true, attributeFilter: ['type'] });
+        })();
+
+        // Let the booking form animate out. Flowbite hides it the instant it is
+        // asked to, so the ways of closing it - the X, Cancel, a click on the
+        // blurred background, Escape - are caught first, the form plays its
+        // exit (.bk-closing in booking-modal.css), and then Cancel is clicked
+        // for real so Flowbite closes it exactly as it always has.
+        (function () {
+            const modal = document.getElementById('default-modal');
+            const cancel = modal ? modal.querySelector('.bk-btn-ghost[data-modal-hide]') : null;
+            const lessMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (!modal || !cancel || lessMotion) {
+                return;
+            }
+
+            let passing = false;
+
+            const closeAnimated = function (event) {
+                if (passing || modal.classList.contains('hidden') || modal.classList.contains('bk-closing')) {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                modal.classList.add('bk-closing');
+
+                setTimeout(function () {
+                    passing = true;
+                    cancel.click();
+                    passing = false;
+                    modal.classList.remove('bk-closing');
+                }, 200);
+            };
+
+            document.addEventListener('click', function (event) {
+                const target = event.target instanceof Element ? event.target : null;
+
+                if (target && (target === modal || target.closest('[data-modal-hide="default-modal"]'))) {
+                    closeAnimated(event);
+                }
+            }, true);
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeAnimated(event);
+                }
+            }, true);
+        })();
     </script>
 @endsection

@@ -21,8 +21,8 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        // Run the command every 1 minute (for testing purposes)
-        $schedule->command('alert:meetings')->everyMinute();
+        // Meeting alert emails switched off 2026-09-30. Uncomment the line below to turn them back on.
+        // $schedule->command('alert:meetings')->everyMinute();
     }
     /**
      * Register the commands for the application.   
